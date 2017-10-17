@@ -1,0 +1,26 @@
+//
+// Surströmming - Creates a CSS-only arrow
+//
+
+@mixin arrow($direction, $size, $color: currentColor) {
+  @if not index(top right bottom left, $direction) {
+    @error "Direction must be either top, right, bottom or left.";
+  }
+
+  border-#{opposite-position($direction)}: ($size * 1.5) solid $color;
+  content: "";
+  height: 0;
+  width: 0;
+  z-index: 2;
+
+  $perpendicular-borders: $size solid transparent;
+
+  @if $direction == top or $direction == bottom {
+    border-left:    $perpendicular-borders;
+    border-right:   $perpendicular-borders;
+  }
+  @else {
+    border-bottom:  $perpendicular-borders;
+    border-top:     $perpendicular-borders;
+  }
+}

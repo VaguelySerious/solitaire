@@ -1,0 +1,66 @@
+//
+// deck (stock)
+//
+
+.deck {
+  display: flex;
+  position: relative;
+
+  &__stock,
+  &__waste {
+    @include deck-stacked(4);
+
+    &:not(:empty) {
+      @include elevate(3);
+    }
+
+    .card__front,
+    .card__back {
+      box-shadow: none;
+    }
+  }
+
+
+  // deck cycle or done button
+  &__button {
+    appearance: none;
+    background: transparent;
+    border: none;
+    left: 0;
+    outline: none;
+    pointer-events: none;
+    position: absolute;
+    top: 0;
+
+
+    .board &.card-placeholder {
+      margin-left: 0;
+    }
+
+
+    &::before {
+      align-items: center;
+      border: none;
+      color: rgba(color(black), 0.7);
+      content: "✕";
+      display: flex;
+      justify-content: center;
+      text-shadow: 0 1px 0 rgba(lighten(color(fiord), 15%), 1);
+    }
+
+    // hide button when stock has items
+    .deck__stock:not(:empty) + & {
+      display: none;
+    }
+
+    // reenable functionality
+    .deck__stock--cycle + & {
+      cursor: pointer;
+      pointer-events: all;
+
+      &::before {
+        content: "⟲";
+      }
+    }
+  }
+}

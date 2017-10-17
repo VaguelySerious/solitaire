@@ -1,0 +1,21 @@
+//
+// foundations
+//
+
+.foundations {
+  display: flex;
+  flex-direction: row;
+
+  &__foundation {
+    @include deck-stacked(4);
+
+    &:not(:empty) {
+      @include elevate(3);
+    }
+
+    .card__front,
+    .card__back {
+      box-shadow: none;
+    }
+  }
+}

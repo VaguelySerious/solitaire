@@ -1,0 +1,21 @@
+//
+// Surströmming - mobile-first breakpoint mixin
+//
+
+@mixin break($breakpoint, $modifier: 'min') {
+  @if ($modifier == 'max') {
+    $breakpoint: $breakpoint - 1;
+  }
+
+  @if map-has-key($breakpoints, $breakpoint) {
+    $size: map-get($breakpoints, $breakpoint);
+
+    @media only screen and (#{$modifier}-width: $size) {
+      @content;
+    }
+  }
+
+  @else {
+    @warn "Unkown '#{$breakpoint}' in $breakpoints";
+  }
+}

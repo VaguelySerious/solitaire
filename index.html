@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="initial-scale=1.0">
+  <title>Solitaire Demo</title>
+  <link rel="stylesheet" href="public/css/main.css">
+</head>
+<body class="board card-demo">
+
+  <div class="card-demo__wrapper">
+    <!-- karo -->
+    <div class="card card--diamonds card--ace">
+      <div class="card__wrap">
+        <div class="card__front">
+          <span class="card__color"></span>
+          <span class="card__color"></span>
+        </div>
+        <div class="card__back"></div>
+      </div>
+    </div>
+    <div class="card card--diamonds card--2">
+      <div class="card__wrap">
+        <div class="card__front">
+          <span class="card__color"></span>
+          <span class="card__color"></span>
+        </div>
+        <div class="card__back"></div>
+      </div>
+    </div>
+    <div class="card card--diamonds card--3">
+      <div class="card__wrap">
+        <div class="card__front">
+          <span class="card__color"></span>
+          <span class="card__color"></span>
+        </div>
+        <div class="card__back"></div>
+      </div>
+    </div><div class="card card--hearts card--4">
+      <div class="card__wrap">
+        <div class="card__front">
+          <span class="card__color"></span>
+          <span class="card__color"></span>
+        </div>
+        <div class="card__back"></div>
+      </div>
+    </div>
+    <div class="card card--hearts card--5">
+      <div class="card__wrap">
+        <div class="card__front">
+          <span class="card__color"></span>
+          <span class="card__color"></span>
+        </div>
+        <div class="card__back"></div>
+      </div>
+    </div><div class="card card--hearts card--6">
+      <div class="card__wrap">
+        <div class="card__front">
+          <span class="card__color"></span>
+          <span class="card__color"></span>
+        </div>
+        <div class="card__back"></div>
+      </div>
+    </div><div class="card card--spades card--7">
+      <div class="card__wrap">
+        <div class="card__front">
+          <span class="card__color"></span>
+          <span class="card__color"></span>
+        </div>
+        <div class="card__back"></div>
+      </div>
+    </div>
+    <div class="card card--spades card--8">
+      <div class="card__wrap">
+        <div class="card__front">
+          <span class="card__color"></span>
+          <span class="card__color"></span>
+        </div>
+        <div class="card__back"></div>
+      </div>
+    </div>
+    <div class="card card--spades card--9">
+      <div class="card__wrap">
+        <div class="card__front">
+          <span class="card__color"></span>
+          <span class="card__color"></span>
+        </div>
+        <div class="card__back"></div>
+      </div>
+    </div><div class="card card--clubs card--10">
+      <div class="card__wrap">
+        <div class="card__front">
+          <span class="card__color"></span>
+          <span class="card__color"></span>
+        </div>
+        <div class="card__back"></div>
+      </div>
+    </div>
+    <div class="card card--clubs card--jester">
+      <div class="card__wrap">
+        <div class="card__front">
+          <span class="card__color"></span>
+          <span class="card__color"></span>
+        </div>
+        <div class="card__back"></div>
+      </div>
+    </div>
+    <div class="card card--clubs card--queen">
+      <div class="card__wrap">
+        <div class="card__front">
+          <span class="card__color"></span>
+          <span class="card__color"></span>
+        </div>
+        <div class="card__back"></div>
+      </div>
+    </div><div class="card card--diamonds card--king card--back">
+      <div class="card__wrap">
+        <div class="card__front">
+          <span class="card__color"></span>
+          <span class="card__color"></span>
+        </div>
+        <div class="card__back"></div>
+      </div>
+    </div>
+  </div>
+
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script>
+    $(".card").click(function(){
+      $(this).toggleClass("card--back");
+    });
+  </script>
+</body>
+</html>

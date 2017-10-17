@@ -1,0 +1,9 @@
+//
+// Klondike-specific styles
+//
+
+.board--solitaire {
+
+  // Klondike board needs space for 7 cards in the tableau
+  @include board-size(7);
+}

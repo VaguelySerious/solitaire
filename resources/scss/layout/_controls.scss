@@ -1,0 +1,127 @@
+//
+// game controls
+//
+
+.controls {
+  display: flex;
+
+  &__item {
+    margin-left: 20px;
+  }
+
+  &__link {
+    align-items: center;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    height: 20px;
+    width: 20px;
+
+    @include break(tablet) {
+      height: 30px;
+      width: 30px;
+    }
+
+    @include break(hd) {
+      height: 48px;
+      width: 48px;
+    }
+  }
+
+  &__icon {
+    color: color(white);
+    display: block;
+    font-family: $card-font;
+    height: 12px;
+    position: relative;
+    transition: color 0.25s;
+    width: 12px;
+
+
+    &--cross {
+      &::after,
+      &::before {
+        background: currentColor;
+        border-radius: 1px;
+        content: "";
+        display: block;
+        height: 2px;
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 100%;
+      }
+      &::after {
+        transform: translateY(-50%) rotate(45deg);
+      }
+      &::before {
+        transform: translateY(-50%) rotate(-45deg);
+      }
+    }
+
+    &--undo {
+      &::before {
+        content: "↩";
+        display: block;
+        font-size: 0.9em;
+        line-height: 1;
+        margin-top: 2.5px;
+
+        @include break(tablet) {
+          font-size: $font-large;
+        }
+
+        @include break(hd) {
+          font-size: 2.3rem;
+        }
+      }
+    }
+
+    &--plus {
+      &::after,
+      &::before {
+        background: currentColor;
+        border-radius: 1px;
+        bottom: 0;
+        content: "";
+        height: 100%;
+        position: absolute;
+        top: 0;
+        width: 2px;
+
+        @include break(hd) {
+          width: 4px;
+        }
+      }
+
+      &::before {
+        left: 50%;
+        margin-left: -1px;
+      }
+
+      &::after {
+        left: 5px;
+        transform: rotate(90deg);
+
+        @include break(tablet) {
+          left: 8px;
+        }
+
+        @include break(hd) {
+          left: 16px;
+        }
+      }
+    }
+
+
+    @include break(tablet) {
+      height: 18px;
+      width: 18px;
+    }
+
+    @include break(hd) {
+      height: 36px;
+      width: 36px;
+    }
+  }
+}

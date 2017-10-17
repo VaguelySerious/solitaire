@@ -1,0 +1,70 @@
+//
+// mixin to handle responsive styling for the entire board
+//
+// calculate the board padding and width of cards and card placeholders
+// receives the number of cards as a parameter
+//
+
+@mixin board-size($n) {
+
+  // default styles (mobile-first)
+  @include board-size-helper($n, $board-default-size);
+
+  // iterate through breakpoint-relative board widths
+  @each $key, $value in $board-sizes {
+    @include break($key) {
+      @include board-size-helper($n, $value);
+    }
+  }
+}
+
+
+// helper mixin
+@mixin board-size-helper($n, $board-size) {
+  $card-width: card-size($n, $board-size);
+
+  padding-left: board-padding($board-size);
+  padding-right: board-padding($board-size);
+
+
+  // card dimensions
+  .card {
+    @include card-dimensions($n, $board-size);
+
+    &__back,
+    &__front {
+      @include card-border-radius;
+    }
+
+    &__back {
+      border-width: ($card-width * 0.05);
+    }
+
+    &__front {
+      &::before {
+        font-size: ($card-width * 0.65);
+      }
+    }
+
+
+    &__color {
+      font-size: ($card-width * 0.15);
+    }
+  }
+
+
+  // empty piles or placeholders
+  .card-placeholder {
+    @include card-dimensions($n, $board-size);
+    margin-left: card-margin($n, $board-size);
+
+    &.tableau__column:before {
+      @include card-dimensions($n, $board-size);
+      margin-left: 0;
+    }
+  }
+
+  .deck__button::before {
+    font-size: ($card-width * 0.5);
+  }
+}

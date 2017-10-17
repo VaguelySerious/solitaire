@@ -1,0 +1,27 @@
+/**
+ *
+ * Surströmming - placeholder classes
+ *
+ */
+
+
+// adding classes for managing element-visibility depending on viewport size
+@each $key, $value in $breakpoints {
+  // show marked element only from given breakpoint and above
+  .hidden--#{$key} {
+    display: none;
+
+    @include break($key) {
+      display: block;
+    }
+  }
+
+  // show marked element only on given breakpoint and below
+  .show--#{$key} {
+    display: block;
+
+    @include break($key) {
+      display: none;
+    }
+  }
+}

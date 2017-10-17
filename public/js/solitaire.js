@@ -1,15 +1,17 @@
 // TODO: Drag and drop
-// TODO: Undo button
 // TODO: Hints
 // TODO: Different games
 // TODO: Scoring
 // TODO: Menu button code
 // TODO: Sounds
 // TODO: Tutorial and fancy win screen
+// TODO: Create cookies for save states (document.cookie = "_x_=_y_; expires=Thu, 18 Dec 2018 12:00:00 UTC";)
 
 // TODO: Fix too fast clicking leading to weird card movement (fixed by drag and drop)
 // TODO: Make cards turn red after a wrong move
-// TODO: Add effect for flipping cards
+// TODO: Turn undo button red or "x" after undos are used up
+// TODO: Double click moves card to available foundation
+// TODO: Fix undo plz
 
 
 
@@ -18,9 +20,13 @@
 //////////////////////
 
 var stacks = [[],[],[],[],[],[],[],[],[],[],[],[],[]];
+var gameStates = [];
+var maxGameStates = 2;
 var cardAmount = 52;
 var lastCard = null;
+var clickedUndo = false;
 var cycleTimes = 2;
+var undoTimes = 100;
 var score = 0;
 var colors = ["hearts", "diamonds", "clubs", "spades"];
 
@@ -118,6 +124,7 @@ function cardInteraction(card){
 	if (numFromCard(card) == stacks[0][stacks[0].length-1]){
 		// console.log(`cycled ${stacks[0][stacks[0].length-1]} from deck to pile`);
 		deckCycle();
+		createGameState();
 	}
 	// Uncover a face down card
 	else if (numFromCard(card) >= 52){
@@ -130,7 +137,7 @@ function cardInteraction(card){
 			stacks[cardPos[0]][cardPos[1]] = numFromCard(card) - 52;
 			// flip card in DOM
 			$(card).toggleClass("card--back");
-			console.log(card.className);
+			createGameState();
 		}
 	}
 	// Highlight a card
@@ -151,6 +158,7 @@ function cardInteraction(card){
 				if ((num2%13 + 1 === num1%13 && (num1 >= 26 && num2 < 26 || num1 < 26 && num2 >= 26))
 					|| (num2 - 1 === num1 && cardPos[0] > 1 && cardPos[0] < 6)){
 					moveElements(lastCardPos[0], cardPos[0], stacks[lastCardPos[0]].length - lastCardPos[1]);
+					createGameState();
 				}
 				else {
 					// TURN RED
@@ -182,6 +190,8 @@ function handleEmptyFieldInteraction(field){
 		}
 		$(lastCard).toggleClass("card--clicked");
 		lastCard = null;
+
+		createGameState();
 	}
 }
 
@@ -195,7 +205,55 @@ function handleCycle(){
 		cycleTimes -= 1;
 		if (cycleTimes == 0)
 			$("#stack0").toggleClass("deck__stock--cycle");
+
+		createGameState();
 	}
+}
+
+// Saves a certain amount of game states
+function createGameState() {
+	gameStates.push(clone(stacks));
+	console.log("Created gamestate.");
+	if (gameStates.length > maxGameStates){
+		gameStates.shift();
+		console.log("shifted gamestate");
+	}
+	clickedUndo = false;
+}
+
+	// Goes back to the previous game state
+function handleUndo () {
+	if (!clickedUndo) {
+		gameStates.pop();
+	}
+	clickedUndo = true;
+	console.log("Clicked undo.");
+	if (gameStates.length > 0 && undoTimes > 0){
+		undoTimes -= 1;
+		stacks = gameStates.pop();
+		clearDom();
+		rebaseDom();
+		console.log("Reverted gamestate. " + gameStates.length + " gameStates remaining.");
+	}
+	else{
+		alert("Nothing to undo, or undo limit reached.");
+		// Turn button red?
+	}
+}
+
+// Clones an array value by value with a depth of 2
+// Designed to clone the "stacks" array for gamestate saving
+function clone (arr) {
+	n = []
+	for (var i = 0; i < arr.length; i++) {
+		n.push([]);
+	}
+	for (var i = 0; i < arr.length; i++) {
+		for (var j = 0; j < arr[i].length; j++) {
+			n[i].push(arr[i][j]);
+		}
+	}
+	return n;
 }
 
 
@@ -241,6 +299,7 @@ function resetBoard(){
 
   clearDom();
   rebaseDom();
+  createGameState();
 }
 
 // Empty all cards from the DOM
@@ -287,5 +346,5 @@ $(".controls__link--new-game").click(function(){
 
 // Undo a move on undo button clikc
 $(".controls__link--undo").click(function(){
-  alert("Undo function not implemented.");
+	handleUndo();
 });

@@ -1,0 +1,203 @@
+//
+// card styles
+//
+// this file does not contain any size-related properties to
+// make sure the card width is always relative to the board
+// settings
+//
+
+.card {
+  box-sizing: border-box;
+  @include card-colors;
+  cursor: pointer;
+  display: flex;
+  position: relative;
+  transition: margin-top 0.3s ease;
+
+  &--hearts,
+  &--diamonds {
+    color: color(brickred);
+  }
+
+  &--clubs,
+  &--spades {
+    color: color(black);
+  }
+
+
+  // general card styles
+  &__back,
+  &__front {
+    backface-visibility: hidden;
+    box-sizing: border-box;
+    @include card-border-radius;
+    @include elevate(1);
+    height: 100%;
+    overflow: hidden;
+    transition: all 0.4s ease;
+    width: 100%;
+
+    .card:hover & {
+      @include elevate(7);
+    }
+  }
+
+
+  // card front
+  &__front {
+    background: color(white);
+    border: 1px solid darken(color(white), 10%);
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    justify-content: space-between;
+    padding: 8%;
+
+    // make room for back of card
+    .card--back & {
+      transform: rotateY(180deg);
+    }
+
+    // click focus
+    .card--clicked & {
+      &, &:hover {
+        box-shadow: 0 0 15px 2px desaturate(lighten($card-default, 25%), 10%);
+      }
+    }
+
+    .card--flash & {
+      animation: cardFlash 0.125s;
+      animation-iteration-count: 2;
+
+      &, &:hover {
+        box-shadow: none;
+      }
+
+      @include keyframes(cardFlash) {
+        0% {
+          transform: rotate(0);
+        }
+        25% {
+          transform: rotate(3deg);
+        }
+        50% {
+          transform: rotate(0);
+        }
+        75% {
+          transform: rotate(-3deg);
+        }
+        100% {
+          transform: rotate(0);
+        }
+      }
+    }
+
+
+    // centered color icon
+    &::before {
+      left: 50%;
+      line-height: 1;
+      font-family: $card-font;
+      position: absolute;
+      top: 47.5%;
+      transform: translate(-50%, -50%);
+    }
+
+
+    // loop through card colors
+    @each $key, $value in $card-colors {
+      .card--#{$key} &::before {
+        content: $value;
+      }
+    }
+  }
+
+
+  // card backdrop
+  &__back {
+    $decorative-border-x: 4%;
+    $decorative-border-y: 5%;
+
+    border-color: color(white);
+    border-style: solid;
+    left: 0;
+    position: absolute;
+    top: 0;
+    transform: rotateY(180deg);
+
+    &::after,
+    &::before {
+      border: 1px solid;
+      content: "";
+      position: absolute;
+
+      @include break(tablet) {
+        border-width: 2px;
+      }
+    }
+
+    &::before {
+      border-radius: 0.75vw;
+      @include abs-position($decorative-border-x, $decorative-border-y);
+    }
+
+    &::after {
+      border-radius: 0.5vw;
+      @include abs-position(($decorative-border-x * 2), ($decorative-border-y * 2 + 1));
+    }
+
+    // reverse rotation when back of card should be visible
+    .card--back & {
+      transform: rotateY(0);
+    }
+  }
+
+
+  // card icons
+  &__color {
+    display: block;
+    font-weight: bold;
+    text-align: center;
+
+    &::before {
+      display: block;
+      line-height: 1;
+    }
+
+
+    &::after {
+      display: block;
+      font-size: 0.875em;
+      line-height: 1;
+    }
+
+
+    &:first-child{
+      align-self: flex-start;
+    }
+    &:last-child {
+      align-self: flex-end;
+      transform: rotate(180deg);
+    }
+
+
+    // loop through card values
+    @each $key, $value in $card-values {
+      .card--#{$key} & {
+        &::before {
+          content: $value;
+        }
+      }
+    }
+
+
+    // loop throuh card colors
+    @each $key, $value in $card-colors {
+      .card--#{$key} & {
+        &::after {
+          content: $value;
+        }
+      }
+    }
+  }
+}

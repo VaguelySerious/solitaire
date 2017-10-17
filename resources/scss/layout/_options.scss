@@ -1,0 +1,218 @@
+//
+// player options menu
+// contains game selection and game settings
+//
+
+.options {
+  @include gradient(-70deg, darken(color(fiord), 7.5%));
+  bottom: 0;
+  color: color(white);
+  display: flex;
+  flex-wrap: wrap;
+  left: 0;
+  min-width: 320px;
+  padding: 5rem 0;
+  position: fixed;
+  top: 0;
+  transform: translateX(-100%);
+  transition: transform 0.5s ease;
+  width: calc(17.2vw + #{30px + 20px});
+  z-index: 11;
+
+  &--open {
+    transform: translateX(0);
+  }
+
+
+  // close icon
+  &__close {
+    color: color(white);
+    cursor: pointer;
+    display: flex;
+    position: absolute;
+    right: 25px;
+    top: 13px;
+  }
+
+
+  // item group
+  &__list {
+    width: 100%;
+
+    &--settings {
+      align-self: flex-end;
+    }
+  }
+
+
+  // link overlay
+  &__link {
+    bottom: 0;
+    display: block;
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+  }
+
+
+  // option list items
+  &__item {
+    align-items: center;
+    display: flex;
+    list-style: none;
+    padding: 24px 36px;
+    position: relative;
+
+    // background
+    &::before {
+      @include gradient(-70deg, darken(color(fiord), 20%));
+      content: "";
+      height: 100%;
+      left: 0;
+      opacity: 0.4;
+      position: absolute;
+      top: 0;
+      transition: opacity 0.6s ease;
+      width: 100%;
+      z-index: -1;
+    }
+
+
+    // mouseover
+    &:hover {
+      &::before {
+        opacity: 1;
+      }
+    }
+
+
+    // content within options
+    p {
+      color: desaturate(lighten(color(fiord), 15%), 5%);
+    }
+
+
+    // simple text list items have no background
+    &--headline,
+    &--setting {
+      padding-bottom: 20px;
+      padding-top: 20px;
+
+      &::before {
+        background: transparent;
+      }
+    }
+  }
+
+  // option list item thumbnail
+  &__thumb {
+    @include elevate(2);
+    color: color(white);
+    @include flex(0 0 25%);
+    height: 0;
+    margin-right: 16px;
+    padding-bottom: 25%;
+    position: relative;
+
+    &::after {
+      font-size: 1.75rem;
+      font-weight: 300;
+      left: 50%;
+      position: absolute;
+      top: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    // thumbnail options
+    .options__item--klondike & {
+      background: color(aqua);
+
+      &::after {
+        content: "K";
+      }
+    }
+
+    .options__item--spider & {
+      background: color(plum);
+
+      &::after {
+        content: "S";
+      }
+    }
+
+    .options__item--freecell & {
+      background: color(emerald);
+
+      &::after {
+        content: "F";
+      }
+    }
+  }
+
+
+  // hide the checkbox to make room for an actual design
+  &__checkbox {
+    left: -9999px;
+    position: absolute;
+    top: -9999px;
+
+    &-label {
+      $checkbox-size: 20px;
+
+      cursor: pointer;
+      font-weight: 300;
+      padding-left: ($checkbox-size * 2);
+      position: relative;
+
+
+      // styling for the visible checkbox
+      &::after,
+      &::before {
+        box-sizing: border-box;
+        content: "";
+        display: block;
+        position: absolute;
+        transition: all 0.25s ease;
+        vertical-align: middle;
+      }
+
+      &::before {
+        background: darken(color(fiord), 15%);
+        border-radius: 3px;
+        left: 0;
+        height: $checkbox-size;
+        width: $checkbox-size;
+      }
+
+      // only visible when checkbox is checked
+      &::after {
+        $checkbox-inner-size: ($checkbox-size * 0.4);
+        background: desaturate(lighten(color(fiord), 35%), 5%);
+        border-radius: 2px;
+        height: $checkbox-inner-size;
+        left: ($checkbox-size - $checkbox-inner-size) / 2;
+        opacity: 0;
+        top: ($checkbox-size - $checkbox-inner-size) / 2;
+        transform: scale(3);
+        transition: all 0.25s ease;
+        width: $checkbox-inner-size;
+      }
+    }
+
+    &:hover + &-label {
+      cursor: pointer;
+
+      &::before {
+        @include elevate(1);
+      }
+    }
+
+    &:checked + &-label {
+      &::after {
+        transform: scale(1);
+        opacity: 1;
+      }
+    }
+  }
+}

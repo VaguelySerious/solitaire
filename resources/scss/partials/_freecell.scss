@@ -1,0 +1,10 @@
+//
+// Freecell-specific styles
+//
+
+.board--freecell {
+
+  // Freecell board needs space for 8 cards in the tableau and
+  // one card-width as a spacer between foundations and free cells
+  @include board-size(9);
+}

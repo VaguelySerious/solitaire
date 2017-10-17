@@ -1,0 +1,9 @@
+{
+  "default": [],
+
+  "start": [
+    "sass",
+    "uglify",
+    "concurrent:watch"
+  ]
+}

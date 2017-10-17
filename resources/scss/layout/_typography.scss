@@ -1,0 +1,31 @@
+//
+// typography
+//
+
+body {
+  font: 400 #{$document-font-size}px/1.4 $font-text;
+}
+
+h3 {
+  font-size: $font-x-small;
+  font-weight: bold;
+  letter-spacing: 0.1em;
+  line-height: 1.1;
+  text-transform: uppercase;
+}
+
+h4 {
+  font-size: $font-medium;
+  font-weight: bold;
+  line-height: 1.1;
+  margin-bottom: 4px;
+
+  & + p {
+    font-size: $font-small;
+    line-height: 1.2;
+  }
+}
+
+a {
+  cursor: pointer;
+}

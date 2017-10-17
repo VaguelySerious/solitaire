@@ -1,0 +1,79 @@
+//
+// game overlay
+// contains game statistics and basic controls
+//
+
+.overlay {
+  @include gradient(45deg, darken(color(fiord), 5%));
+  color: color(white);
+  display: flex;
+  font-size: $font-small;
+  justify-content: space-between;
+  left: 0;
+  letter-spacing: 0.05em;
+  padding: 2px 0;
+  padding-left: inherit;
+  padding-right: inherit;
+  position: fixed;
+  right: 0;
+  top: 0;
+  z-index: 10;
+
+  &__statistics {
+    display: flex;
+  }
+
+
+  @include break(tablet) {
+    padding-bottom: 12px;
+    padding-top: 12px;
+  }
+
+  @include break(hd) {
+    padding-bottom: 18px;
+    padding-top: 18px;
+  }
+}
+
+.statistics {
+  font-size: 12px;
+  left: 50%;
+  position: absolute;
+  top: 50%;
+  @include translate(-50%, -50%);
+
+  &__item {
+    margin-right: 36px;
+
+    &:last-child {
+      margin-right: 0;
+    }
+
+    &--time {
+      display: none;
+
+      @include break(mobile-l) {
+        display: block;
+      }
+    }
+  }
+
+  &__label {
+    font-weight: 300;
+    text-transform: lowercase;
+  }
+
+  &__value {
+    font-weight: 700;
+    margin-left: 6px;
+
+    @include break(tablet) {
+      font-size: 1.3em;
+    }
+  }
+
+
+  @include break(tablet) {
+    font-size: 16px;
+  }
+}
