@@ -28,7 +28,7 @@
   // general card styles
   &__back,
   &__front {
-    backface-visibility: hidden;
+    @include backface-visibility(hidden);
     box-sizing: border-box;
     @include card-border-radius;
     @include elevate(1);
