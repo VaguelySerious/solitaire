@@ -13,6 +13,7 @@
   display: flex;
   position: relative;
   transition: margin-top 0.3s ease;
+  transform: translateZ(-1px);
 
   &--hearts,
   &--diamonds {
@@ -28,7 +29,7 @@
   // general card styles
   &__back,
   &__front {
-    backface-visibility: hidden;
+    @include backface-visibility(hidden);
     box-sizing: border-box;
     @include card-border-radius;
     @include elevate(1);
