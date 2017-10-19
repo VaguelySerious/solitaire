@@ -5,6 +5,7 @@
 
 .card-placeholder {
   position: relative;
+  transform: translateZ(-2px);
 
   .board &:first-child {
     margin-left: 0;
