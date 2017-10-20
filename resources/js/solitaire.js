@@ -11,7 +11,7 @@
 // TODO: Make cards turn red after a wrong move
 // TODO: Turn undo button red or "x" after undos are used up
 // TODO: Double click moves card to available foundation
-// TODO: Fix undo plz
+// TODO: Check if card flash could cause weird behaviour
 
 
 
@@ -21,12 +21,11 @@
 
 var stacks = [[],[],[],[],[],[],[],[],[],[],[],[],[]];
 var gameStates = [];
-var maxGameStates = 3;
+var maxGameStates = 1;      // Controls the amount of undo times too
+var progressiveUndo = true; // If true you can "always" undo the last x steps
 var cardAmount = 52;
 var lastCard = null;
-var clickedUndo = false;
 var cycleTimes = 2;
-var undoTimes = 1;
 var score = 0;
 var colors = ["hearts", "diamonds", "clubs", "spades"];
 
@@ -128,19 +127,19 @@ function cardInteraction(card){
   var cardPos = findCardPos(card);  
   // Click on deck to cycle
   if (numFromCard(card) == stacks[0][stacks[0].length-1]){
+    createGameState();
     deckCycle();
     if (lastCard != null) forgetLastCard();
-    createGameState();
   }
   // Uncover a face down card
   else if (numFromCard(card) >= 52){
     if (lastCard != null) forgetLastCard();
     if (cardPos[1] == stacks[cardPos[0]].length - 1){
+      createGameState();
       // change card in stack
       stacks[cardPos[0]][cardPos[1]] = numFromCard(card) - 52;
       // flip card in DOM
       $(card).toggleClass("card--back");
-      createGameState();
     }
   }
   // Highlight a card
@@ -160,8 +159,8 @@ function cardInteraction(card){
         // IF the card is one above the other and a different color OR IF it's one above the other and on the foundation
         if ((num2%13 + 1 === num1%13 && (num1 >= 26 && num2 < 26 || num1 < 26 && num2 >= 26)) || 
             (num2 - 1 === num1 && cardPos[0] > 1 && cardPos[0] < 6)){
-          moveElements(lastCardPos[0], cardPos[0], stacks[lastCardPos[0]].length - lastCardPos[1]);
           createGameState();
+          moveElements(lastCardPos[0], cardPos[0], stacks[lastCardPos[0]].length - lastCardPos[1]);
         } else {
           console.log("Clicked two incompatible cards");
           $(lastCard).toggleClass("card--flash");
@@ -203,18 +202,18 @@ function handleEmptyFieldInteraction(field){
   if (lastCard != null && stacks[stack].length === 0 && stack > 1)
   {
     if ((stack > 5 && numFromCard(lastCard) % 13 === 12) || numFromCard(lastCard) % 13 === 0){
+      createGameState();
       moveElements(lastCardPos[0], parseInt(stack), stacks[lastCardPos[0]].length - lastCardPos[1]);
     }
     $(lastCard).toggleClass("card--clicked");
     lastCard = null;
-
-    createGameState();
   }
 }
 
 // Cycles the pile back onto the deck, while managing the count
 function handleCycle(){
   if (cycleTimes>0){
+    createGameState();
     temp = stacks[1].length;
     for (var i = 0; i < temp; i++) {
       addElement(removeElement(1), 0, true, false);
@@ -222,8 +221,6 @@ function handleCycle(){
     cycleTimes -= 1;
     if (cycleTimes == 0)
       $("#stack0").toggleClass("deck__stock--cycle");
-
-    createGameState();
   }
 }
 
@@ -235,25 +232,23 @@ function createGameState() {
     gameStates.shift();
     console.log("shifted gamestate");
   }
-  clickedUndo = false;
 }
 
   // Goes back to the previous game state
 function handleUndo () {
-  if (!clickedUndo) {
-    gameStates.pop();
-  }
-  clickedUndo = true;
   console.log("Clicked undo.");
-  if (gameStates.length > 0 && undoTimes > 0){
-    undoTimes -= 1;
+  if (!progressiveUndo){
+    console.log("decreased max Game states");
+    maxGameStates -= 1;
+  }
+  if (gameStates.length > 0){
     stacks = gameStates.pop();
     clearDom();
     rebaseDom();
-    console.log("Reverted gamestate. " + gameStates.length + " gameStates remaining.");
+    console.log("Reverted gamestate. " + gameStates.length + " gameStates and " + maxGameStates + " max game states.");
   }
   else{
-    alert("Undo limit reached. Gamesates: " + gameStates.length + " Undotimes: " + undoTimes);
+    alert("No gamestates remaining.");
     // Turn button red?
   }
 }
@@ -319,7 +314,6 @@ function resetBoard(){
 
   clearDom();
   rebaseDom();
-  createGameState();
 }
 
 // Empty all cards from the DOM
