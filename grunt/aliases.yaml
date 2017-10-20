@@ -1,7 +1,7 @@
 default:
   description: 'Default build'
   tasks:
-    - prod
+    - dev
 dev:
   description: 'Development build'
   tasks:

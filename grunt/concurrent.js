@@ -7,7 +7,7 @@ module.exports = {
 
     // Dev tasks
     devFirst: [
-    //    'clean',
+        'clean',
         'jshint'
     ],
     devSecond: [
@@ -17,7 +17,7 @@ module.exports = {
 
     // Production tasks
     prodFirst: [
-    //    'clean',
+        'clean',
         'jshint'
     ],
     prodSecond: [

@@ -162,11 +162,17 @@ function cardInteraction(card){
             (num2 - 1 === num1 && cardPos[0] > 1 && cardPos[0] < 6)){
           moveElements(lastCardPos[0], cardPos[0], stacks[lastCardPos[0]].length - lastCardPos[1]);
           createGameState();
+        } else {
+          console.log("Clicked two incompatible cards");
+          $(lastCard).toggleClass("card--flash");
+          $(card).toggleClass("card--flash");
+          setTimeout(function(){
+            $(card).toggleClass("card--flash");
+            $(lastCard).toggleClass("card--flash");
+          },500);
         }
-        else {
-          // ($lastCard).toggleClass("card--flash");
-          // ($card).toggleClass("card--flash");
-        }
+    } else {
+      console.log("Clicked same card twice");      
     }
 
     // Un-highlight both cards
