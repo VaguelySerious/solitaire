@@ -1,5 +1,5 @@
 module.exports = {
     main: [
-        'src/js/*.js'
+        'resources/js/*.js'
     ]
 };

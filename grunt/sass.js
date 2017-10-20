@@ -6,8 +6,8 @@ module.exports = function(grunt, data) {
   ];
   var files = [{
     expand: true,
-    cwd: 'src/scss',
-    src: ['*.scss'],
+    cwd: 'resources/scss',
+    src: ['**/*.scss'],
     dest: 'public/css',
     ext: '.css'
   }];

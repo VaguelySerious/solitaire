@@ -174,7 +174,7 @@ function cardInteraction(card){
       $(card).toggleClass("card--clicked");
       $(lastCard).toggleClass("card--clicked");
       lastCard = null;
-    },500)
+    },500);
   }
 
   // Check for win-condition

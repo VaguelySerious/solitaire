@@ -9,7 +9,7 @@ module.exports = function(grunt, data) {
       ]
     },
     dist: {
-      src: 'src/css/*.css'
+      src: 'resources/css/*.css'
     }
   };
 }
