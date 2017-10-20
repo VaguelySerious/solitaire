@@ -134,8 +134,7 @@ function cardInteraction(card){
   }
   // Uncover a face down card
   else if (numFromCard(card) >= 52){
-    if (lastCard != null)
-      forgetLastCard();
+    if (lastCard != null) forgetLastCard();
     if (cardPos[1] == stacks[cardPos[0]].length - 1){
       // change card in stack
       stacks[cardPos[0]][cardPos[1]] = numFromCard(card) - 52;
@@ -165,8 +164,8 @@ function cardInteraction(card){
           createGameState();
         }
         else {
-          ($lastCard).toggleClass("card--flash");
-          ($card).toggleClass("card--flash");
+          // ($lastCard).toggleClass("card--flash");
+          // ($card).toggleClass("card--flash");
         }
     }
 
@@ -175,7 +174,7 @@ function cardInteraction(card){
       $(card).toggleClass("card--clicked");
       $(lastCard).toggleClass("card--clicked");
       lastCard = null;
-    },500);
+    },500)
   }
 
   // Check for win-condition
@@ -186,7 +185,8 @@ function cardInteraction(card){
 
 // Un-highlight a card and forget it
 function forgetLastCard () {
-  $(lastCard).toggleClass("card--clicked");
+  if ($(lastCard).hasClass("card--clicked"))
+    $(lastCard).toggleClass("card--clicked");
   lastCard = null;
 }
 
