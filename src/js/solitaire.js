@@ -21,12 +21,12 @@
 
 var stacks = [[],[],[],[],[],[],[],[],[],[],[],[],[]];
 var gameStates = [];
-var maxGameStates = 2;
+var maxGameStates = 3;
 var cardAmount = 52;
 var lastCard = null;
 var clickedUndo = false;
 var cycleTimes = 2;
-var undoTimes = 100;
+var undoTimes = 1;
 var score = 0;
 var colors = ["hearts", "diamonds", "clubs", "spades"];
 
@@ -38,14 +38,16 @@ var colors = ["hearts", "diamonds", "clubs", "spades"];
 
 // Create the DOM element for a given card number
 function cardFromNumber(num){
-  num == null || num == NaN ? alert("cardFromNumber(null) was called") : null;
+  if (num == null || isNaN(num))
+    alert("cardFromNumber(null) was called");
   var divs = [];
   classNames = ["card card--" + colors[Math.floor(num%52/13)]+ " card--" + num%13 + (num < 52 ? "" : " card--back"),
-                 "card__front", "card__color", "card__color", "card__back"]
+                 "card__front", "card__color", "card__color", "card__back"];
   for (var i = 0; i < classNames.length; i++){
     divs.push(document.createElement("div"));
     divs[i].className += classNames[i];
-    i != 0 ? divs[i==2 || i==3 ? 1 : 0].appendChild(divs[i]) : null;
+    if (i != 0)
+      divs[i==2 || i==3 ? 1 : 0].appendChild(divs[i]);
   }
   return divs[0];
 }
@@ -81,10 +83,15 @@ function deckCycle () {
 
 // Add a card to both Stacks and the DOM
 function addElement(num, stack, flip, pos){
-  if (num == null || num == NaN) return null;
+  if (num == null || isNaN(num)) return null;
   flip = flip | false;
   pos = pos | false;
-  flip ? (num >= 52 ? num -= 52 : num += 52) : null;
+  if (flip){
+    if (num >= 52)
+      num -= 52;
+    else
+      num += 52;
+  }
   if (!pos){
     stacks[stack].push(num);
     $('#stack'+stack).append(cardFromNumber(num));
@@ -110,8 +117,8 @@ function moveElements(from, to, amount){
   for (var i = 0; i < amount; i++) {
     cards.push(removeElement(from));
   }
-  for (var i = cards.length - 1; i >= 0; i--) {
-    addElement(cards[i], to);
+  for (var j = cards.length - 1; j >= 0; j--) {
+    addElement(cards[j], to);
   }
 }
 
@@ -119,20 +126,17 @@ function moveElements(from, to, amount){
 function cardInteraction(card){
 
   var cardPos = findCardPos(card);  
-
   // Click on deck to cycle
   if (numFromCard(card) == stacks[0][stacks[0].length-1]){
-    // console.log(`cycled ${stacks[0][stacks[0].length-1]} from deck to pile`);
     deckCycle();
+    if (lastCard != null) forgetLastCard();
     createGameState();
   }
   // Uncover a face down card
   else if (numFromCard(card) >= 52){
-    if (lastCard != null){
-      $(lastCard).toggleClass("card--clicked");
-      lastCard = null;
-    } else if (cardPos[1] == stacks[cardPos[0]].length - 1){
-      // addElement(removeElement(cardPos[0]), cardPos[0], true, false);
+    if (lastCard != null)
+      forgetLastCard();
+    if (cardPos[1] == stacks[cardPos[0]].length - 1){
       // change card in stack
       stacks[cardPos[0]][cardPos[1]] = numFromCard(card) - 52;
       // flip card in DOM
@@ -155,13 +159,14 @@ function cardInteraction(card){
 
     if (lastCard != card && cardPos[0] >= 2){
         // IF the card is one above the other and a different color OR IF it's one above the other and on the foundation
-        if ((num2%13 + 1 === num1%13 && (num1 >= 26 && num2 < 26 || num1 < 26 && num2 >= 26))
-          || (num2 - 1 === num1 && cardPos[0] > 1 && cardPos[0] < 6)){
+        if ((num2%13 + 1 === num1%13 && (num1 >= 26 && num2 < 26 || num1 < 26 && num2 >= 26)) || 
+            (num2 - 1 === num1 && cardPos[0] > 1 && cardPos[0] < 6)){
           moveElements(lastCardPos[0], cardPos[0], stacks[lastCardPos[0]].length - lastCardPos[1]);
           createGameState();
         }
         else {
-          // TURN RED
+          ($lastCard).toggleClass("card--flash");
+          ($card).toggleClass("card--flash");
         }
     }
 
@@ -170,13 +175,19 @@ function cardInteraction(card){
       $(card).toggleClass("card--clicked");
       $(lastCard).toggleClass("card--clicked");
       lastCard = null;
-    },500)
+    },500);
   }
 
   // Check for win-condition
   if (stacks[2].length + stacks[3].length + stacks[4].length + stacks[5].length === 52){
     alert("CONGRATULATIONS, YOU WON!");
   }
+}
+
+// Un-highlight a card and forget it
+function forgetLastCard () {
+  $(lastCard).toggleClass("card--clicked");
+  lastCard = null;
 }
 
 // Handle placing cards on empty fields
@@ -236,7 +247,7 @@ function handleUndo () {
     console.log("Reverted gamestate. " + gameStates.length + " gameStates remaining.");
   }
   else{
-    alert("Nothing to undo, or undo limit reached.");
+    alert("Undo limit reached. Gamesates: " + gameStates.length + " Undotimes: " + undoTimes);
     // Turn button red?
   }
 }
@@ -244,8 +255,8 @@ function handleUndo () {
 // Clones an array value by value with a depth of 2
 // Designed to clone the "stacks" array for gamestate saving
 function clone (arr) {
-  n = []
-  for (var i = 0; i < arr.length; i++) {
+  n = [];
+  for (var k = 0; k < arr.length; k++) {
     n.push([]);
   }
   for (var i = 0; i < arr.length; i++) {
@@ -284,16 +295,19 @@ function resetBoard(){
   }
   // Shuffle the deck (works similar to insertion sort)
   var j, x;
-  for (var i = cardAmount; i; i--) {
-      j = Math.floor(Math.random() * i);
-      x = stacks[0][i - 1];
-      stacks[0][i - 1] = stacks[0][j];
+  for (var k = cardAmount; k; k--) {
+      j = Math.floor(Math.random() * k);
+      x = stacks[0][k - 1];
+      stacks[0][k - 1] = stacks[0][j];
       stacks[0][j] = x;
   }
   // Redistribute deck cards across the tableu in both DOM and stacks
-  for (var i = 6; i < 13; i++){
-    for (var j = i-6; j >= 0; j--){
-      j == 0 ? stacks[i].push(stacks[0].pop() - 52) : stacks[i].push(stacks[0].pop());
+  for (var h = 6; h < 13; h++){
+    for (var l = h-6; l >= 0; l--){
+      if (l == 0)
+        stacks[h].push(stacks[0].pop() - 52);
+      else
+        stacks[h].push(stacks[0].pop());
     }
   }
 

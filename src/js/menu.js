@@ -1,16 +1,3 @@
-// temporary timer solution for fancy
-// function a() {
-//   startDate = + new Date();
-//   spanValue = $('.statistics__value').last();
-//   setInterval(function() {
-//     diff = Math.floor((new Date() - startDate) / 1000);
-//     mins = Math.floor(diff/60);
-//     secs = diff % 60;
-//     spanValue.text(mins.toString() + ":" + secs.toString().padStart(2, "0"));
-//   }, 1000);
-// }
-
-// better timer solution
 var gameTime = 0;
 var timerStarted = false;
 function timerReset() {
@@ -38,7 +25,7 @@ var cardColors = [
   'emerald',
   'mint',
   'aqua'
-]
+];
 var randomColor = Math.floor(Math.random() * cardColors.length);
 $('.board').addClass('board--' + cardColors[randomColor]);
 

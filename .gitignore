@@ -1,4 +1,5 @@
 node_modules/
 build/
-Grunfile.js
+grunt/
+Gruntfile.js
 package.json
