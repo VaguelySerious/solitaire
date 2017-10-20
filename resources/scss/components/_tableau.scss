@@ -18,15 +18,25 @@
   .card {
 
     // cards should be stacked so that the card value
-    // and color are well visible
+    // and color are still visible
     & + .card {
       margin-top: -100%;
+
+      // IE and Edge fix
+      .ie & {
+        margin-top: -9.75%;
+      }
     }
 
 
     // if the card is turned around, save space
     &--back + .card {
       margin-top: -115%;
+
+      // IE and Edge fix
+      .ie & {
+        margin-top: -12.5%;
+      }
     }
   }
 

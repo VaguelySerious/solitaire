@@ -11,6 +11,7 @@
   @include card-colors;
   cursor: pointer;
   display: flex;
+  flex-shrink: 0;
   position: relative;
   transition: margin-top 0.3s ease;
   transform: translateZ(-1px);
