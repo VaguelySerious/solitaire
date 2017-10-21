@@ -6,8 +6,6 @@
 // TODO: Tutorial and fancy win screen
 // TODO: Create cookies for save states (document.cookie = "_x_=_y_; expires=Thu, 18 Dec 2018 12:00:00 UTC";)
 
-// TODO: Save score in gameStates
-// TODO: Fix cumulative score
 // TODO: Hotkeys for undo and new game and auto-complete
 // TODO: Fix too fast clicking leading to weird card movement (fixed by drag and drop)
 // TODO: Check if card flash could cause weird behaviour
@@ -26,7 +24,7 @@ var accumulativeScore = false;
 var cardAmount = 52;
 var lastCard = null;
 var cycleTimes = 2;
-var score = 2;
+var score = 0;
 var gameTime = 0;
 var timerStarted = false;
 var timerInterval = null;
@@ -249,7 +247,7 @@ function createGameState() {
   if (progressiveUndo){
     $(".controls__icon--undo").removeClass("invalid");
   }
-  gameStates.push(clone(stacks));
+  gameStates.push([clone(stacks), score]);
   if (gameStates.length > maxGameStates){
     gameStates.shift();
   }
@@ -263,7 +261,9 @@ function handleUndo () {
   }
   if (gameStates.length > 0){
     $(".controls__icon--undo").removeClass("invalid");
-    stacks = gameStates.pop();
+    var tempStacks = gameStates.pop();
+    stacks = tempStacks[0];
+    score = tempStacks[1];
     clearDom();
     rebaseDom();
     score -= 10 ;
@@ -381,7 +381,7 @@ function timerReset() {
         "") + Math.floor(gameTime/60)%60 + ":" + (gameTime%60).toString().padStart(2, "0"));
     }, 1000);
   } else {
-    gameTime = -1;
+    gameTime = 0;
   }
 }
 
@@ -401,21 +401,23 @@ $(".card-placeholder").click(function(){
   handleEmptyFieldInteraction(this);
 });
 
-$("#cycleButton").click(function(){
-  handleCycle();
+$("#cumulative").click(function(){
+  score = 0;
+  if (!accumulativeScore)
+    accumulativeScore = true;
+  else
+    accumulativeScore = false;
+  resetBoard();
 });
 
+$("#cycleButton").click(handleCycle);
+
 $("#timerBox").click(function(){
-  console.log("AWAEGSEGERSH");
   $("#timerWrapper").toggleClass("statistics__item--hidden");
 });
 
 // Reset board on new game button click
-$(".controls__link--new-game").click(function(){
-  resetBoard();
-});
+$(".controls__link--new-game").click(resetBoard);
 
 // Undo a move on undo button clikc
-$(".controls__link--undo").click(function(){
-  handleUndo();
-});
+$(".controls__link--undo").click(handleUndo);
