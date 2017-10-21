@@ -1,15 +1,15 @@
 // TODO: Drag and drop
 // TODO: Hints
 // TODO: Different games
-// TODO: Scoring
-// TODO: Menu button code
+// TODO: Loss conditions
 // TODO: Sounds
 // TODO: Tutorial and fancy win screen
 // TODO: Create cookies for save states (document.cookie = "_x_=_y_; expires=Thu, 18 Dec 2018 12:00:00 UTC";)
 
+// TODO: Save score in gameStates
+// TODO: Fix cumulative score
+// TODO: Hotkeys for undo and new game and auto-complete
 // TODO: Fix too fast clicking leading to weird card movement (fixed by drag and drop)
-// TODO: Make cards turn red after a wrong move
-// TODO: Turn undo button red or "x" after undos are used up
 // TODO: Check if card flash could cause weird behaviour
 
 
@@ -22,10 +22,14 @@ var stacks = [[],[],[],[],[],[],[],[],[],[],[],[],[]];
 var gameStates = [];
 var maxGameStates = 1;      // Controls the amount of undo times too
 var progressiveUndo = true; // If true you can "always" undo the last x steps
+var accumulativeScore = false;
 var cardAmount = 52;
 var lastCard = null;
 var cycleTimes = 2;
-var score = 0;
+var score = 2;
+var gameTime = 0;
+var timerStarted = false;
+var timerInterval = null;
 var colors = ["hearts", "diamonds", "clubs", "spades"];
 
 
@@ -75,13 +79,15 @@ function findCardPos(card){
 
 // Cycle through the deck
 function deckCycle () {
-  addElement(removeElement(0), 1, true, false);
+  // addElement(removeElement(0), 1, true, false);
+  moveElements(0, 1, 1, true, false);
   return stacks[0].length;
 }
 
 // Add a card to both Stacks and the DOM
 function addElement(num, stack, flip, pos){
   if (num == null || isNaN(num)) return null;
+
   flip = flip | false;
   pos = pos | false;
   if (flip){
@@ -110,14 +116,22 @@ function removeElement(stack){
 }
 
 // Moves a certain amount of cards from one stack to another
-function moveElements(from, to, amount){
+function moveElements(from, to, amount, flip, pos){
+  flip = flip | false;
+  pos = pos | false;
   var cards = [];
   for (var i = 0; i < amount; i++) {
     cards.push(removeElement(from));
   }
   for (var j = cards.length - 1; j >= 0; j--) {
-    addElement(cards[j], to);
+    addElement(cards[j], to, flip, pos);
   }
+
+  // Scoring
+  if (from > 1 && from < 6) score -= 15;
+  else if (to > 1 && to < 6) score += 10;
+  else if (from === 1 && to > 5) score += 5;
+  $("#score").text(score);
 }
 
 // Handle card selection and game logic
@@ -137,6 +151,9 @@ function cardInteraction(card){
       createGameState();
       // change card in stack
       stacks[cardPos[0]][cardPos[1]] = numFromCard(card) - 52;
+      // Scoring
+      score += 5;
+      $("#score").text(score);
       // flip card in DOM
       $(card).toggleClass("card--back");
     }
@@ -187,11 +204,7 @@ function cardInteraction(card){
       lastCard = null;
     },500);
   }
-
-  // Check for win-condition
-  if (stacks[2].length + stacks[3].length + stacks[4].length + stacks[5].length === 52){
-    alert("CONGRATULATIONS, YOU WON!");
-  }
+  checkConditions();
 }
 
 // Un-highlight a card and forget it
@@ -222,7 +235,8 @@ function handleCycle(){
     createGameState();
     temp = stacks[1].length;
     for (var i = 0; i < temp; i++) {
-      addElement(removeElement(1), 0, true, false);
+      // addElement(removeElement(1), 0, true, false);
+      moveElements(1, 0, 1, true, false);
     }
     cycleTimes -= 1;
     if (cycleTimes == 0)
@@ -252,9 +266,22 @@ function handleUndo () {
     stacks = gameStates.pop();
     clearDom();
     rebaseDom();
+    score -= 10 ;
+    $("#score").text(score);
   }
   if (gameStates.length == 0)
     $(".controls__icon--undo").addClass("invalid");
+}
+
+function checkConditions () {
+  // Check for win-condition
+  if (stacks[2].length + stacks[3].length + stacks[4].length + stacks[5].length === 52){
+    // Stop the timer
+    clearInterval(timerInterval);
+    // Scoring
+    score += Math.floor(700000/gameTime);
+  }
+  // Check for loss-condition
 }
 
 // Clones an array value by value with a depth of 2
@@ -282,11 +309,13 @@ function clone (arr) {
 // Set up a fresh new board
 function resetBoard(){
 
+  accumulativeScore = document.getElementById("cumulative").checked;
   timerReset();
   if (cycleTimes == 0)
     $("#stack0").toggleClass("deck__stock--cycle");
   cycleTimes = 2;
-  $("#score").text(0);
+  if (accumulativeScore) score -= 52; else score = 0;
+  $("#score").text(score);
   $(".controls__icon--undo").removeClass("invalid");
 
   // RESET ALL THE STACKS //
@@ -338,6 +367,24 @@ function rebaseDom () {
   }
 }
 
+function timerReset() {
+  if (!timerStarted) {
+    timerStarted = true;
+    spanValue = $('.statistics__value').last();
+    timerInterval = setInterval(function() {
+      gameTime += 1;
+      // Scoring
+      if (gameTime % 10 === 0)
+        score -= 2;
+        $("#score").text(score);
+      spanValue.text((gameTime/3600>=1 ? (Math.floor(gameTime/3600) + ":") : 
+        "") + Math.floor(gameTime/60)%60 + ":" + (gameTime%60).toString().padStart(2, "0"));
+    }, 1000);
+  } else {
+    gameTime = -1;
+  }
+}
+
 resetBoard();
 
 
@@ -356,6 +403,11 @@ $(".card-placeholder").click(function(){
 
 $("#cycleButton").click(function(){
   handleCycle();
+});
+
+$("#timerBox").click(function(){
+  console.log("AWAEGSEGERSH");
+  $("#timerWrapper").toggleClass("statistics__item--hidden");
 });
 
 // Reset board on new game button click
