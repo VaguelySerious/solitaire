@@ -29,8 +29,9 @@
   }
 
   &__icon {
+    align-items: center;
     color: color(white);
-    display: block;
+    display: flex;
     font-family: $card-font;
     height: 12px;
     position: relative;
@@ -61,11 +62,11 @@
 
     &--undo {
       &::before {
-        content: "↩";
-        display: block;
+        content: "⟲";
         font-size: 0.9em;
         line-height: 1;
-        margin-top: 2.5px;
+        transform: rotate(70deg);
+
 
         @include break(tablet) {
           font-size: $font-large;
@@ -78,6 +79,8 @@
 
       &.invalid::before {
         content: "✕";
+        margin-top: 0;
+        transform: none;
       }
     }
 

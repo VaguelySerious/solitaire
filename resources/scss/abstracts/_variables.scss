@@ -1,4 +1,4 @@
-///
+ ///
 /// Solitaire variables
 ///
 
@@ -103,7 +103,7 @@ $board-default-size: columns(22);
 $board-sizes: (
   mobile-l:   columns(18),
   tablet:     columns(22),
-  laptop:     columns(20),
-  laptop-l:   columns(18),
-  hd:         columns(16)
+  laptop:     columns(18),
+  laptop-l:   columns(14),
+  hd:         columns(12)
 );

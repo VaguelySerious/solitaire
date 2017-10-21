@@ -665,8 +665,11 @@ html {
         height: 48px;
         width: 48px; } }
   .controls__icon {
+    -ms-flex-align: center;
+        align-items: center;
     color: #FDFDFD;
-    display: block;
+    display: -ms-flexbox;
+    display: flex;
     font-family: "Helvetica Neue", "Arial", sans-serif;
     height: 12px;
     position: relative;
@@ -687,11 +690,10 @@ html {
     .controls__icon--cross::before {
       transform: translateY(-50%) rotate(-45deg); }
     .controls__icon--undo::before {
-      content: "↩";
-      display: block;
+      content: "⟲";
       font-size: 0.9em;
       line-height: 1;
-      margin-top: 2.5px; }
+      transform: rotate(70deg); }
       @media only screen and (min-width: 768px) {
         .controls__icon--undo::before {
           font-size: 1.25rem; } }
@@ -700,8 +702,8 @@ html {
           font-size: 2.3rem; } }
     .controls__icon--undo.invalid::before {
       content: "✕";
-      margin-left: 2px;
-      margin-top: 0; }
+      margin-top: 0;
+      transform: none; }
     .controls__icon--plus::after, .controls__icon--plus::before {
       background: currentColor;
       border-radius: 1px;
