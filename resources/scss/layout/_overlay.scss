@@ -56,12 +56,18 @@
         display: block;
       }
     }
+
+    &--hidden {
+      display: none;
+    }
   }
+
 
   &__label {
     font-weight: 300;
     text-transform: lowercase;
   }
+
 
   &__value {
     font-weight: 700;

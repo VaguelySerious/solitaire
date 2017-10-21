@@ -806,8 +806,6 @@ html {
       padding-top: 20px; }
       .options__item--headline::before, .options__item--setting::before {
         background: transparent; }
-    .options__item--hidden {
-      display: none; }
   .options__thumb {
     box-shadow: 2.5px 2px 5px rgba(0, 0, 0, 0.05), -2.5px 3px 5px rgba(0, 0, 0, 0.1);
     color: #FDFDFD;
@@ -921,6 +919,8 @@ html {
       @media only screen and (min-width: 414px) {
         .statistics__item--time {
           display: block; } }
+    .statistics__item--hidden {
+      display: none; }
   .statistics__label {
     font-weight: 300;
     text-transform: lowercase; }
