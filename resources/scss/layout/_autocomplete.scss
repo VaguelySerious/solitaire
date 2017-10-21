@@ -1,0 +1,30 @@
+.autocomplete {
+  $offset: 2rem;
+  $offset-x: $offset;
+
+  background: darken(color(fiord), 7.5%);
+  appearance: none;
+  border-radius: 3px;
+  border: none;
+  bottom: $offset;
+  color: color(white);
+  cursor: pointer;
+  display: none;
+  font-size: $font-small;
+  font-weight: 300;
+  padding: 10px 12px;
+  position: absolute;
+  right: $offset-x;
+  text-transform: lowercase;
+  transition: background 0.4s ease;
+
+
+  &:hover {
+    background: darken(color(fiord), 12.5%);
+  }
+
+
+  &--visible {
+    display: block;
+  }
+}

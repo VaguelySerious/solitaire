@@ -934,6 +934,29 @@ html {
     .statistics {
       font-size: 16px; } }
 
+.autocomplete {
+  background: #2b384d;
+  -webkit-appearance: none;
+     -moz-appearance: none;
+          appearance: none;
+  border-radius: 3px;
+  border: none;
+  bottom: 2rem;
+  color: #FDFDFD;
+  cursor: pointer;
+  display: none;
+  font-size: 0.875rem;
+  font-weight: 300;
+  padding: 10px 12px;
+  position: absolute;
+  right: 2rem;
+  text-transform: lowercase;
+  transition: background 0.4s ease; }
+  .autocomplete:hover {
+    background: #222c3c; }
+  .autocomplete--visible {
+    display: block; }
+
 .menu__link {
   -ms-flex-align: center;
       align-items: center;
