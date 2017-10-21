@@ -232,6 +232,9 @@ function handleCycle(){
 
 // Saves a certain amount of game states
 function createGameState() {
+  if (progressiveUndo){
+    $(".controls__icon--undo").removeClass("invalid");
+  }
   gameStates.push(clone(stacks));
   if (gameStates.length > maxGameStates){
     gameStates.shift();
@@ -245,13 +248,13 @@ function handleUndo () {
     maxGameStates -= 1;
   }
   if (gameStates.length > 0){
+    $(".controls__icon--undo").removeClass("invalid");
     stacks = gameStates.pop();
     clearDom();
     rebaseDom();
   }
-  else{
-    $(".controls__icon--undo").toggleClass("invalid");
-  }
+  if (gameStates.length == 0)
+    $(".controls__icon--undo").addClass("invalid");
 }
 
 // Clones an array value by value with a depth of 2
@@ -283,7 +286,8 @@ function resetBoard(){
   if (cycleTimes == 0)
     $("#stack0").toggleClass("deck__stock--cycle");
   cycleTimes = 2;
-  $("#score").text(score);
+  $("#score").text(0);
+  $(".controls__icon--undo").removeClass("invalid");
 
   // RESET ALL THE STACKS //
   // Reset stacks
