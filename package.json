@@ -3,18 +3,18 @@
   "name": "solitairecollection",
   "version": "0.1.2",
   "description": "open solitaire collection project",
-
   "devDependencies": {
     "grunt": "^1.0.1",
     "grunt-concurrent": "^2.3.1",
     "grunt-contrib-clean": "^1.1.0",
+    "grunt-contrib-copy": "^1.0.0",
     "grunt-contrib-jshint": "^1.1.0",
     "grunt-contrib-uglify": "^3.1.0",
     "grunt-contrib-watch": "^1.0.0",
     "grunt-sass": "^2.0.0",
     "load-grunt-config": "^0.19.2"
   },
-  "dependencies":{
+  "dependencies": {
     "bootstrap-sass": "^3.0.0",
     "compass-importer": "*",
     "grunt": "~0.4.5",

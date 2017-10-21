@@ -16,7 +16,7 @@ module.exports = function(grunt, data) {
     dev: {
       options: {
         importer: compass,
-        sourceMap: false,
+        sourceMap: true,
         includePaths: include
       },
       files: files

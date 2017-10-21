@@ -12,7 +12,7 @@ module.exports = {
     ],
     devSecond: [
         'sass:dev',
-        'uglify'
+        'copy'
     ],
 
     // Production tasks

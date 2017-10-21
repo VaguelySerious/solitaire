@@ -10,7 +10,6 @@
 // TODO: Fix too fast clicking leading to weird card movement (fixed by drag and drop)
 // TODO: Make cards turn red after a wrong move
 // TODO: Turn undo button red or "x" after undos are used up
-// TODO: Double click moves card to available foundation
 // TODO: Check if card flash could cause weird behaviour
 
 
@@ -155,14 +154,13 @@ function cardInteraction(card){
 
     $(card).toggleClass("card--clicked");
 
-    if (lastCard != card && cardPos[0] >= 2){
+    if (lastCard != card ){
         // IF the card is one above the other and a different color OR IF it's one above the other and on the foundation
-        if ((num2%13 + 1 === num1%13 && (num1 >= 26 && num2 < 26 || num1 < 26 && num2 >= 26)) || 
-            (num2 - 1 === num1 && cardPos[0] > 1 && cardPos[0] < 6)){
+        if (((num2%13 + 1 === num1%13 && (num1 >= 26 && num2 < 26 || num1 < 26 && num2 >= 26)) || 
+            (num2 - 1 === num1 && cardPos[0] > 1 && cardPos[0] < 6)) && cardPos[0] >= 2){
           createGameState();
           moveElements(lastCardPos[0], cardPos[0], stacks[lastCardPos[0]].length - lastCardPos[1]);
         } else {
-          console.log("Clicked two incompatible cards");
           $(lastCard).toggleClass("card--flash");
           $(card).toggleClass("card--flash");
           setTimeout(function(){
@@ -171,7 +169,15 @@ function cardInteraction(card){
           },500);
         }
     } else {
-      console.log("Clicked same card twice");      
+      // CHECK IF AVAILABLE SLOT IN FOUNDATION
+      for (var y = 2; y < 6; y++){
+        if (stacks[y][stacks[y].length-1] === numFromCard(lastCard) - 1 ||
+            (stacks[y].length === 0 && numFromCard(lastCard) % 13 === 0)){
+          createGameState();
+          moveElements(lastCardPos[0], y, 1);
+          break;
+        }
+      }
     }
 
     // Un-highlight both cards
@@ -227,10 +233,8 @@ function handleCycle(){
 // Saves a certain amount of game states
 function createGameState() {
   gameStates.push(clone(stacks));
-  console.log("Created gamestate.");
   if (gameStates.length > maxGameStates){
     gameStates.shift();
-    console.log("shifted gamestate");
   }
 }
 
@@ -238,18 +242,15 @@ function createGameState() {
 function handleUndo () {
   console.log("Clicked undo.");
   if (!progressiveUndo){
-    console.log("decreased max Game states");
     maxGameStates -= 1;
   }
   if (gameStates.length > 0){
     stacks = gameStates.pop();
     clearDom();
     rebaseDom();
-    console.log("Reverted gamestate. " + gameStates.length + " gameStates and " + maxGameStates + " max game states.");
   }
   else{
-    alert("No gamestates remaining.");
-    // Turn button red?
+    $(".controls__link--undo").toggleClass("invalid");
   }
 }
 
