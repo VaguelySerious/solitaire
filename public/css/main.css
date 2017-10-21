@@ -56,6 +56,7 @@ elements-of-type(html5-block) {
   background: #394a65;
   background-image: -owg-linear-gradient(0, #394a65, #395165);
   background-image: linear-gradient(0, #394a65, #395165);
+  background-attachment: fixed;
   box-sizing: border-box;
   display: -ms-flexbox;
   display: flex;
@@ -72,6 +73,8 @@ elements-of-type(html5-block) {
     display: flex;
     -ms-flex-direction: row;
         flex-direction: row;
+    -ms-flex-negative: 0;
+        flex-shrink: 0;
     -ms-flex-pack: justify;
         justify-content: space-between;
     width: 100%; }
@@ -436,14 +439,10 @@ elements-of-type(html5-block) {
     display: flex;
     -ms-flex-direction: column;
         flex-direction: column; }
-  .tableau .card + .card {
-    margin-top: -100%; }
-    .ie .tableau .card + .card {
-      margin-top: -9.75%; }
-  .tableau .card--back + .card {
-    margin-top: -115%; }
-    .ie .tableau .card--back + .card {
-      margin-top: -12.5%; }
+  .tableau .card {
+    margin-bottom: -100%; }
+    .tableau .card--back {
+      margin-bottom: -115%; }
   @media only screen and (min-width: 768px) {
     .tableau {
       margin-top: 7.5%; } }
