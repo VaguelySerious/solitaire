@@ -250,7 +250,7 @@ function handleUndo () {
     rebaseDom();
   }
   else{
-    $(".controls__link--undo").toggleClass("invalid");
+    $(".controls__icon--undo").toggleClass("invalid");
   }
 }
 
