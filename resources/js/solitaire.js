@@ -311,8 +311,8 @@ function clone (arr) {
 // Deselect everything on mouse up
 document.onmouseup = (function (e) {
   $(dragObject).toggleClass("card--dragged");
-  dragObject.style.top = "auto";
-  dragObject.style.left = "auto";
+  // dragObject.style.top = "auto";
+  // dragObject.style.left = "auto";
   dragObject = null;
 });
 
@@ -326,6 +326,7 @@ document.onmousemove = (function (e) {
   if(dragObject){
     dragObject.style.top = (mousePos.y - cardOffset.y) + "px"; 
     dragObject.style.left = (mousePos.x - cardOffset.x) + "px"; 
+    console.log(dragObject.style.left);
     return false;
   }
 });
@@ -348,8 +349,8 @@ $("body").on("mousedown", ".card", function(){
   $(dragObject).toggleClass("card--dragged");
   var docPos = getPosition(dragObject);
   cardOffset = {
-    x: mousePos.x - docPos.x - $(this).offset.x,
-    y: mousePos.y - docPos.y - $(this).offset.y
+    x: mousePos.x - docPos.x,
+    y: mousePos.y - docPos.y
   };
 });
 
