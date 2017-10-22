@@ -27,9 +27,8 @@
   }
 
 
-  .board .card-placeholder &--dragged,
-  .board .tableau .card-placeholder &--dragged {
-    position: absolute;
+  &--dragged {
+    position: absolute !important;
     z-index: 999;
   }
 

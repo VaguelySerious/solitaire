@@ -114,9 +114,8 @@ elements-of-type(html5-block) {
     color: #C32A46; }
   .card--clubs, .card--spades {
     color: #1F1F1F; }
-  .board .card-placeholder .card--dragged,
-  .board .tableau .card-placeholder .card--dragged {
-    position: absolute;
+  .card--dragged {
+    position: absolute !important;
     z-index: 999; }
   .card__back, .card__front {
     -webkit-backface-visibility: hidden;
