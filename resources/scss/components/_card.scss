@@ -27,6 +27,12 @@
   }
 
 
+  &--dragged {
+    position: absolute;
+    z-index: 999;
+  }
+
+
   // general card styles
   &__back,
   &__front {

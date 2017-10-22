@@ -102,7 +102,7 @@ elements-of-type(html5-block) {
   -ms-flex-negative: 0;
       flex-shrink: 0;
   position: relative;
-  transition: margin-top 0.3s ease;
+  transition: margin-bottom 0.3s ease;
   transform: translateZ(-1px); }
   .card__back {
     background: #FE8139;
@@ -114,6 +114,9 @@ elements-of-type(html5-block) {
     color: #C32A46; }
   .card--clubs, .card--spades {
     color: #1F1F1F; }
+  .card--dragged {
+    position: absolute;
+    z-index: 999; }
   .card__back, .card__front {
     -webkit-backface-visibility: hidden;
     backface-visibility: hidden;
@@ -443,6 +446,8 @@ elements-of-type(html5-block) {
     margin-bottom: -100%; }
     .tableau .card--back {
       margin-bottom: -115%; }
+    .tableau .card:last-child {
+      margin-bottom: 0; }
   @media only screen and (min-width: 768px) {
     .tableau {
       margin-top: 7.5%; } }

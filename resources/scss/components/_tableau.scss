@@ -25,6 +25,10 @@
     &--back {
       margin-bottom: -115%;
     }
+
+    &:last-child {
+      margin-bottom: 0;
+    }
   }
 
 
