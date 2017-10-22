@@ -30,8 +30,11 @@ var gameTime = 0;
 var timerStarted = false;
 var timerInterval = null;
 var colors = ["hearts", "diamonds", "clubs", "spades"];
+
 var mousePos = null;
-var cardOffset = null;
+var onDownMousePos = null;
+var onDownCardPos = null;
+var onDownInternalPos = null;
 
 
 
@@ -181,6 +184,8 @@ function cardInteraction(card){
         } else {
           $(lastCard).toggleClass("card--flash");
           $(card).toggleClass("card--flash");
+          var audio = document.getElementById("audio");
+          audio.play();
           setTimeout(function(){
             $(card).toggleClass("card--flash");
             $(lastCard).toggleClass("card--flash");
@@ -310,10 +315,22 @@ function clone (arr) {
 
 // Deselect everything on mouse up
 document.onmouseup = (function (e) {
-  $(dragObject).toggleClass("card--dragged");
-  // dragObject.style.top = "auto";
-  // dragObject.style.left = "auto";
+  if (!dragObject) return;
+  // $(dragObject).toggleClass("card--dragged");
+  dragObject.style.top = "auto";
+  dragObject.style.left = "auto";
   dragObject = null;
+});
+
+// Select a card on mouse down
+$("body").on("mousedown", ".card", function(){
+  dragObject = this;
+  // $(dragObject).toggleClass("card--dragged");
+
+  onDownMousePos = mousePos;
+  onDownCardPos = getPosition(dragObject);
+  onDownInternalPos = {x: 0, y:0};
+  // GET Y DIFFERENCE TO STACK12 FROM CARD
 });
 
 // Track mouse movement
@@ -324,9 +341,9 @@ document.onmousemove = (function (e) {
     y: e.pageY
   };
   if(dragObject){
-    dragObject.style.top = (mousePos.y - cardOffset.y) + "px"; 
-    dragObject.style.left = (mousePos.x - cardOffset.x) + "px"; 
-    console.log(dragObject.style.left);
+    dragObject.style.top = (mousePos.y - onDownMousePos.y) + "px"; 
+    dragObject.style.left = (mousePos.x - onDownMousePos.x) + "px"; 
+    // console.log(dragObject.style.left);
     return false;
   }
 });
@@ -339,20 +356,12 @@ function getPosition(e){
     top  += e.offsetTop; 
     e     = e.offsetParent; 
   }   
-  left += e.offsetLeft; 
-  top  += e.offsetTop; 
-  return {x:left, y:top}; 
+  return {
+    x:left + e.offsetLeft,
+    y:top + e.offsetTop
+  }; 
 } 
 
-$("body").on("mousedown", ".card", function(){
-  dragObject = this;
-  $(dragObject).toggleClass("card--dragged");
-  var docPos = getPosition(dragObject);
-  cardOffset = {
-    x: mousePos.x - docPos.x,
-    y: mousePos.y - docPos.y
-  };
-});
 
 
 ////////////////
