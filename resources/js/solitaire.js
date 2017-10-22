@@ -1,11 +1,10 @@
-// TODO: Drag and drop <= Currently under construction
 // TODO: Hints
 // TODO: Different games
 // TODO: Loss conditions
-// TODO: Sounds
 // TODO: Tutorial and fancy win screen
 // TODO: Create cookies for save states (document.cookie = "_x_=_y_; expires=Thu, 18 Dec 2018 12:00:00 UTC";)
 
+// TODO: Add more sounds
 // TODO: Hotkeys for undo and new game and auto-complete
 // TODO: Fix too fast clicking leading to weird card movement (fixed by drag and drop)
 // TODO: Check if card flash could cause weird behaviour
@@ -31,10 +30,9 @@ var timerStarted = false;
 var timerInterval = null;
 var colors = ["hearts", "diamonds", "clubs", "spades"];
 
+var cardUnderCursor = null;
 var mousePos = null;
 var onDownMousePos = null;
-var onDownCardPos = null;
-var onDownInternalPos = null;
 
 
 
@@ -138,80 +136,80 @@ function moveElements(from, to, amount, flip, pos){
   $("#score").text(score);
 }
 
-// Handle card selection and game logic
-function cardInteraction(card){
+// // Handle card selection and game logic
+// function cardInteraction(card){
 
-  var cardPos = findCardPos(card);  
-  // Click on deck to cycle
-  if (numFromCard(card) == stacks[0][stacks[0].length-1]){
-    createGameState();
-    deckCycle();
-    if (lastCard != null) forgetLastCard();
-  }
-  // Uncover a face down card
-  else if (numFromCard(card) >= 52){
-    if (lastCard != null) forgetLastCard();
-    if (cardPos[1] == stacks[cardPos[0]].length - 1){
-      createGameState();
-      // change card in stack
-      stacks[cardPos[0]][cardPos[1]] = numFromCard(card) - 52;
-      // Scoring
-      score += 5;
-      $("#score").text(score);
-      // flip card in DOM
-      $(card).toggleClass("card--back");
-    }
-  }
-  // Highlight a card
-  else if (lastCard == null){
-    $(card).toggleClass("card--clicked");
-    lastCard = card;
-  }
-  // Interact with the current and last highlighted card
-  else {
-    var lastCardPos = findCardPos(lastCard);
-    var num1 = numFromCard(card);
-    var num2 = numFromCard(lastCard);
+//   var cardPos = findCardPos(card);  
+//   // Click on deck to cycle
+//   if (numFromCard(card) == stacks[0][stacks[0].length-1]){
+//     createGameState();
+//     deckCycle();
+//     if (lastCard != null) forgetLastCard();
+//   }
+//   // Uncover a face down card
+//   else if (numFromCard(card) >= 52){
+//     if (lastCard != null) forgetLastCard();
+//     if (cardPos[1] == stacks[cardPos[0]].length - 1){
+//       createGameState();
+//       // change card in stack
+//       stacks[cardPos[0]][cardPos[1]] = numFromCard(card) - 52;
+//       // Scoring
+//       score += 5;
+//       $("#score").text(score);
+//       // flip card in DOM
+//       $(card).toggleClass("card--back");
+//     }
+//   }
+//   // Highlight a card
+//   else if (lastCard == null){
+//     $(card).toggleClass("card--clicked");
+//     lastCard = card;
+//   }
+//   // Interact with the current and last highlighted card
+//   else {
+//     var lastCardPos = findCardPos(lastCard);
+//     var num1 = numFromCard(card);
+//     var num2 = numFromCard(lastCard);
 
-    $(card).toggleClass("card--clicked");
+//     $(card).toggleClass("card--clicked");
 
-    if (lastCard != card ){
-        // IF the card is one above the other and a different color OR IF it's one above the other and on the foundation
-        if (((num2%13 + 1 === num1%13 && (num1 >= 26 && num2 < 26 || num1 < 26 && num2 >= 26)) || 
-            (num2 - 1 === num1 && cardPos[0] > 1 && cardPos[0] < 6)) && cardPos[0] >= 2){
-          createGameState();
-          moveElements(lastCardPos[0], cardPos[0], stacks[lastCardPos[0]].length - lastCardPos[1]);
-        } else {
-          $(lastCard).toggleClass("card--flash");
-          $(card).toggleClass("card--flash");
-          var audio = document.getElementById("audio");
-          audio.play();
-          setTimeout(function(){
-            $(card).toggleClass("card--flash");
-            $(lastCard).toggleClass("card--flash");
-          },500);
-        }
-    } else {
-      // CHECK IF AVAILABLE SLOT IN FOUNDATION
-      for (var y = 2; y < 6; y++){
-        if (stacks[y][stacks[y].length-1] === numFromCard(lastCard) - 1 ||
-            (stacks[y].length === 0 && numFromCard(lastCard) % 13 === 0)){
-          createGameState();
-          moveElements(lastCardPos[0], y, 1);
-          break;
-        }
-      }
-    }
+//     if (lastCard != card ){
+//         // IF the card is one above the other and a different color OR IF it's one above the other and on the foundation
+//         if (((num2%13 + 1 === num1%13 && (num1 >= 26 && num2 < 26 || num1 < 26 && num2 >= 26)) || 
+//             (num2 - 1 === num1 && cardPos[0] > 1 && cardPos[0] < 6)) && cardPos[0] >= 2){
+//           createGameState();
+//           moveElements(lastCardPos[0], cardPos[0], stacks[lastCardPos[0]].length - lastCardPos[1]);
+//         } else {
+//           $(lastCard).toggleClass("card--flash");
+//           $(card).toggleClass("card--flash");
+//           var audio = document.getElementById("audio");
+//           audio.play();
+//           setTimeout(function(){
+//             $(card).toggleClass("card--flash");
+//             $(lastCard).toggleClass("card--flash");
+//           },500);
+//         }
+//     } else {
+//       // CHECK IF AVAILABLE SLOT IN FOUNDATION
+//       for (var y = 2; y < 6; y++){
+//         if (stacks[y][stacks[y].length-1] === numFromCard(lastCard) - 1 ||
+//             (stacks[y].length === 0 && numFromCard(lastCard) % 13 === 0)){
+//           createGameState();
+//           moveElements(lastCardPos[0], y, 1);
+//           break;
+//         }
+//       }
+//     }
 
-    // Un-highlight both cards
-    setTimeout(function(){
-      $(card).toggleClass("card--clicked");
-      $(lastCard).toggleClass("card--clicked");
-      lastCard = null;
-    },500);
-  }
-  checkConditions();
-}
+//     // Un-highlight both cards
+//     setTimeout(function(){
+//       $(card).toggleClass("card--clicked");
+//       $(lastCard).toggleClass("card--clicked");
+//       lastCard = null;
+//     },500);
+//   }
+//   checkConditions();
+// }
 
 // Un-highlight a card and forget it
 function forgetLastCard () {
@@ -315,22 +313,24 @@ function clone (arr) {
 
 // Deselect everything on mouse up
 document.onmouseup = (function (e) {
-  if (!dragObject) return;
+  if (dragObject){
+    dragObject.style.top = "auto";
+    dragObject.style.left = "auto";
+    dragObject = null;
+    cardInteraction(cardUnderCursor);   
+  }
   // $(dragObject).toggleClass("card--dragged");
-  dragObject.style.top = "auto";
-  dragObject.style.left = "auto";
-  dragObject = null;
 });
 
 // Select a card on mouse down
 $("body").on("mousedown", ".card", function(){
-  dragObject = this;
+  if (findCardPos(this)[0] != 0) {
+    onDownMousePos = mousePos;
+    lastCard = this;
+    dragObject = this;
+  }
   // $(dragObject).toggleClass("card--dragged");
-
-  onDownMousePos = mousePos;
-  onDownCardPos = getPosition(dragObject);
-  onDownInternalPos = {x: 0, y:0};
-  // GET Y DIFFERENCE TO STACK12 FROM CARD
+  // CREATE A NEW ELEMENT THAT'S DRAGGED
 });
 
 // Track mouse movement
@@ -342,25 +342,63 @@ document.onmousemove = (function (e) {
   };
   if(dragObject){
     dragObject.style.top = (mousePos.y - onDownMousePos.y) + "px"; 
-    dragObject.style.left = (mousePos.x - onDownMousePos.x) + "px"; 
-    // console.log(dragObject.style.left);
-    return false;
+    dragObject.style.left = (mousePos.x - onDownMousePos.x) + "px";
   }
 });
 
-function getPosition(e){ 
-  var left = 0; 
-  var top  = 0; 
-  while (e.offsetParent){ 
-    left += e.offsetLeft; 
-    top  += e.offsetTop; 
-    e     = e.offsetParent; 
-  }   
-  return {
-    x:left + e.offsetLeft,
-    y:top + e.offsetTop
-  }; 
-} 
+// Handle card selection and game logic
+function cardInteraction(card){
+
+  console.log("-------------");
+  console.log(lastCard);
+  console.log(cardUnderCursor);
+  console.log("-------------");
+  if (lastCard == null) return;
+  var cardPos = findCardPos(card);  
+  // Click on deck to cycle
+  if (numFromCard(card) == stacks[0][stacks[0].length-1]){
+    createGameState();
+    deckCycle();
+  }
+  // Uncover a face down card
+  else if (numFromCard(card) >= 52){
+    if (lastCard != null) forgetLastCard();
+    if (cardPos[1] == stacks[cardPos[0]].length - 1){
+      createGameState();
+      stacks[cardPos[0]][cardPos[1]] = numFromCard(card) - 52;
+      score += 5;
+      $("#score").text(score);
+      $(card).toggleClass("card--back");
+    }
+  }
+  else {
+    var lastCardPos = findCardPos(lastCard);
+    var num1 = numFromCard(card);
+    var num2 = numFromCard(lastCard);
+
+    console.log("Dragged " + num2 + " onto " + num1);
+
+    if (lastCard != card ){
+      // IF the card is one above the other and a different color OR IF it's one above the other and on the foundation
+      if (((num2%13 + 1 === num1%13 && (num1 >= 26 && num2 < 26 || num1 < 26 && num2 >= 26)) || 
+          (num2 - 1 === num1 && cardPos[0] > 1 && cardPos[0] < 6)) && cardPos[0] >= 2){
+        createGameState();
+        moveElements(lastCardPos[0], cardPos[0], stacks[lastCardPos[0]].length - lastCardPos[1]);
+      } else {
+        $(lastCard).toggleClass("card--flash");
+        $(card).toggleClass("card--flash");
+        var audio = document.getElementById("audio");
+        audio.play();
+        setTimeout(function(){
+          $(card).toggleClass("card--flash");
+          $(lastCard).toggleClass("card--flash");
+        },400);
+      }
+    }
+  }
+  lastCard = null;
+  checkConditions();
+}
 
 
 
@@ -456,7 +494,11 @@ resetBoard();
 /////////////////////////
 
 $("body").on("click", ".card", function(){
-  cardInteraction(this);
+  // cardInteraction(this);
+});
+
+$("body").on("mouseover", ".card", function(){
+  cardUnderCursor = this;
 });
 
 $(".card-placeholder").click(function(){
