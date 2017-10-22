@@ -25,7 +25,7 @@
     "grunt-nightwatch": "^0.2.4",
     "grunt-nodemon": "*",
     "grunt-sass": "*",
-    "load-grunt-config": "*",
-    "grunt-sass-globbing": "*"
+    "grunt-sass-globbing": "*",
+    "load-grunt-config": "*"
   }
 }
