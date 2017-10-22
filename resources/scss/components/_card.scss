@@ -13,7 +13,7 @@
   display: flex;
   flex-shrink: 0;
   position: relative;
-  transition: margin-top 0.3s ease;
+  transition: margin-bottom 0.3s ease;
   transform: translateZ(-1px);
 
   &--hearts,
@@ -24,6 +24,12 @@
   &--clubs,
   &--spades {
     color: color(black);
+  }
+
+
+  &--dragged {
+    position: absolute;
+    z-index: 999;
   }
 
 
