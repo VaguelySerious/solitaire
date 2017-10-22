@@ -8,7 +8,11 @@
 // TODO: Hotkeys for undo and new game and auto-complete
 // TODO: Fix too fast clicking leading to weird card movement (fixed by drag and drop)
 // TODO: Check if card flash could cause weird behaviour
-
+// TODO: Fix card dropping onlyunder cursor
+// TODO: Fix all cards meep merping when dragged between timer and redo
+// TODO: Fix double click and shuffle
+// TODO: Fix dragging card to foundation
+// TODO: Fix dragging all cards below the one selected
 
 
 //////////////////////
@@ -261,7 +265,6 @@ function createGameState() {
 
   // Goes back to the previous game state
 function handleUndo () {
-  console.log("Clicked undo.");
   if (!progressiveUndo){
     maxGameStates -= 1;
   }
@@ -317,9 +320,10 @@ document.onmouseup = (function (e) {
     dragObject.style.top = "auto";
     dragObject.style.left = "auto";
     dragObject = null;
-    cardInteraction(cardUnderCursor);   
+    cardUnderCursor = document.elementsFromPoint(mousePos.x, mousePos.y)[1];
+    cardInteraction(cardUnderCursor);
+    // $(lastCard).toggleClass("card--dragged");
   }
-  // $(dragObject).toggleClass("card--dragged");
 });
 
 // Select a card on mouse down
@@ -327,10 +331,10 @@ $("body").on("mousedown", ".card", function(){
   if (findCardPos(this)[0] != 0) {
     onDownMousePos = mousePos;
     lastCard = this;
+    // addElement(12, numFromCard(this));
     dragObject = this;
+    // $(lastCard).toggleClass("card--dragged");
   }
-  // $(dragObject).toggleClass("card--dragged");
-  // CREATE A NEW ELEMENT THAT'S DRAGGED
 });
 
 // Track mouse movement
@@ -497,9 +501,9 @@ $("body").on("click", ".card", function(){
   // cardInteraction(this);
 });
 
-$("body").on("mouseover", ".card", function(){
-  cardUnderCursor = this;
-});
+// $("body").on("mouseover", ".card", function(){
+//   cardUnderCursor = this;
+// });
 
 $(".card-placeholder").click(function(){
   handleEmptyFieldInteraction(this);
