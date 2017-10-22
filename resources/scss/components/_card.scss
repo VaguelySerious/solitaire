@@ -28,8 +28,7 @@
 
 
   &--dragged {
-    position: absolute !important;
-    z-index: 999;
+    display: none;
   }
 
 
