@@ -1,4 +1,4 @@
-// TODO: Drag and drop
+// TODO: Drag and drop <= Currently under construction
 // TODO: Hints
 // TODO: Different games
 // TODO: Loss conditions
@@ -23,12 +23,15 @@ var progressiveUndo = true; // If true you can "always" undo the last x steps
 var accumulativeScore = false;
 var cardAmount = 52;
 var lastCard = null;
+var dragObject = null;
 var cycleTimes = 2;
 var score = 0;
 var gameTime = 0;
 var timerStarted = false;
 var timerInterval = null;
 var colors = ["hearts", "diamonds", "clubs", "spades"];
+var mousePos = null;
+var cardOffset = null;
 
 
 
@@ -301,10 +304,59 @@ function clone (arr) {
 
 
 
+///////////////////
+// DRAG AND DROP //
+///////////////////
+
+// Deselect everything on mouse up
+document.onmouseup = (function (e) {
+  $(dragObject).toggleClass("card--dragged");
+  dragObject.style.top = "auto";
+  dragObject.style.left = "auto";
+  dragObject = null;
+});
+
+// Track mouse movement
+document.onmousemove = (function (e) {
+  e = e || window.event;
+  mousePos = {
+    x: e.pageX,
+    y: e.pageY
+  };
+  if(dragObject){
+    dragObject.style.top = (mousePos.y - cardOffset.y) + "px"; 
+    dragObject.style.left = (mousePos.x - cardOffset.x) + "px"; 
+    return false;
+  }
+});
+
+function getPosition(e){ 
+  var left = 0; 
+  var top  = 0; 
+  while (e.offsetParent){ 
+    left += e.offsetLeft; 
+    top  += e.offsetTop; 
+    e     = e.offsetParent; 
+  }   
+  left += e.offsetLeft; 
+  top  += e.offsetTop; 
+  return {x:left, y:top}; 
+} 
+
+$("body").on("mousedown", ".card", function(){
+  dragObject = this;
+  $(dragObject).toggleClass("card--dragged");
+  var docPos = getPosition(dragObject);
+  cardOffset = {
+    x: mousePos.x - docPos.x - $(this).offset.x,
+    y: mousePos.y - docPos.y - $(this).offset.y
+  };
+});
+
+
 ////////////////
 // GAME SETUP //
 ////////////////
-
 
 // Set up a fresh new board
 function resetBoard(){
