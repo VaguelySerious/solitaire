@@ -65,6 +65,7 @@ elements-of-type(html5-block) {
   height: 100%;
   -ms-flex-pack: start;
       justify-content: flex-start;
+  overflow: hidden;
   padding-bottom: 36px;
   padding-top: 36px;
   width: 100%; }
@@ -102,7 +103,6 @@ elements-of-type(html5-block) {
   -ms-flex-negative: 0;
       flex-shrink: 0;
   position: relative;
-  transition: margin-bottom 0.3s ease;
   transform: translateZ(-1px); }
   .card__back {
     background: #FE8139;
