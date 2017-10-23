@@ -311,9 +311,9 @@ function checkConditions () {
 
   // Check if you can auto-complete
   if (stacks[0].length === 0 && stacks[1].length < 2){
-    for (var i = 0; i < stacks.length; i++) {
-      for (var j = 0; j < stacks[i].length; j++) {
-        if (stacks[i][j] >= 52)
+    for (var u = 0; u < stacks.length; u++) {
+      for (var w = 0; w < stacks[u].length; w++) {
+        if (stacks[u][w] >= 52)
           autoSolvable = false;
       }
     }
