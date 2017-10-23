@@ -292,6 +292,12 @@ function checkConditions () {
           info(last(i)).isFaceDown || 
           (info(last(1)).value - 1 == info(last(i)).value && info(last(1).isBlack != info(last(i)).isBlack)))
             possibleMove = true; // DIDNT YET CHECK FOR KINGS ON EMPTY FIELDS OR FROM TABLEU TO FOUNDATION
+        if (info(last(i)).isFaceDown)
+          console.log("possible Move from faceDown card");
+        if (info(last(i)).value - 1 == info(last(j)).value && info(last(i).isBlack != info(last(j)).isBlack))
+          console.log("possible Move from movement inside tableu");
+        if (info(last(1)).value - 1 == info(last(i)).value && info(last(1).isBlack != info(last(i)).isBlack))
+          console.log("possible Move from pile to tableu");
       }
       // for (var k = 2; k < 6; k++){
       //   if (last(k) + 1 == last(i))
