@@ -280,41 +280,51 @@ function handleUndo () {
     $(".controls__icon--undo").addClass("invalid");
 }
 
-var possibleMove = true;
-var autoSolvable = false;
 function checkConditions () {
   // Check if there is a possible move
-  if (stacks[0].length === 0 && cycleTimes == 0){
-    possibleMove = false;
+  // if (stacks[0].length === 0 && cycleTimes == 0){
+    var possibleMove = false;
     for (var i = 6; i < stacks.length; i++) {
-      for (var j = 6; j < stacks.length; j++) {
-        if ((info(last(i)).value - 1 == info(last(j)).value && info(last(i).isBlack != info(last(j)).isBlack)) ||
-          info(last(i)).isFaceDown || 
-          (info(last(1)).value - 1 == info(last(i)).value && info(last(1).isBlack != info(last(i)).isBlack)))
-            possibleMove = true; // DIDNT YET CHECK FOR KINGS ON EMPTY FIELDS OR FROM TABLEU TO FOUNDATION
-        if (info(last(i)).isFaceDown)
-          console.log("possible Move from faceDown card");
-        if (info(last(i)).value - 1 == info(last(j)).value && info(last(i).isBlack != info(last(j)).isBlack))
-          console.log("possible Move from movement inside tableu");
-        if (info(last(1)).value - 1 == info(last(i)).value && info(last(1).isBlack != info(last(i)).isBlack))
-          console.log("possible Move from pile to tableu");
-      }
-      // for (var k = 2; k < 6; k++){
-      //   if (last(k) + 1 == last(i))
-      //     possibleMove = true;
-      // }
+      if (!possibleMove){
+        for (var j = 6; j < stacks.length; j++) {
+          if (info(last(i)).isFaceDown) {
+            console.log("Hint: Uncover face-down card on stack " + (i - 5));
+            possibleMove = true; break;
+          }
+          else if ((j-4 > 1 && j-4 < 6 && last(i) - 1 === last(j-4)) || last(i) % 13 == 0) { // TODO Move to foundation
+            console.log("Hint: Move card in column " + (i-5) + " to the foundation");
+            possibleMove = true; break;
+          }
+          else if (false) { // TODO King moven
+            console.log("Hint: Move card from column " + (i-5) + " to column " + (j-5));
+            possibleMove = true; break;
+          }
+          else if (info(last(1)).value + 1 == info(last(i)).value && info(last(1)).isBlack != info(last(i)).isBlack) {
+            console.log("Hint: Move card from pile to column " + (i - 5));
+            possibleMove = true; break;
+          }
+          else if (info(last(i)).value + 1 == info(last(j)).value && info(last(i)).isBlack != info(last(j)).isBlack) {
+            console.log("Hint: Move card from column " + (i-5) + " to column " + (j-5));
+            possibleMove = true; break;
+          }
+        } // DIDNT YET CHECK FOR KINGS ON EMPTY FIELDS OR FROM TABLEU TO FOUNDATION
+      } else break;
+    }
+    if (!possibleMove && (stacks[0].length > 0 || cycleTimes > 0)) {
+          console.log("Hint: Shuffle deck");
+          possibleMove = true;
     }
     if (!possibleMove)
       alert("Well shit, you got an unsolvable game. Poor you.");
-    console.log(possibleMove);
-  }
+  // }
 
   // Check if you can auto-complete
   if (stacks[0].length === 0 && stacks[1].length < 2){
+    var autoSolvable = true;
     for (var u = 0; u < stacks.length; u++) {
       for (var w = 0; w < stacks[u].length; w++) {
         if (stacks[u][w] >= 52)
-          autoSolvable = false;
+          autoSolvable = false; // TODO STUFF HERE
       }
     }
     if (autoSolvable)
@@ -413,6 +423,7 @@ function resetBoard(){
 
   clearDom();
   rebaseDom();
+  checkConditions();
 }
 
 // Empty all cards from the DOM
