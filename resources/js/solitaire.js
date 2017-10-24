@@ -1,17 +1,8 @@
-// TODO: Different games
-// TODO: Loss conditions
 // TODO: Tutorial and fancy win screen and loss screen
-// TODO: Create cookies for save states and tutorial message (document.cookie = "_x_=_y_; expires=Thu, 18 Dec 2018 12:00:00 UTC";)
+// TODO: Create cookies for save states and statistics
 // TODO: Ditch jquery
-// TODO: Refractor
-
-// TODO: Add more sounds
-// TODO: Hotkeys for undo and new game and auto-complete
-// TODO: Check if card flash could cause weird behaviour
-
-// FIX: Too fast clicking leading to weird card movement (fixed by drag and drop)
-// FIX: Points counting incorrectly when moving from pile to foundation
-
+// TODO: Refactor
+// TODO: Merge drag and drop
 
 //////////////////////
 // GLOBAL VARIABLES //
@@ -21,18 +12,31 @@ var stacks = [[],[],[],[],[],[],[],[],[],[],[],[],[]];
 var gameStates = [];
 var colors = ["hearts", "diamonds", "clubs", "spades"];
 
-var maxGameStates = 1;      // Controls the amount of undo times too
-var progressiveUndo = true; // If true you can "always" undo the last x steps
+var maxGameStates = 1;
+var progressiveUndo = true;
 var cycleTimes = 2;
 
+var showTimer = false;
+var showHelp = true;
+var vegasMode = false;
 var score = 0;
-var accumulativeScore = false;
 
 var gameTime = 0;
 var timerStarted = false;
 var timerInterval = null;
 
+var toDeleteCard = null;
+var toDeleteLastCard = null;
 var lastCard = null;
+var autoCompletable = false;
+var possibleMove = true;
+
+var s_pileToTableau = 5;
+var s_tableauToFoundation = 10;
+var s_undo = -10;
+var s_foundationToTableau = -15;
+var s_uncoverFaceDown = 5;
+
 // var dragObject = null;
 // var cardUnderCursor = null;
 // var mousePos = null;
@@ -85,7 +89,6 @@ function findCardPos(card){
 
 // Cycle through the deck
 function deckCycle () {
-  // addElement(removeElement(0), 1, true, false);
   moveElements(0, 1, 1, true, false);
   return stacks[0].length;
 }
@@ -134,9 +137,9 @@ function moveElements(from, to, amount, flip, pos){
   }
 
   // Scoring
-  if (from > 1 && from < 6) score -= 15;
-  else if (to > 1 && to < 6) score += 10;
-  else if (from === 1 && to > 5) score += 5;
+  if (from > 1 && from < 6) score += s_foundationToTableau;
+  else if (to > 1 && to < 6) score += s_tableauToFoundation;
+  else if (from === 1 && to > 5) score += s_pileToTableau;
   $("#score").text(score);
 }
 
@@ -158,7 +161,7 @@ function cardInteraction(card){
       // change card in stack
       stacks[cardPos[0]][cardPos[1]] = numFromCard(card) - 52;
       // Scoring
-      score += 5;
+      score += s_uncoverFaceDown;
       $("#score").text(score);
       // flip card in DOM
       $(card).toggleClass("card--back");
@@ -180,7 +183,7 @@ function cardInteraction(card){
     if (lastCard != card ){
         // IF the card is one above the other and a different color OR IF it's one above the other and on the foundation
         if (((num2%13 + 1 === num1%13 && (num1 >= 26 && num2 < 26 || num1 < 26 && num2 >= 26)) || 
-            (num2 - 1 === num1 && cardPos[0] > 1 && cardPos[0] < 6)) && cardPos[0] >= 2){
+        (num2 - 1 === num1 && cardPos[0] > 1 && cardPos[0] < 6)) && cardPos[0] >= 2){
           createGameState();
           moveElements(lastCardPos[0], cardPos[0], stacks[lastCardPos[0]].length - lastCardPos[1]);
         } else {
@@ -191,25 +194,30 @@ function cardInteraction(card){
           setTimeout(function(){
             $(card).toggleClass("card--flash");
             $(lastCard).toggleClass("card--flash");
-          },500);
+          },250);
         }
     } else {
       // CHECK IF AVAILABLE SLOT IN FOUNDATION
       for (var y = 2; y < 6; y++){
         if (last(y) === numFromCard(lastCard) - 1 ||
-            (stacks[y].length === 0 && numFromCard(lastCard) % 13 === 0)){
+        (stacks[y].length === 0 && numFromCard(lastCard) % 13 === 0)){
           createGameState();
           moveElements(lastCardPos[0], y, 1);
+          // Scoring
+          if (lastCardPos[0] == 1) score += s_pileToTableau;
+          $("#score").text(score);
           break;
         }
       }
     }
 
     // Un-highlight both cards
+    toDeleteCard = card;
+    toDeleteLastCard = lastCard;
+    lastCard = null;
     setTimeout(function(){
-      $(card).toggleClass("card--clicked");
-      $(lastCard).toggleClass("card--clicked");
-      lastCard = null;
+      $(toDeleteCard).toggleClass("card--clicked");
+      $(toDeleteLastCard).toggleClass("card--clicked");
     },500);
   }
   checkConditions();
@@ -243,7 +251,6 @@ function handleCycle(){
     createGameState();
     temp = stacks[1].length;
     for (var i = 0; i < temp; i++) {
-      // addElement(removeElement(1), 0, true, false);
       moveElements(1, 0, 1, true, false);
     }
     cycleTimes -= 1;
@@ -261,6 +268,8 @@ function createGameState() {
   if (gameStates.length > maxGameStates){
     gameStates.shift();
   }
+
+  // TODO: CREATE COOKIES
 }
 
   // Goes back to the previous game state
@@ -275,7 +284,8 @@ function handleUndo () {
     score = tempStacks[1];
     clearDom();
     rebaseDom();
-    score -= 10 ;
+    // Scoring
+    score += s_undo;
     $("#score").text(score);
   }
   if (gameStates.length == 0)
@@ -285,57 +295,62 @@ function handleUndo () {
 function checkConditions () {
   // Check if there is a possible move
   // if (stacks[0].length === 0 && cycleTimes == 0){
-    var possibleMove = false;
+    possibleMove = false;
     for (var i = 6; i < stacks.length; i++) {
       if (!possibleMove){
         for (var j = 6; j < stacks.length; j++) {
-          if (info(last(i)).isFaceDown) {
-            console.log("Hint: Uncover face-down card on stack " + (i - 5));
-            possibleMove = true; break;
-          }
-          else if ((j-4 > 1 && j-4 < 6 && last(i) - 1 === last(j-4)) || last(i) % 13 == 0) {
-            console.log("Hint: Move card in column " + (i-5) + " to the foundation");
-            possibleMove = true; break;
-          }
-          // else if (stacks[i].length == 0 && stacks[j][x] % 13 == 12) { // TODO King moven
-            // console.log("Hint: Move card from column " + (i-5) + " to column " + (j-5));
-            // possibleMove = true; break;
-          // }
-          else if (info(last(1)).value + 1 == info(last(i)).value && info(last(1)).isBlack != info(last(i)).isBlack) {
-            console.log("Hint: Move card from pile to column " + (i - 5));
-            possibleMove = true; break;
-          }
-          else{
-            for (var x = 0; x < stacks[j].length; x++){ // FIX THIS SHIT
-              if (info(last(i)).value + 1 === info(stacks[j][x]).value && info(last(i)).isBlack != info(stacks[j][x]).isBlack) {
-                console.log("Hint: Move card from column " + (i-5) + " (depth " + x +") to column " + (j-5));
+          if (!possibleMove){
+            for (var x = 0; x < stacks[j].length; x++) { // FIX THIS SHIT
+              if (info(last(i)).isFaceDown) {
+                console.log("Hint: Uncover face-down card on stack " + (i - 5));
                 possibleMove = true; break;
-              } 
-            }
-          } 
+              }
+              else if ((j-4 > 1 && j-4 < 6 && last(i) - 1 === last(j-4)) || last(i) % 13 == 0) {
+                console.log("Hint: Move card in column " + (i-5) + " to the foundation");
+                possibleMove = true; break;
+              }
+              else if (stacks[i].length == 0 && stacks[j][x] % 13 == 12) {
+                console.log("Hint: Move card from column " + (j-5) + " to column " + (i-5));
+                possibleMove = true; break;
+              }
+              else if (info(last(1)).value + 1 == info(last(i)).value && info(last(1)).isBlack != info(last(i)).isBlack) {
+                console.log("Hint: Move card from pile to column " + (i - 5));
+                possibleMove = true; break;
+              }
+              else if (last(i)<52 && stacks[j][x]<52 && i != j &&
+              info(last(i)).value - 1 === info(stacks[j][x]).value &&
+              info(last(i)).isBlack != info(stacks[j][x]).isBlack) {
+                console.log("Hint: Move card from column " + (j-5) + " (depth " + (stacks[j].length-x) +") to column " + (i-5));
+                possibleMove = true; break;
+              }
+            } 
+          } else break;
         }
       } else break;
     }
+
     if (!possibleMove && (stacks[0].length > 0 || cycleTimes > 0)) {
           console.log("Hint: Shuffle deck");
           possibleMove = true;
     }
     else if (!possibleMove)
-      alert("-insert loss screen here-");
+      console.log("Hmm. It seems there are no more possible moves.\nConsider starting a new game.");
   // }
 
   // Check if you can auto-complete
-  if (stacks[0].length === 0 && stacks[1].length < 2 && stacks[2].length > 0 &&
-      stacks[3].length > 0 && stacks[4].length > 0 && stacks[5].length > 0){
-    var autoSolvable = true;
-    for (var u = 0; u < stacks.length; u++) {
-      for (var w = 0; w < stacks[u].length; w++) {
-        if (stacks[u][w] >= 52)
-          autoSolvable = false;
+  if (!autoCompletable){
+    if (stacks[0].length === 0 && stacks[1].length < 2 && stacks[2].length > 0 &&
+        stacks[3].length > 0 && stacks[4].length > 0 && stacks[5].length > 0){
+      autoCompletable = true;
+      for (var u = 0; u < stacks.length; u++) {
+        for (var w = 0; w < stacks[u].length; w++) {
+          if (stacks[u][w] >= 52)
+            autoCompletable = false;
+        }
       }
-    }
-    if (autoSolvable){
-      $(".autocomplete").toggleClass("autocomplete--visible");
+      if (autoCompletable){
+        $(".autocomplete").toggleClass("autocomplete--visible");
+      }
     }
   }
 
@@ -348,22 +363,23 @@ function checkConditions () {
     //
     alert("-insert win screen here-");
   }
-  // Check for loss-condition
 }
 
-function autoSolve() {
+function autoComplete() {
   var tempOrdering = [stacks[2][0], stacks[3][0], stacks[4][0], stacks[5][0]];
+  var tempCardCount = 52 - (stacks[2].length + stacks[3].length + stacks[4].length + stacks[5].length);
+  score += tempCardCount * (s_tableauToFoundation);
   for (var t = 0; t < stacks.length; t++) {
     stacks[t] = [];
   }
   for (var i = 0; i < 13; i++) {
     for (var j = 0; j < 4; j++) {
-      console.log("adding element");
-      addElement(i + tempOrdering[j], j);
+      addElement(i + tempOrdering[j], j+2);
     }
   }
   clearDom();
   rebaseDom();
+  checkConditions();
 }
 
 // Clones an array value by value with a depth of 2 (for gamestate copying)
@@ -406,14 +422,15 @@ function info (cardNum) {
 // Set up a fresh new board
 function resetBoard(){
 
-  accumulativeScore = document.getElementById("cumulative").checked;
+  vegasMode = document.getElementById("cumulative").checked;
   timerReset();
   if (cycleTimes == 0)
     $("#stack0").toggleClass("deck__stock--cycle");
   cycleTimes = 2;
-  if (accumulativeScore) score -= 52; else score = 0;
+  if (vegasMode) score -= 52; else score = 0;
   $("#score").text(score);
   $(".controls__icon--undo").removeClass("invalid");
+  updateTimerVisibility();
 
   // RESET ALL THE STACKS //
   // Reset stacks
@@ -433,7 +450,7 @@ function resetBoard(){
       stacks[0][k - 1] = stacks[0][j];
       stacks[0][j] = x;
   }
-  // Redistribute deck cards across the tableu in both DOM and stacks
+  // Redistribute deck cards across the tableau in both DOM and stacks
   for (var h = 6; h < 13; h++){
     for (var l = h-6; l >= 0; l--){
       if (l == 0)
@@ -468,7 +485,7 @@ function rebaseDom () {
 function timerReset() {
   if (!timerStarted) {
     timerStarted = true;
-    spanValue = $('.statistics__value').last();
+    spanValue = $('#timer');
     timerInterval = setInterval(function() {
       gameTime += 1;
       // Scoring
@@ -483,7 +500,12 @@ function timerReset() {
   }
 }
 
-resetBoard();
+function updateTimerVisibility() {
+  if (showTimer)
+    $("#timerWrapper").removeClass("statistics__item--hidden");
+  else
+    $("#timerWrapper").addClass("statistics__item--hidden");
+}
 
 
 
@@ -499,28 +521,37 @@ $(".card-placeholder").click(function(){
   handleEmptyFieldInteraction(this);
 });
 
-$(".autocomplete").click(autoSolve);
+$(".autocomplete").click(autoComplete);
 
 $("#cumulative").click(function(){
   score = 0;
-  if (!accumulativeScore)
-    accumulativeScore = true;
-  else
-    accumulativeScore = false;
+  vegasMode = !vegasMode;
   resetBoard();
 });
 
 $("#cycleButton").click(handleCycle);
 
 $("#timerBox").click(function(){
-  $("#timerWrapper").toggleClass("statistics__item--hidden");
+  showTimer = !showTimer;
+  updateTimerVisibility();
 });
 
 // Reset board on new game button click
 $(".controls__link--new-game").click(resetBoard);
 
-// Undo a move on undo button clikc
+// Undo a move on undo button click
 $(".controls__link--undo").click(handleUndo);
+
+// Start screen tick box
+$("#dismiss").click(function(){
+  showHelp = !showHelp;
+});
+
+// Start screen start game
+$(".new-game").click(function(){
+  this.parentElement..classList.toggle("modal--show");
+  resetBoard();
+});
 
 // Hotkeys
 document.onkeypress = function(e){
@@ -531,8 +562,27 @@ document.onkeypress = function(e){
     break;
     case 110: resetBoard();
     break;
-    case 104: console.log("Pressed button to display tutorial");
+    case 104: console.log("Pressed button to display help");
+    break;
+    case 116: console.log("Pressed button to display hint");
+    break;
+    case 32: if (autoCompletable) autoComplete();
     break;
   }
-  console.log(e.which);
+  // console.log(e.which);
 };
+
+
+
+////////////////////
+// MAIN EXECUTION //
+////////////////////
+
+// TODO: LOAD COOKIES
+
+if (!showHelp){
+  resetBoard();
+}
+else {
+  $(".help").toggleClass("modal--show");
+}
