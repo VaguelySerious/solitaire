@@ -1,7 +1,6 @@
 .tutorial {
   align-items: center;
   bottom: rem(20);
-  display: flex;
   max-width: 960px;
   padding: rem(20);
   position: fixed;
@@ -22,5 +21,10 @@
 
   &__content {
     font-weight: 300;
+  }
+
+
+  &.modal--show {
+    display: flex;
   }
 }

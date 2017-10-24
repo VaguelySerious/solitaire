@@ -1165,8 +1165,6 @@ button {
   -ms-flex-align: center;
       align-items: center;
   bottom: 1.25rem;
-  display: -ms-flexbox;
-  display: flex;
   max-width: 960px;
   padding: 1.25rem;
   position: fixed;
@@ -1182,6 +1180,9 @@ button {
     z-index: 999; }
   .tutorial__content {
     font-weight: 300; }
+  .tutorial.modal--show {
+    display: -ms-flexbox;
+    display: flex; }
 
 body {
   font: 400 16px/1.4 sans-serif; }
