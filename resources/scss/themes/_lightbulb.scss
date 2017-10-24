@@ -1,0 +1,16 @@
+//
+// lightbulb themes
+// pick the color based on the board--modifier
+//
+
+@each $key, $value in $colors {
+  .board--#{$key} {
+    .lightbulb {
+      @include lightbulb(color(white), darken(adjust-hue($value, 10%), 5%), 20px);
+    }
+
+    .tutorial__thumb {
+      @include gradient(70deg, $value);
+    }
+  }
+}

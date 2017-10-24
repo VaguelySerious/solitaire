@@ -7,64 +7,64 @@
 
 @mixin board-size($n) {
 
-  // default styles (mobile-first)
-  @include board-size-helper($n, $board-default-size);
+  // board size helper mixin
+  @mixin helper($n, $board-size) {
+    $card-width: card-size($n, $board-size);
 
-  // iterate through breakpoint-relative board widths
-  @each $key, $value in $board-sizes {
-    @include break($key) {
-      @include board-size-helper($n, $value);
-    }
-  }
-}
+    padding-left: board-padding($board-size);
+    padding-right: board-padding($board-size);
 
 
-// helper mixin
-@mixin board-size-helper($n, $board-size) {
-  $card-width: card-size($n, $board-size);
+    // card dimensions
+    .card {
+      @include card-dimensions($n, $board-size);
 
-  padding-left: board-padding($board-size);
-  padding-right: board-padding($board-size);
+      &__back,
+      &__front {
+        @include card-border-radius;
+      }
+
+      &__back {
+        border-width: ($card-width * 0.05);
+      }
+
+      &__front {
+        &::before {
+          font-size: ($card-width * 0.5);
+        }
+      }
 
 
-  // card dimensions
-  .card {
-    @include card-dimensions($n, $board-size);
-
-    &__back,
-    &__front {
-      @include card-border-radius;
-    }
-
-    &__back {
-      border-width: ($card-width * 0.05);
-    }
-
-    &__front {
-      &::before {
-        font-size: ($card-width * 0.5);
+      &__color {
+        font-size: ($card-width * 0.15);
       }
     }
 
 
-    &__color {
-      font-size: ($card-width * 0.15);
-    }
-  }
-
-
-  // empty piles or placeholders
-  .card-placeholder {
-    @include card-dimensions($n, $board-size);
-    margin-left: card-margin($n, $board-size);
-
-    &.tableau__column:before {
+    // empty piles or placeholders
+    .card-placeholder {
       @include card-dimensions($n, $board-size);
-      margin-left: 0;
+      margin-left: card-margin($n, $board-size);
+
+      &.tableau__column:before {
+        @include card-dimensions($n, $board-size);
+        margin-left: 0;
+      }
+    }
+
+    .deck__button::before {
+      font-size: ($card-width * 0.5);
     }
   }
 
-  .deck__button::before {
-    font-size: ($card-width * 0.5);
+
+  // default styles (mobile-first)
+  @include helper($n, $board-default-size);
+
+  // iterate through breakpoint-relative board widths
+  @each $key, $value in $board-sizes {
+    @include break($key) {
+      @include helper($n, $value);
+    }
   }
 }

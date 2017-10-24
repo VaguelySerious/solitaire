@@ -1,0 +1,43 @@
+.modal {
+  @include elevate(5);
+  color: color(white);
+  display: none;
+  font-size: 1em;
+  max-width: 95%;
+  position: fixed;
+  width: 500px;
+  z-index: 999;
+
+
+  &--show {
+    display: block;
+  }
+
+
+  // background
+  &::before {
+    @include abs-position(0,0);
+    background: $modal-color;
+    border-radius: 3px;
+    content: "";
+    opacity: 0.975;
+    position: absolute;
+    @include gradient(70deg, $modal-color);
+    z-index: -1;
+  }
+
+
+  &__headline {
+    color: darken($modal-color, 15%);
+    margin-bottom: rem(4);
+    text-shadow: 0 1px 0 lighten($modal-color, 5%);
+  }
+
+
+  .modal__close {
+    justify-content: center;
+    position: absolute;
+    right: rem(20);
+    top: rem(20);
+  }
+}

@@ -27,11 +27,14 @@
 @import "abstracts/mixins/deck-stacked";
 
 @import "components/board";
+@import "components/button";
 @import "components/card";
 @import "components/card-placeholder";
 @import "components/deck";
 @import "components/foundations";
 @import "components/free-cell";
+@import "components/lightbulb";
+@import "components/modal";
 @import "components/tableau";
 @import "components/tooltip";
 
@@ -43,7 +46,11 @@
 @import "layout/overlay";
 @import "layout/autocomplete";
 @import "layout/menu";
+@import "layout/statistics";
+@import "layout/tutorial";
 @import "layout/typography";
 
 @import "themes/cards";
 @import "themes/controls";
+@import "themes/lightbulb";
+@import "themes/statistics";

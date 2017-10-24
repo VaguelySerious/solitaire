@@ -214,5 +214,9 @@
         opacity: 1;
       }
     }
+
+    &:disabled + &-label {
+      opacity: 0.25;
+    }
   }
 }

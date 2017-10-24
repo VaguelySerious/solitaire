@@ -4,7 +4,7 @@
 
 @mixin elevate($elevation: 0, $color: #000) {
   $x: (2px + $elevation * 0.25);
-  $y1: ($elevation * 1px);
+  $y1: ($elevation * 0.5px);
   $y2: ($elevation + 1px);
 
   $blur: (3px + $elevation);

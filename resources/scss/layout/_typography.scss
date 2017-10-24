@@ -6,6 +6,13 @@ body {
   font: 400 #{$document-font-size}px/1.4 $font-text;
 }
 
+h2 {
+  font-size: $font-large;
+  font-weight: bold;
+  letter-spacing: 0.025em;
+  margin-bottom: 2em;
+}
+
 h3 {
   font-size: $font-x-small;
   font-weight: bold;

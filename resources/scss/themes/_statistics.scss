@@ -1,0 +1,38 @@
+//
+// statistics (new best) themes
+// pick the color based on the board--modifier
+//
+
+@each $key, $value in $colors {
+  .board--#{$key} {
+    .statistics {
+
+      // new highscore
+      &__content--new {
+        align-items: center;
+        display: flex;
+        justify-content: flex-end;
+
+        &::after {
+          color: $value;
+          content: "*";
+          font-size: 1.35em;
+          left: 105%;
+          line-height: 1;
+          position: absolute;
+          top: 7px;
+        }
+      }
+
+
+      // button color
+      &__new {
+        @include gradient(70deg, $value);
+
+        &:hover {
+          @include gradient(70deg, saturate(lighten($value, 5%), 10%));
+        }
+      }
+    }
+  }
+}

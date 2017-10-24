@@ -7,3 +7,13 @@ html {
   height: 100%;
   width: 100%;
 }
+
+
+button {
+  appearance: none;
+  background: transparent;
+  border: none;
+  color: color(white);
+  cursor: pointer;
+  text-transform: lowercase;
+}

@@ -45,6 +45,10 @@
 
     <ul class="options__list options__list--settings">
       <li class="options__item options__item--setting">
+        <input type="checkbox" class="options__checkbox" id="timerBox" checked disabled>
+        <label for="timerBox" class="options__checkbox-label">Enable Drag &amp; Drop</label>
+      </li>
+      <li class="options__item options__item--setting">
         <input type="checkbox" class="options__checkbox" id="timerBox" checked>
         <label for="timerBox" class="options__checkbox-label">Show Timer</label>
       </li>
@@ -56,7 +60,7 @@
   </nav>
 
   <!-- overlay -->
-  <sidebar class="overlay">
+  <aside class="overlay">
     <a class="controls__link menu__link options-toggle">
       <div class="menu__link-icon controls__icon">
         <span></span>
@@ -65,14 +69,14 @@
       </div>
     </a>
 
-    <ul class="overlay__statistics statistics">
-      <li class="statistics__item">
-        <span class="statistics__label">Score</span>
-        <span class="statistics__value" id="score">0</span>
+    <ul class="overlay__stats stats">
+      <li class="stats__item">
+        <span class="stats__label">Score</span>
+        <span class="stats__value" id="score">0</span>
       </li>
-      <li class="statistics__item" id="timerWrapper">
-        <span class="statistics__label">Time</span>
-        <span class="statistics__value" id="timer">0:00</span>
+      <li class="stats__item" id="timerWrapper">
+        <span class="stats__label">Time</span>
+        <span class="stats__value" id="timer">0:00</span>
       </li>
     </ul>
 
@@ -91,7 +95,7 @@
         </a>
       </li>
     </ul>
-  </sidebar>
+  </aside>
 
   <!-- board top half -->
   <div class="board__top">
@@ -130,8 +134,72 @@
   </div>
 
 
-  <button class="autocomplete">Auto Complete</button>
+  <button class="button autocomplete">Auto Complete</button>
 
+  <!-- option: modal--show -->
+  <aside class="modal statistics">
+    <h2 class="statistics__headline">Gratzzzzz, you the best!</h2>
+    <ul class="statistics__list">
+      <li class="statistics__header">
+        <div class="statistics__title"></div>
+        <ul class="statistics__values">
+          <li class="statistics__content"><h3 class="modal__headline">Now</h3></li>
+          <li class="statistics__content"><h3 class="modal__headline">Best</h3></li>
+          <li class="statistics__content"><h3 class="modal__headline">AVG</h3></li>
+        </ul>
+      </li>
+      <li class="statistics__item">
+        <h5 class="statistics__title">Time</h4>
+        <ul class="statistics__values">
+          <li class="statistics__content statistics__game statistics__content--new">0:57</li>
+          <li class="statistics__content statistics__best">0:57</li>
+          <li class="statistics__content statistics__average">3:32</li>
+          <li class="statistics__change statistics__change--positive">-2:35</li>
+        </ul>
+      </li>
+      <li class="statistics__item">
+        <h5 class="statistics__title">Score</h4>
+        <ul class="statistics__values">
+          <li class="statistics__content statistics__game">11,457</li>
+          <li class="statistics__content statistics__best">12,001</li>
+          <li class="statistics__content statistics__average">10,983</li>
+          <li class="statistics__change statistics__change--positive">+474</li>
+        </ul>
+      </li>
+      <li class="statistics__item">
+        <h5 class="statistics__title">Wins</h5>
+        <ul class="statistics__values">
+          <li class="statistics__content statistics__game">52</li>
+          <li class="statistics__content statistics__best">48</li>
+          <li class="statistics__content statistics__average">52%</li>
+          <li class="statistics__change statistics__change--negative">-0.25%</li>
+        </ul>
+      </li>
+    </ul>
+
+    <button class="button statistics__new">Play again</button>
+  </aside>
+
+  <!-- option: modal--show -->
+  <div class="modal tutorial">
+    <div class="tutorial__thumb lightbulb-wrap">
+      <div class="lightbulb">
+        <div class="lightbulb__bulb">
+          <div class="lightbulb__shine"></div>
+        </div>
+        <div class="lightbulb__socket">
+          <div class="lightbulb__thread"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tutorial__content">
+      <h3 class="modal__headline tutorial__headline">Hint</h3>
+      <p>Move the card from stack a to stack b.</p>
+    </div>
+
+    <button class="modal__close controls__icon controls__icon--cross"></button>
+  </div>
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script src="public/js/menu.min.js"></script>
