@@ -19,22 +19,24 @@
 
 var stacks = [[],[],[],[],[],[],[],[],[],[],[],[],[]];
 var gameStates = [];
+var colors = ["hearts", "diamonds", "clubs", "spades"];
+
 var maxGameStates = 1;      // Controls the amount of undo times too
 var progressiveUndo = true; // If true you can "always" undo the last x steps
-var accumulativeScore = false;
-var cardAmount = 52;
-var lastCard = null;
-var dragObject = null;
 var cycleTimes = 2;
+
 var score = 0;
+var accumulativeScore = false;
+
 var gameTime = 0;
 var timerStarted = false;
 var timerInterval = null;
-var colors = ["hearts", "diamonds", "clubs", "spades"];
 
-var cardUnderCursor = null;
-var mousePos = null;
-var onDownMousePos = null;
+var lastCard = null;
+// var dragObject = null;
+// var cardUnderCursor = null;
+// var mousePos = null;
+// var onDownMousePos = null;
 
 
 
@@ -291,44 +293,50 @@ function checkConditions () {
             console.log("Hint: Uncover face-down card on stack " + (i - 5));
             possibleMove = true; break;
           }
-          else if ((j-4 > 1 && j-4 < 6 && last(i) - 1 === last(j-4)) || last(i) % 13 == 0) { // TODO Move to foundation
+          else if ((j-4 > 1 && j-4 < 6 && last(i) - 1 === last(j-4)) || last(i) % 13 == 0) {
             console.log("Hint: Move card in column " + (i-5) + " to the foundation");
             possibleMove = true; break;
           }
-          else if (false) { // TODO King moven
-            console.log("Hint: Move card from column " + (i-5) + " to column " + (j-5));
-            possibleMove = true; break;
-          }
+          // else if (stacks[i].length == 0 && stacks[j][x] % 13 == 12) { // TODO King moven
+            // console.log("Hint: Move card from column " + (i-5) + " to column " + (j-5));
+            // possibleMove = true; break;
+          // }
           else if (info(last(1)).value + 1 == info(last(i)).value && info(last(1)).isBlack != info(last(i)).isBlack) {
             console.log("Hint: Move card from pile to column " + (i - 5));
             possibleMove = true; break;
           }
-          else if (info(last(i)).value + 1 == info(last(j)).value && info(last(i)).isBlack != info(last(j)).isBlack) {
-            console.log("Hint: Move card from column " + (i-5) + " to column " + (j-5));
-            possibleMove = true; break;
-          }
-        } // DIDNT YET CHECK FOR KINGS ON EMPTY FIELDS OR FROM TABLEU TO FOUNDATION
+          else{
+            for (var x = 0; x < stacks[j].length; x++){ // FIX THIS SHIT
+              if (info(last(i)).value + 1 === info(stacks[j][x]).value && info(last(i)).isBlack != info(stacks[j][x]).isBlack) {
+                console.log("Hint: Move card from column " + (i-5) + " (depth " + x +") to column " + (j-5));
+                possibleMove = true; break;
+              } 
+            }
+          } 
+        }
       } else break;
     }
     if (!possibleMove && (stacks[0].length > 0 || cycleTimes > 0)) {
           console.log("Hint: Shuffle deck");
           possibleMove = true;
     }
-    if (!possibleMove)
-      alert("Well shit, you got an unsolvable game. Poor you.");
+    else if (!possibleMove)
+      alert("-insert loss screen here-");
   // }
 
   // Check if you can auto-complete
-  if (stacks[0].length === 0 && stacks[1].length < 2){
+  if (stacks[0].length === 0 && stacks[1].length < 2 && stacks[2].length > 0 &&
+      stacks[3].length > 0 && stacks[4].length > 0 && stacks[5].length > 0){
     var autoSolvable = true;
     for (var u = 0; u < stacks.length; u++) {
       for (var w = 0; w < stacks[u].length; w++) {
         if (stacks[u][w] >= 52)
-          autoSolvable = false; // TODO STUFF HERE
+          autoSolvable = false;
       }
     }
-    if (autoSolvable)
-      alert("Well done! The game is now auto solvable so you don't have to\nkill your wrist clicking all the cards\nto the top.");
+    if (autoSolvable){
+      $(".autocomplete").toggleClass("autocomplete--visible");
+    }
   }
 
   // Check for win-condition
@@ -338,13 +346,27 @@ function checkConditions () {
     // Scoring
     score += Math.floor(700000/gameTime);
     //
-    alert("Congratulations, you win!!!");
+    alert("-insert win screen here-");
   }
   // Check for loss-condition
 }
 
-// Clones an array value by value with a depth of 2
-// Designed to clone the "stacks" array for gamestate saving
+function autoSolve() {
+  var tempOrdering = [stacks[2][0], stacks[3][0], stacks[4][0], stacks[5][0]];
+  for (var t = 0; t < stacks.length; t++) {
+    stacks[t] = [];
+  }
+  for (var i = 0; i < 13; i++) {
+    for (var j = 0; j < 4; j++) {
+      console.log("adding element");
+      addElement(i + tempOrdering[j], j);
+    }
+  }
+  clearDom();
+  rebaseDom();
+}
+
+// Clones an array value by value with a depth of 2 (for gamestate copying)
 function clone (arr) {
   n = [];
   for (var k = 0; k < arr.length; k++) {
@@ -399,13 +421,13 @@ function resetBoard(){
     stacks[i] = [];
   }
   // Push 52 new cards to the deck
-  while (stacks[0].length < cardAmount){
+  while (stacks[0].length < 52){
     var tempLen = stacks[0].length + 52;
     stacks[0].push(tempLen);
   }
   // Shuffle the deck (works similar to insertion sort)
   var j, x;
-  for (var k = cardAmount; k; k--) {
+  for (var k = 52; k; k--) {
       j = Math.floor(Math.random() * k);
       x = stacks[0][k - 1];
       stacks[0][k - 1] = stacks[0][j];
@@ -477,6 +499,8 @@ $(".card-placeholder").click(function(){
   handleEmptyFieldInteraction(this);
 });
 
+$(".autocomplete").click(autoSolve);
+
 $("#cumulative").click(function(){
   score = 0;
   if (!accumulativeScore)
@@ -497,3 +521,18 @@ $(".controls__link--new-game").click(resetBoard);
 
 // Undo a move on undo button clikc
 $(".controls__link--undo").click(handleUndo);
+
+// Hotkeys
+document.onkeypress = function(e){
+  switch(e.which) {
+    case 117: handleUndo();
+    break; 
+    case 26: handleUndo();
+    break;
+    case 110: resetBoard();
+    break;
+    case 104: console.log("Pressed button to display tutorial");
+    break;
+  }
+  console.log(e.which);
+};
