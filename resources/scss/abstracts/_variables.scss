@@ -102,9 +102,8 @@ $card-sizes: (
 // responsive board width variables
 $board-default-size: columns(22);
 $board-sizes: (
-  mobile-l:   columns(18),
-  tablet:     columns(22),
-  laptop:     columns(18),
+  mobile-l:   columns(20),
+  laptop:     columns(16),
   laptop-l:   columns(14),
-  hd:         columns(12)
+  hd:         columns(10)
 );

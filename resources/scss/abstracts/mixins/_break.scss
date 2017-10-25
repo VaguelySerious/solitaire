@@ -3,12 +3,13 @@
 //
 
 @mixin break($breakpoint, $modifier: 'min') {
-  @if ($modifier == 'max') {
-    $breakpoint: $breakpoint - 1;
-  }
 
   @if map-has-key($breakpoints, $breakpoint) {
     $size: map-get($breakpoints, $breakpoint);
+
+    @if ($modifier == 'max') {
+      $size: $size - 1;
+    }
 
     @media only screen and (#{$modifier}-width: $size) {
       @content;
@@ -16,6 +17,8 @@
   }
 
   @else {
-    @warn "Unkown '#{$breakpoint}' in $breakpoints";
+    @media only screen and (#{$modifier}-width: $breakpoint) {
+      @content;
+    }
   }
 }

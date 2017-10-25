@@ -45,16 +45,16 @@
 
     <ul class="options__list options__list--settings">
       <li class="options__item options__item--setting">
-        <input type="checkbox" class="options__checkbox" id="timerBox" checked disabled>
-        <label for="timerBox" class="options__checkbox-label">Enable Drag &amp; Drop</label>
+        <input type="checkbox" class="checkbox" id="drag" checked disabled>
+        <label for="drag" class="label">Enable Drag &amp; Drop</label>
       </li>
       <li class="options__item options__item--setting">
-        <input type="checkbox" class="options__checkbox" id="timerBox" checked>
-        <label for="timerBox" class="options__checkbox-label">Show Timer</label>
+        <input type="checkbox" class="checkbox" id="timerBox" checked>
+        <label for="timerBox" class="label">Show Timer</label>
       </li>
       <li class="options__item options__item--setting">
-        <input type="checkbox" class="options__checkbox" id="cumulative">
-        <label for="cumulative" class="options__checkbox-label">Vegas</label>
+        <input type="checkbox" class="checkbox" id="cumulative">
+        <label for="cumulative" class="label">Cumulative Score</label>
       </li>
     </ul>
   </nav>
@@ -137,8 +137,8 @@
   <button class="button autocomplete">Auto Complete</button>
 
   <!-- option: modal--show -->
-  <aside class="modal statistics">
-    <h2 class="statistics__headline">Gratzzzzz, you the best!</h2>
+  <aside class="modal modal--large statistics">
+    <h2 class="modal__header">Gratzzzzz, you the best!</h2>
     <ul class="statistics__list">
       <li class="statistics__header">
         <div class="statistics__title"></div>
@@ -163,7 +163,7 @@
           <li class="statistics__content statistics__game">11,457</li>
           <li class="statistics__content statistics__best">12,001</li>
           <li class="statistics__content statistics__average">10,983</li>
-          <li class="statistics__change statistics__change--positive">+474</li>
+          <li class="statistics__change statistics__change--positive">+2</li>
         </ul>
       </li>
       <li class="statistics__item">
@@ -177,7 +177,65 @@
       </li>
     </ul>
 
-    <button class="button statistics__new">Play again</button>
+    <div class="modal__buttons">
+      <button class="button">Reset</button>
+      <button class="button button--primary new-game">Play again</button>
+    </div>
+  </aside>
+
+  <!-- option: modal--show -->
+  <aside class="modal modal--large modal--show help">
+    <h2 class="modal__header">Help &amp; Shortcuts</h2>
+    <ul class="help__list shortcuts">
+      <li class="help__headline"><h3 class="modal__headline">Shortcuts</h3></li>
+      <li class="help__item shortcut">
+        <span class="shortcut__label">New game</span>
+        <div class="shortcut__keys">
+          <span class="shortcut__key">N</span>
+        </div>
+      </li>
+      <li class="help__item shortcut">
+        <span class="shortcut__label">Show help</span>
+        <div class="shortcut__keys">
+          <span class="shortcut__key">H</span>
+        </div>
+      </li>
+      <li class="help__item shortcut">
+        <span class="shortcut__label">Undo</span>
+        <div class="shortcut__keys">
+          <span class="shortcut__key">U</span>
+          <span class="shortcut__key">ctrl+Z</span>
+        </div>
+      </li>
+      <li class="help__item shortcut">
+        <span class="shortcut__label">Auto-Solve</span>
+        <div class="shortcut__keys">
+          <span class="shortcut__key shortcut__key--space">Spacebar</span>
+        </div>
+      </li>
+      <li class="help__item shortcut">
+        <span class="shortcut__label">Tip</span>
+        <div class="shortcut__keys">
+          <span class="shortcut__key">T</span>
+        </div>
+      </li>
+    </ul>
+
+    <ul class="help__list">
+      <li class="help__headline"><h3 class="modal__headline">Rules</h3></li>
+      <li class="help__text">
+        <p>You really don't know how to play Solitaire? Pathetic. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Omnis, incidunt!</p>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Totam ex veritatis fugiat. Ipsa perferendis error, cum at minus beatae accusamus sint magni velit illum.</p>
+      </li>
+    </ul>
+
+    <div class="modal__buttons">
+      <button class="button button--primary new-game">Start Playing</button>
+      <div class="modal__checkbox">
+        <input type="checkbox" class="checkbox" id="dismiss">
+        <label for="dismiss" class="label">don't show this again</label>
+      </div>
+    </div>
   </aside>
 
   <!-- option: modal--show -->
@@ -196,7 +254,6 @@
     <div class="tutorial__content">
       <h3 class="modal__headline tutorial__headline">Hint</h3>
       <p>Move the card from stack a to stack b.</p>
-      <p>Press U for undo, N for new game, H for help, SPACE for auto-solve and T for tutorial.</p>
     </div>
 
     <button class="modal__close controls__icon controls__icon--cross"></button>

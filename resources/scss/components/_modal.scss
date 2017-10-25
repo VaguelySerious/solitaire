@@ -4,8 +4,9 @@
   display: none;
   font-size: 1em;
   max-width: 95%;
+  padding: rem(20);
   position: fixed;
-  width: 500px;
+  width: 600px;
   z-index: 999;
 
 
@@ -21,23 +22,110 @@
     border-radius: 3px;
     content: "";
     opacity: 0.975;
-    position: absolute;
+    position: fixed;
     @include gradient(70deg, $modal-color);
     z-index: -1;
   }
 
 
   &__headline {
-    color: darken($modal-color, 15%);
+    color: lighten(color(fiord), 15%);
     margin-bottom: rem(4);
-    text-shadow: 0 1px 0 lighten($modal-color, 5%);
   }
 
 
-  .modal__close {
+  &__buttons {
+    align-items: center;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin: rem(48) auto 0;
+    max-width: 500px;
+
+
+    @include break(mobile-l) {
+      flex-direction: row-reverse;
+      justify-content: space-between;
+    }
+  }
+
+
+  &__checkbox {
+    display: flex;
+    flex-basis: 100%;
+    justify-content: center;
+    margin-top: rem(24);
+
+    @include break(mobile-l) {
+      display: block;
+      flex-basis: 60%;
+      margin-top: 0;
+    }
+
+    @include break(laptop) {
+      left: rem(48);
+      margin-top: 0;
+      position: absolute;
+    }
+  }
+
+
+  & &__close {
     justify-content: center;
     position: absolute;
     right: rem(20);
     top: rem(20);
+  }
+
+
+  // big modals, centered
+  &--large {
+    bottom: 0;
+    box-sizing: border-box;
+    left: 0;
+    max-width: 100%;
+    padding: rem(32) rem(20);
+    position: fixed;
+    top: 0;
+    width: 100%;
+
+
+    @include break(mobile-l) {
+      padding-bottom: rem(46);
+      padding-top: rem(48);
+    }
+
+
+    @include break(tablet) {
+      left: 50%;
+      bottom: auto;
+      margin-bottom: rem(40);
+      padding: rem(48) rem(48) rem(56);
+      top: 50%;
+      transform: translate(-50%, -50%);
+      width: 600px;
+    }
+  }
+  &--large & {
+
+    &__header {
+      color: color(white);
+      text-align: center;
+    }
+  }
+
+
+  p.small {
+    font-size: 0.875em;
+    opacity: 0.75;
+  }
+
+
+  @include break(tablet, max) {
+    overflow-y: auto;
+  }
+
+  @include break(laptop) {
+    width: 500px;
   }
 }

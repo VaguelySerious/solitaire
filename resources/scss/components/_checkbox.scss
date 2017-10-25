@@ -1,0 +1,64 @@
+.checkbox {
+  // hide the checkbox to make room for an actual design
+  left: -9999px;
+  position: absolute;
+  top: -9999px;
+
+  & + .label {
+    $checkbox-size: 20px;
+
+    cursor: pointer;
+    font-weight: 300;
+    padding-left: ($checkbox-size * 1.5);
+    position: relative;
+
+
+    // styling for the visible checkbox
+    &::after,
+    &::before {
+      box-sizing: border-box;
+      content: "";
+      display: block;
+      position: absolute;
+      transition: all 0.25s ease;
+      vertical-align: middle;
+    }
+
+    &::before {
+      background: darken(color(fiord), 15%);
+      border-radius: 3px;
+      left: 0;
+      height: $checkbox-size;
+      width: $checkbox-size;
+    }
+
+    // only visible when checkbox is checked
+    &::after {
+      $checkbox-inner-size: ($checkbox-size * 0.4);
+      background: desaturate(lighten(color(fiord), 35%), 5%);
+      border-radius: 2px;
+      height: $checkbox-inner-size;
+      left: ($checkbox-size - $checkbox-inner-size) / 2;
+      opacity: 0;
+      top: ($checkbox-size - $checkbox-inner-size) / 2;
+      transform: scale(3);
+      transition: all 0.25s ease;
+      width: $checkbox-inner-size;
+    }
+  }
+
+  &:hover + .label {
+    cursor: pointer;
+  }
+
+  &:checked + .label {
+    &::after {
+      transform: scale(1);
+      opacity: 1;
+    }
+  }
+
+  &:disabled + .label {
+    opacity: 0.25;
+  }
+}

@@ -9,8 +9,12 @@ body {
 h2 {
   font-size: $font-large;
   font-weight: bold;
-  letter-spacing: 0.025em;
-  margin-bottom: 2em;
+  margin-bottom: 1em;
+
+
+  @include break(tablet) {
+    margin-bottom: 2em;
+  }
 }
 
 h3 {
@@ -35,4 +39,8 @@ h4 {
 
 a {
   cursor: pointer;
+}
+
+p {
+  margin-bottom: 0.5em;
 }

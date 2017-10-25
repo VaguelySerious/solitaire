@@ -23,16 +23,22 @@
           top: 7px;
         }
       }
+    }
 
 
-      // button color
-      &__new {
-        @include gradient(70deg, $value);
+    // button color
+    .button--primary {
+      @include gradient(70deg, $value);
 
-        &:hover {
-          @include gradient(70deg, saturate(lighten($value, 5%), 10%));
-        }
+      &:hover {
+        @include gradient(70deg, saturate(lighten($value, 5%), 10%));
       }
+    }
+
+
+    // modal headlines
+    .modal__headline {
+      color: $value;
     }
   }
 }

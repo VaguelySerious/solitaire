@@ -3,17 +3,6 @@ $statistics-title-width: (100% / 3);
 
 .statistics {
   font-size: 1.2em;
-  left: 50%;
-  margin-bottom: rem(40);
-  padding: rem(48) rem(48) rem(56) rem(56);
-  top: 50%;
-  transform: translate(-55%, -50%);
-
-
-  &__headline {
-    color: color(white);
-    text-align: center;
-  }
 
 
   // statistics table header
@@ -81,12 +70,5 @@ $statistics-title-width: (100% / 3);
     &--negative {
       color: lighten(color(brickred), 10%);
     }
-  }
-
-
-  // start new game
-  &__new {
-    display: block;
-    margin: rem(56) auto 0;
   }
 }

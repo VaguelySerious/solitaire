@@ -30,6 +30,7 @@
 @import "components/button";
 @import "components/card";
 @import "components/card-placeholder";
+@import "components/checkbox";
 @import "components/deck";
 @import "components/foundations";
 @import "components/free-cell";
@@ -41,11 +42,12 @@
 @import "partials/solitaire";
 
 @import "layout/core";
+@import "layout/autocomplete";
 @import "layout/controls";
+@import "layout/help";
+@import "layout/menu";
 @import "layout/options";
 @import "layout/overlay";
-@import "layout/autocomplete";
-@import "layout/menu";
 @import "layout/statistics";
 @import "layout/tutorial";
 @import "layout/typography";

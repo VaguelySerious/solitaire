@@ -38,19 +38,5 @@
         width: 22px;
       }
     }
-
-    @include break(hd) {
-      height: 48px;
-      width: 48px;
-
-      &-icon {
-        height: 25px;
-        width: 36px;
-
-        span {
-          height: 4px;
-        }
-      }
-    }
   }
 }

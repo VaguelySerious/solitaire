@@ -21,11 +21,6 @@
       height: 30px;
       width: 30px;
     }
-
-    @include break(hd) {
-      height: 48px;
-      width: 48px;
-    }
   }
 
   &__icon {
@@ -71,10 +66,6 @@
         @include break(tablet) {
           font-size: $font-large;
         }
-
-        @include break(hd) {
-          font-size: 2.3rem;
-        }
       }
 
       &.invalid::before {
@@ -95,10 +86,6 @@
         position: absolute;
         top: 0;
         width: 2px;
-
-        @include break(hd) {
-          width: 4px;
-        }
       }
 
       &::before {
@@ -113,10 +100,6 @@
         @include break(tablet) {
           left: 8px;
         }
-
-        @include break(hd) {
-          left: 16px;
-        }
       }
     }
 
@@ -124,11 +107,6 @@
     @include break(tablet) {
       height: 18px;
       width: 18px;
-    }
-
-    @include break(hd) {
-      height: 36px;
-      width: 36px;
     }
   }
 }

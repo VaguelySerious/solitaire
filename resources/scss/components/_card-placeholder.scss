@@ -19,7 +19,7 @@
   // border
   &::before {
     box-sizing: border-box;
-    border: 2px solid rgba(color(black), 0.4);
+    border: 1px solid rgba(color(black), 0.4);
     @include card-border-radius;
     bottom: 0;
     content: "";
@@ -27,6 +27,11 @@
     position: absolute;
     right: 0;
     top: 0;
+
+
+    @include break(l-between) {
+      border-width: 2px;
+    }
   }
 
   // reset position for cards in a placeholder
