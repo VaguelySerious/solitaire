@@ -4,6 +4,9 @@
 // TODO: Refactor
 // TODO: Merge drag and drop
 
+// TODO: Fix moving to same stack prediction\
+// TODO: Make hints highlight cards
+
 //////////////////////
 // GLOBAL VARIABLES //
 //////////////////////
@@ -18,8 +21,10 @@ var cycleTimes = 2;
 
 var showTimer = false;
 var showHelp = true;
+var enableHints = true;
 var vegasMode = false;
 var score = 0;
+var stats = [[0,0,0],[0,0,0],[0,0,0]];
 
 var gameTime = 0;
 var timerStarted = false;
@@ -221,6 +226,9 @@ function cardInteraction(card){
     },500);
   }
   checkConditions();
+  if (enableHints){
+    displayHints();
+  }
 }
 
 // Un-highlight a card and forget it
@@ -335,7 +343,7 @@ function checkConditions () {
     }
     else if (!possibleMove)
       console.log("Hmm. It seems there are no more possible moves.\nConsider starting a new game.");
-  // }
+  }
 
   // Check if you can auto-complete
   if (!autoCompletable){
@@ -356,13 +364,15 @@ function checkConditions () {
 
   // Check for win-condition
   if (stacks[2].length + stacks[3].length + stacks[4].length + stacks[5].length === 52){
-    // Stop the timer
+    winGame();
+  }
+}
+
+function winGame () {
+  // Stop the timer
     clearInterval(timerInterval);
     // Scoring
     score += Math.floor(700000/gameTime);
-    //
-    alert("-insert win screen here-");
-  }
 }
 
 function autoComplete() {
@@ -549,7 +559,7 @@ $("#dismiss").click(function(){
 
 // Start screen start game
 $(".new-game").click(function(){
-  this.parentElement..classList.toggle("modal--show");
+  this.parentElement.parentElement.classList.toggle("modal--show");
   resetBoard();
 });
 
@@ -562,7 +572,7 @@ document.onkeypress = function(e){
     break;
     case 110: resetBoard();
     break;
-    case 104: console.log("Pressed button to display help");
+    case 104: $(".help").toggleClass("modal--show");
     break;
     case 116: console.log("Pressed button to display hint");
     break;
@@ -582,7 +592,8 @@ document.onkeypress = function(e){
 
 if (!showHelp){
   resetBoard();
+  $(".help").toggleClass("modal--show");
 }
 else {
-  $(".help").toggleClass("modal--show");
+
 }
