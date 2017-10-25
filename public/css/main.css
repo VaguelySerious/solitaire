@@ -282,7 +282,7 @@ elements-of-type(html5-block) {
     border-radius: 0.75vw; }
   .card-placeholder::before {
     box-sizing: border-box;
-    border: 1px solid rgba(31, 31, 31, 0.4);
+    border: 1px solid #303e55;
     border-radius: 0.75vw;
     bottom: 0;
     content: "";
@@ -474,15 +474,23 @@ elements-of-type(html5-block) {
     top: -1px; }
   .foundations__foundation:not(:empty) {
     box-shadow: 2.75px 1.5px 6px rgba(0, 0, 0, 0.05), -2.75px 4px 6px rgba(0, 0, 0, 0.1); }
+  .foundations__foundation::after {
+    color: #303e55;
+    left: 50%;
+    position: absolute;
+    top: 50%;
+    transform: translate(-50%, -50%); }
+  .foundations__foundation:nth-child(1)::after {
+    content: "♦"; }
+  .foundations__foundation:nth-child(2)::after {
+    content: "♥"; }
+  .foundations__foundation:nth-child(3)::after {
+    content: "♠"; }
+  .foundations__foundation:nth-child(4)::after {
+    content: "♣"; }
   .foundations__foundation .card__front,
   .foundations__foundation .card__back {
     box-shadow: none; }
-
-.free-cells {
-  display: -ms-flexbox;
-  display: flex;
-  -ms-flex-pack: justify;
-      justify-content: space-between; }
 
 .lightbulb {
   left: 50%;
@@ -707,6 +715,142 @@ elements-of-type(html5-block) {
     opacity: 1;
     transform: translate(-50%, 0); }
 
+.board--freecell {
+  padding-left: 4.1666666667vw;
+  padding-right: 4.1666666667vw; }
+  .board--freecell .card {
+    height: 11.877962963vw;
+    width: 8.4842592593vw; }
+    .board--freecell .card__back, .board--freecell .card__front {
+      border-radius: 0.75vw; }
+    .board--freecell .card__back {
+      border-width: 0.424212963vw; }
+    .board--freecell .card__front::before {
+      font-size: 4.2421296296vw; }
+    .board--freecell .card__color {
+      font-size: 1.2726388889vw; }
+  .board--freecell .card-placeholder {
+    height: 11.877962963vw;
+    width: 8.4842592593vw;
+    margin-left: 1.9135416667vw; }
+    .board--freecell .card-placeholder.tableau__column:before {
+      height: 11.877962963vw;
+      width: 8.4842592593vw;
+      margin-left: 0; }
+  .board--freecell .foundations__foundation::after,
+  .board--freecell .deck__button::before {
+    font-size: 4.2421296296vw; }
+  @media only screen and (min-width: 414px) {
+    .board--freecell {
+      padding-left: 8.3333333333vw;
+      padding-right: 8.3333333333vw; }
+      .board--freecell .card {
+        height: 10.7981481481vw;
+        width: 7.712962963vw; }
+        .board--freecell .card__back, .board--freecell .card__front {
+          border-radius: 0.75vw; }
+        .board--freecell .card__back {
+          border-width: 0.3856481481vw; }
+        .board--freecell .card__front::before {
+          font-size: 3.8564814815vw; }
+        .board--freecell .card__color {
+          font-size: 1.1569444444vw; }
+      .board--freecell .card-placeholder {
+        height: 10.7981481481vw;
+        width: 7.712962963vw;
+        margin-left: 1.7395833333vw; }
+        .board--freecell .card-placeholder.tableau__column:before {
+          height: 10.7981481481vw;
+          width: 7.712962963vw;
+          margin-left: 0; }
+      .board--freecell .foundations__foundation::after,
+      .board--freecell .deck__button::before {
+        font-size: 3.8564814815vw; } }
+  @media only screen and (min-width: 1024px) {
+    .board--freecell {
+      padding-left: 16.6666666667vw;
+      padding-right: 16.6666666667vw; }
+      .board--freecell .card {
+        height: 8.6385185185vw;
+        width: 6.1703703704vw; }
+        .board--freecell .card__back, .board--freecell .card__front {
+          border-radius: 0.75vw; }
+        .board--freecell .card__back {
+          border-width: 0.3085185185vw; }
+        .board--freecell .card__front::before {
+          font-size: 3.0851851852vw; }
+        .board--freecell .card__color {
+          font-size: 0.9255555556vw; }
+      .board--freecell .card-placeholder {
+        height: 8.6385185185vw;
+        width: 6.1703703704vw;
+        margin-left: 1.3916666667vw; }
+        .board--freecell .card-placeholder.tableau__column:before {
+          height: 8.6385185185vw;
+          width: 6.1703703704vw;
+          margin-left: 0; }
+      .board--freecell .foundations__foundation::after,
+      .board--freecell .deck__button::before {
+        font-size: 3.0851851852vw; } }
+  @media only screen and (min-width: 1440px) {
+    .board--freecell {
+      padding-left: 20.8333333333vw;
+      padding-right: 20.8333333333vw; }
+      .board--freecell .card {
+        height: 7.5587037037vw;
+        width: 5.3990740741vw; }
+        .board--freecell .card__back, .board--freecell .card__front {
+          border-radius: 0.75vw; }
+        .board--freecell .card__back {
+          border-width: 0.2699537037vw; }
+        .board--freecell .card__front::before {
+          font-size: 2.699537037vw; }
+        .board--freecell .card__color {
+          font-size: 0.8098611111vw; }
+      .board--freecell .card-placeholder {
+        height: 7.5587037037vw;
+        width: 5.3990740741vw;
+        margin-left: 1.2177083333vw; }
+        .board--freecell .card-placeholder.tableau__column:before {
+          height: 7.5587037037vw;
+          width: 5.3990740741vw;
+          margin-left: 0; }
+      .board--freecell .foundations__foundation::after,
+      .board--freecell .deck__button::before {
+        font-size: 2.699537037vw; } }
+  @media only screen and (min-width: 1920px) {
+    .board--freecell {
+      padding-left: 29.1666666667vw;
+      padding-right: 29.1666666667vw; }
+      .board--freecell .card {
+        height: 5.3990740741vw;
+        width: 3.8564814815vw; }
+        .board--freecell .card__back, .board--freecell .card__front {
+          border-radius: 0.75vw; }
+        .board--freecell .card__back {
+          border-width: 0.1928240741vw; }
+        .board--freecell .card__front::before {
+          font-size: 1.9282407407vw; }
+        .board--freecell .card__color {
+          font-size: 0.5784722222vw; }
+      .board--freecell .card-placeholder {
+        height: 5.3990740741vw;
+        width: 3.8564814815vw;
+        margin-left: 0.8697916667vw; }
+        .board--freecell .card-placeholder.tableau__column:before {
+          height: 5.3990740741vw;
+          width: 3.8564814815vw;
+          margin-left: 0; }
+      .board--freecell .foundations__foundation::after,
+      .board--freecell .deck__button::before {
+        font-size: 1.9282407407vw; } }
+
+.free-cells {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-pack: justify;
+      justify-content: space-between; }
+
 .board--solitaire {
   padding-left: 4.1666666667vw;
   padding-right: 4.1666666667vw; }
@@ -729,6 +873,7 @@ elements-of-type(html5-block) {
       height: 15.2716666667vw;
       width: 10.9083333333vw;
       margin-left: 0; }
+  .board--solitaire .foundations__foundation::after,
   .board--solitaire .deck__button::before {
     font-size: 5.4541666667vw; }
   @media only screen and (min-width: 414px) {
@@ -754,6 +899,7 @@ elements-of-type(html5-block) {
           height: 13.8833333333vw;
           width: 9.9166666667vw;
           margin-left: 0; }
+      .board--solitaire .foundations__foundation::after,
       .board--solitaire .deck__button::before {
         font-size: 4.9583333333vw; } }
   @media only screen and (min-width: 1024px) {
@@ -779,6 +925,7 @@ elements-of-type(html5-block) {
           height: 11.1066666667vw;
           width: 7.9333333333vw;
           margin-left: 0; }
+      .board--solitaire .foundations__foundation::after,
       .board--solitaire .deck__button::before {
         font-size: 3.9666666667vw; } }
   @media only screen and (min-width: 1440px) {
@@ -804,6 +951,7 @@ elements-of-type(html5-block) {
           height: 9.7183333333vw;
           width: 6.9416666667vw;
           margin-left: 0; }
+      .board--solitaire .foundations__foundation::after,
       .board--solitaire .deck__button::before {
         font-size: 3.4708333333vw; } }
   @media only screen and (min-width: 1920px) {
@@ -829,6 +977,7 @@ elements-of-type(html5-block) {
           height: 6.9416666667vw;
           width: 4.9583333333vw;
           margin-left: 0; }
+      .board--solitaire .foundations__foundation::after,
       .board--solitaire .deck__button::before {
         font-size: 2.4791666667vw; } }
 

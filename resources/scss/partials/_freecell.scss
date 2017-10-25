@@ -8,3 +8,14 @@
   // one card-width as a spacer between foundations and free cells
   @include board-size(9);
 }
+
+
+//
+// free cells
+// behave similar to any card placeholder
+//
+
+.free-cells {
+  display: flex;
+  justify-content: space-between;
+}

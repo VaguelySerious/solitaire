@@ -33,12 +33,12 @@
 @import "components/checkbox";
 @import "components/deck";
 @import "components/foundations";
-@import "components/free-cell";
 @import "components/lightbulb";
 @import "components/modal";
 @import "components/tableau";
 @import "components/tooltip";
 
+@import "partials/freecell";
 @import "partials/solitaire";
 
 @import "layout/core";

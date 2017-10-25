@@ -52,6 +52,7 @@
       }
     }
 
+    .foundations__foundation::after,
     .deck__button::before {
       font-size: ($card-width * 0.5);
     }
