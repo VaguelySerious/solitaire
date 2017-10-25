@@ -17,3 +17,12 @@ $('.board').addClass('board--' + cardColors[randomColor]);
 $(".options-toggle").click(function(){
   $(".options").toggleClass("options--open");
 });
+
+// var stats = {
+//   games: 0,
+//   wins: 0,
+//   bestTime: 0,
+//   avgTime: 0,
+//   bestScore: 0,
+//   avgScore: 0
+// };

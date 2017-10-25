@@ -21,10 +21,18 @@ var cycleTimes = 2;
 
 var showTimer = false;
 var showHelp = true;
-var enableHints = true;
+var enableHints = false;
 var vegasMode = false;
 var score = 0;
-var stats = [[0,0,0],[0,0,0],[0,0,0]];
+var madeFirstMove = false;
+var stats = {
+  games: 0,
+  wins: 0,
+  bestTime: 0,
+  avgTime: 0.0,
+  bestScore: 0,
+  avgScore: 0.0
+};
 
 var gameTime = 0;
 var timerStarted = false;
@@ -226,8 +234,8 @@ function cardInteraction(card){
     },500);
   }
   checkConditions();
-  if (enableHints){
-    displayHints();
+  if (enableHints && !vegasMode){
+    displayHint();
   }
 }
 
@@ -269,6 +277,10 @@ function handleCycle(){
 
 // Saves a certain amount of game states
 function createGameState() {
+  if (!madeFirstMove){
+    madeFirstMove = true;
+    stats.games += 1;
+  }
   if (progressiveUndo){
     $(".controls__icon--undo").removeClass("invalid");
   }
@@ -276,7 +288,6 @@ function createGameState() {
   if (gameStates.length > maxGameStates){
     gameStates.shift();
   }
-
   // TODO: CREATE COOKIES
 }
 
@@ -343,7 +354,7 @@ function checkConditions () {
     }
     else if (!possibleMove)
       console.log("Hmm. It seems there are no more possible moves.\nConsider starting a new game.");
-  }
+  // }
 
   // Check if you can auto-complete
   if (!autoCompletable){
@@ -368,11 +379,52 @@ function checkConditions () {
   }
 }
 
+function displayHint () {
+  console.log("Stuff");
+}
+
 function winGame () {
-  // Stop the timer
+
+    // Stop the timer
+    timerStarted = false;
     clearInterval(timerInterval);
     // Scoring
     score += Math.floor(700000/gameTime);
+    $("#score").text(score);
+
+
+    // Calculate stats
+    var statboard = document.getElementsByClassName("statistics__content");
+
+    if (gameTime < stats.bestTime || stats.games == 0){
+      stats.bestTime = gameTime;
+      if (!statboard[3].classList.toggle("statistics__content--new"))
+        statboard[3].classList.toggle("statistics__content--new");
+    }
+    if (score > stats.bestScore || stats.games == 0){
+      stats.bestScore = score;
+      if (!statboard[6].classList.toggle("statistics__content--new"))
+        statboard[6].classList.toggle("statistics__content--new");
+    }
+    stats.avgTime = stats.wins > 0 ? ((stats.wins * stats.avgTime + gameTime)/(stats.wins+1)) : gameTime;
+    stats.avgScore = stats.wins > 0 ? ((stats.wins * stats.avgScore + score)/(stats.wins+1)) : score;
+
+    stats.wins += 1;
+    
+    statboard[3].innerHTML = timeToString(gameTime);
+    statboard[4].innerHTML = timeToString(stats.bestTime);
+    statboard[5].innerHTML = stats.avgTime.toFixed(2);
+
+    statboard[6].innerHTML = score;
+    statboard[7].innerHTML = stats.bestScore;
+    statboard[8].innerHTML = stats.avgScore.toFixed(2);
+
+    statboard[9].innerHTML = stats.wins;
+    statboard[10].innerHTML = stats.games - stats.wins;
+    statboard[11].innerHTML = (1.0 * stats.games / (1.0 * stats.wins)).toFixed(2);
+
+    // Print statistics
+    document.getElementsByClassName("statistics")[0].classList.toggle("modal--show");
 }
 
 function autoComplete() {
@@ -423,6 +475,9 @@ function info (cardNum) {
   };
 }
 
+function timeToString (time) {
+  return (gameTime/3600>=1 ? (Math.floor(gameTime/3600) + ":") : "") + Math.floor(gameTime/60)%60 + ":" + (gameTime%60).toString().padStart(2, "0");
+}
 
 
 ////////////////
@@ -432,6 +487,7 @@ function info (cardNum) {
 // Set up a fresh new board
 function resetBoard(){
 
+  madeFirstMove = false;
   vegasMode = document.getElementById("cumulative").checked;
   timerReset();
   if (cycleTimes == 0)
@@ -493,6 +549,7 @@ function rebaseDom () {
 }
 
 function timerReset() {
+  gameTime = 0;
   if (!timerStarted) {
     timerStarted = true;
     spanValue = $('#timer');
@@ -505,9 +562,20 @@ function timerReset() {
       spanValue.text((gameTime/3600>=1 ? (Math.floor(gameTime/3600) + ":") : 
         "") + Math.floor(gameTime/60)%60 + ":" + (gameTime%60).toString().padStart(2, "0"));
     }, 1000);
-  } else {
-    gameTime = 0;
   }
+}
+
+function resetStats() {
+  stats = {
+    games: 0,
+    wins: 0,
+    bestTime: 0,
+    avgTime: 0,
+    bestScore: 0,
+    avgScore: 0
+  };
+  resetBoard();
+  this.parentElement.parentElement.classList.toggle("modal--show");
 }
 
 function updateTimerVisibility() {
@@ -540,6 +608,8 @@ $("#cumulative").click(function(){
 });
 
 $("#cycleButton").click(handleCycle);
+
+$("#statResetButton").click(resetStats);
 
 $("#timerBox").click(function(){
   showTimer = !showTimer;
@@ -579,7 +649,6 @@ document.onkeypress = function(e){
     case 32: if (autoCompletable) autoComplete();
     break;
   }
-  // console.log(e.which);
 };
 
 
