@@ -19,7 +19,7 @@
   // border
   &::before {
     box-sizing: border-box;
-    border: 1px solid rgba(color(black), 0.4);
+    border: 1px solid darken(color(fiord), 5%);
     @include card-border-radius;
     bottom: 0;
     content: "";
