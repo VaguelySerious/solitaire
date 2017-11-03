@@ -116,7 +116,7 @@ elements-of-type(html5-block) {
   -ms-flex-negative: 0;
       flex-shrink: 0;
   position: relative;
-  transform: translateZ(-1px); }
+  transform: translateZ(0px); }
   .card__back {
     background: #FE8139;
     background-image: -owg-linear-gradient(-45deg, #FE8139, #fe6039);
