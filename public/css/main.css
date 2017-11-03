@@ -479,7 +479,8 @@ elements-of-type(html5-block) {
     left: 50%;
     position: absolute;
     top: 50%;
-    transform: translate(-50%, -50%); }
+    transform: translate(-50%, -50%);
+    z-index: -1; }
   .foundations__foundation:nth-child(1)::after {
     content: "♦"; }
   .foundations__foundation:nth-child(2)::after {
