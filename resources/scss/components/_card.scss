@@ -114,6 +114,7 @@
     @each $key, $value in $card-colors {
       .card--#{$key} &::before {
         content: $value;
+        font-family: $card-font;
       }
     }
   }
