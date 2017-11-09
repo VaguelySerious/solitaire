@@ -7,6 +7,9 @@
 function toggleHelp () {
 	document.getElementsByClassName("help")[0].classList.toggle("modal--show");
 }
+function toggleStats () {
+	document.getElementsByClassName("statistics")[0].classList.toggle("modal--show");
+}
 function toggleMenu () {
 	document.getElementsByClassName("options")[0].classList.toggle("options--open");
 }

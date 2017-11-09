@@ -8,11 +8,17 @@ Open Solitaire Project
 //				with irregualar card/color count
 // TODO: Fix cards getting ID from constructor on board.build
 
+// TODO: Statistic avg value change always red EXCEPT when the class
+//				statistics__change--positive is active
+
+// TODO: Color gradient on buttons only visible with certain colors
+
 //////////////////////
 // GLOBAL VARIABLES //
 //////////////////////
 
 var colors = ["diamonds", "hearts", "spades", "clubs"];
+var game = null;
 
 ////////////////////////
 // OBJECT DEFINITIONS //
@@ -165,7 +171,9 @@ function Board (size, count, colorCount, distribution, isRandom) {
 	};
 }
 
-function Stats(maxStates) { // TODO
+function Stats(maxStates, cumulative) { // TODO
+	this.maxStates = maxStates || 1;
+	this.cumulative = cumulative || false;
 	this.values = [
 		[0, 0, 0],		// Games / Wins / Undos
 		[0, 0, 0],		// Current, Best, AVG - SCORE
@@ -175,41 +183,6 @@ function Stats(maxStates) { // TODO
 	this.valueChanges = [0, 0, 0, 0];
 	this.newBest = [false, false, false];
 	this.scoreChanges = [];
-
-	this.addStats = function () {
-		this.newBest = [false, false, false];
-		var oldValues = [[this.values[1][2]],[this.values[2][2]],[this.values[3][2]]];
-		// Calculate new averages
-		for (var i = 1; i < this.values.length; i++) {
-			this.values[i][2] = (this.values[i][2] * this.values[0][1] +
-				this.values[i][0]) / (this.values[0][1]+1);
-		}
-		// Calculate change in averages
-		this.valueChanges[0] = this.values[0][0] / (1.0 *this.values[0][1]) - this.values[0][0] / (this.values[0][1] + 1.00);
-		for (var k = 1; k < this.valueChanges.length; k++) {
-			this.valueChanges[k] = this.values[k][2] - oldValues[k-1];
-		}
-
-		// SEE IF CHANGES ARE POSITIVE OR NOT
-
-		// Set new best score
-		if (this.values[1][2] > this.values[1][1]){
-			this.values[1][2] = this.values[1][1];
-			this.newBest[0] = true;
-		}
-		// Set new best moves
-		if (this.values[2][2] < this.values[2][1]) {
-			this.values[2][2] = this.values[2][1];
-			this.newBest[1] = true;
-		}
-		// Set new best time
-		if (this.values[3][2] < this.values[3][1]) {
-			this.values[3][2] = this.values[3][1];
-			this.newBest[2] = true;
-		}
-		// Increment wins
-		this.wins += 1;
-	};
 
 	this.updateGames = function (val) {
 		this.values[0][0] += val;
@@ -231,18 +204,70 @@ function Stats(maxStates) { // TODO
 		this.values[2][0] += val;
 	};
 
-	this.print = function () {
-		var elements = document.getElementsByClassName("statistics__content");
-		for (var i = 3; i < 15; i++) { // Set the scoreboard values
-			console.log([Math.floor((i-3)/3), (i-3)%3]);
-			elements[i].innerHTML = this.values[Math.floor((i-3)/3)][(i-3)%3];
+	// Called after a win
+	// Commits current stats to averages and bests
+	// Then cleans all the "current" values
+	this.commitStats = function () {
+
+		// Edge case for first game
+		if (this.values[0][1] === 0){
+			this.newBest = [true, true, true];
+			for (var l = 1; l < this.values.length; l++) {
+				this.values[l][1] = this.values[l][0];
+				this.values[l][2] = this.values[l][0];
+			}
 		}
-		for (var j = 0; j < 4; j++) {
-			document.getElementsByClassName("statistics__change")[j].innerHTML =
-				this.valueChanges[j];
-			// TODO SET IF CHANGE POSITIVE OR NEGATIVE
+		// Normal case
+		else {
+			var oldValues = [[this.values[1][2]],[this.values[2][2]],[this.values[3][2]]];
+			this.newBest = [false, false, false];
+			for (var i = 1; i < this.values.length; i++) {
+				// Calculate averages
+				this.values[i][2] = (this.values[i][2] * this.values[0][1] +
+					this.values[i][0]) / (this.values[0][1]+1);
+				// Calculate best scores
+				if (this.values[i][i==1?0:1] > this.values[i][i==1?1:0]) {
+					this.values[i][1] = this.values[i][0];
+					this.newBest[i] = true;
+				}
+				// Calculate change in averages
+				this.valueChanges[i] = this.values[i][2] - oldValues[i-1];
+			}
+			this.valueChanges[0] = this.values[0][1] / (1.0 *this.values[0][1]) - this.values[0][0] / (this.values[0][1] + 1.00);
 		}
 
+		// Increment wins and print scoreboard
+		this.values[0][1] += 1;
+		this.print();
+
+		// Clean current values
+		for (var j = 1; j < this.values.length; j++) {
+			if (!this.cumulative && j != 1) this.values[j][0] = 0;
+		}
+	};
+
+	// Sets the DOM of the Statistics-Board
+	this.print = function () {
+		// Set values
+		var elements1 = document.getElementsByClassName("statistics__content");
+		for (var i = 3; i < 15; i++) {
+			elements1[i].innerHTML = this.values[Math.floor((i-3)/3)][(i-3)%3];
+		}
+		// Set value changes
+		var elements2 = document.getElementsByClassName("statistics__change");
+		for (var j = 0; j < 4; j++) {
+			elements2[j].innerHTML = this.valueChanges[j];
+			
+			// Check if change is positive or negative
+			if (j > 1 ? (this.valueChanges[j] < 0) : (this.valueChanges[j] >= 0)){
+				elements2[j].classList.add("statistics__change--positive");
+				elements2[j].classList.remove("statistics__change--negative");
+			}
+			else{
+				elements2[j].classList.add("statistics__change--negative");
+				elements2[j].classList.remove("statistics__change--positive");
+			}
+		}
 	};
 
 	this.somethingsomethingTimer = function () {
@@ -254,9 +279,11 @@ function Stats(maxStates) { // TODO
 // A handler for a single game type, i.e. Klondike
 // Keeps track of statistics and everything for _that_ game
 // Handles cookies, save states and undos
-function Game (maxGameStates) { // TODO Pass params of board?
-	this.maxGameStates = maxGamesStates;
-	this.stats = new Stats(maxGameStates);
+function Game (distribution, maxGameStates) { // TODO Pass params of board?
+	this.maxGameStates = maxGameStates;
+	this.stats = new Stats();
+	this.board = new Board(13, 52, 4, distribution); // TODO
+	this.board.applyToDom();
 	// Control text of menus
 	
 	// Track score
@@ -268,7 +295,8 @@ function Game (maxGameStates) { // TODO Pass params of board?
 //  MAIN  GAME  CODE  //
 ////////////////////////
 
-var currentGame = null;
+
+// Use currentGame here
 // This is so that a click on "start playing" button
 // will always just execute the function currentGame.newGame()
 // independent of which game is being played
@@ -296,7 +324,20 @@ var exampleDistribution = [
 ];
 
 toggleHelp();
-var b = new Board(13, 52, 4, exampleDistribution);
-var a = new Stats(1);
-a.print();
-// b.applyToDom();
+game = new Game(exampleDistribution, 1);
+
+// EXAMPLE GAMES FOR STATS
+// Game 1
+game.stats.updateGames(1);
+game.stats.updateScore(600);
+game.stats.updateMoves(200);
+game.stats.updateUndos(4);
+game.stats.values[3][0] = 120;
+game.stats.commitStats();
+// Game 2/3 (one loss)
+game.stats.updateGames(2);
+game.stats.updateScore(1200);
+game.stats.updateMoves(100);
+game.stats.updateUndos(4);
+game.stats.values[3][0] = 60;
+game.stats.commitStats();
