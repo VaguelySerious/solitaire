@@ -11,18 +11,9 @@ var cardColors = [
   'aqua'
 ];
 var randomColor = Math.floor(Math.random() * cardColors.length);
-$('.board').addClass('board--' + cardColors[randomColor]);
+document.getElementById("board").className += cardColors[randomColor];
 
-// off-canvas options menu
-$(".options-toggle").click(function(){
-  $(".options").toggleClass("options--open");
-});
-
-// var stats = {
-//   games: 0,
-//   wins: 0,
-//   bestTime: 0,
-//   avgTime: 0,
-//   bestScore: 0,
-//   avgScore: 0
-// };
+document.getElementsByClassName("options-toggle")[0].onclick =
+function () {document.getElementById("options").classList.toggle("options--open");};
+document.getElementsByClassName("options-toggle")[1].onclick =
+function () {document.getElementById("options").classList.toggle("options--open");};
