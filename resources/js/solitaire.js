@@ -4,7 +4,7 @@
 // TODO: Refactor
 // TODO: Merge drag and drop
 
-// TODO: Fix moving to same stack prediction\
+// TODO: Fix moving to same stack prediction
 // TODO: Make hints highlight cards
 
 //////////////////////
@@ -475,10 +475,11 @@ function info (cardNum) {
   };
 }
 
-function timeToString (time) {
-  return (gameTime/3600>=1 ? (Math.floor(gameTime/3600) + ":") : "") + Math.floor(gameTime/60)%60 + ":" + (gameTime%60).toString().padStart(2, "0");
+function timeToString (seconds) {
+  return (seconds/3600>=1 ? (Math.floor(seconds/3600) + ":") : "") +
+  (Math.floor(seconds/60)%60).toString().padStart(2, "0") + ":" +
+  (seconds%60).toString().padStart(2, "0");
 }
-
 
 ////////////////
 // GAME SETUP //
@@ -650,8 +651,6 @@ document.onkeypress = function(e){
     break;
   }
 };
-
-
 
 ////////////////////
 // MAIN EXECUTION //

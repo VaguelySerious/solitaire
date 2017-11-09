@@ -1,0 +1,39 @@
+LIST OF ALL DOM INTERACTIONS
+Preferably write helper functions for most of these.
+
+Menu (via Button):
+	Toggle for timer
+	Toggle for vegas
+	Toggle for drag&drop
+	Button for different game
+	Button for different game...
+	>> Button to reset stats
+
+Top-Middle:
+	Timer with value
+	Score with value
+
+Top-Right:
+	Button for new game (WITH HOTKEY)
+	Button for undo (WITH HOTKEY)
+
+Optional Menus:
+	Start screen: (WITH HOTKEY)
+		Toggle for disabling
+		Button to start new game
+	Win screen:
+		Button to reset stats
+		Button to start new game
+
+Optional Popups:
+	Panel for auto-solve:
+		Button for auto-solve (WITH HOTKEY)
+	Panel for unsolvable-state:
+		Button for new game
+
+Cards:
+	All cards as buttons
+	Most cards draggable
+
+Other:
+	Hints have a Hotkey too
