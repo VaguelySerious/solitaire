@@ -182,13 +182,17 @@ elements-of-type(html5-block) {
       top: 47.5%;
       transform: translate(-50%, -50%); }
     .card--diamonds .card__front::before {
-      content: "♦"; }
+      content: "♦";
+      font-family: "Helvetica Neue", "Arial", sans-serif; }
     .card--hearts .card__front::before {
-      content: "♥"; }
+      content: "♥";
+      font-family: "Helvetica Neue", "Arial", sans-serif; }
     .card--spades .card__front::before {
-      content: "♠"; }
+      content: "♠";
+      font-family: "Helvetica Neue", "Arial", sans-serif; }
     .card--clubs .card__front::before {
-      content: "♣"; }
+      content: "♣";
+      font-family: "Helvetica Neue", "Arial", sans-serif; }
   .card__back {
     border-color: #FDFDFD;
     border-style: solid;
