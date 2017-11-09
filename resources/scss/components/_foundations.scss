@@ -13,6 +13,23 @@
       @include elevate(3);
     }
 
+
+    &::after {
+      color: darken(color(fiord), 5%);
+      left: 50%;
+      position: absolute;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      z-index: -1;
+    }
+
+    @for $i from 1 through 4 {
+      &:nth-child(#{$i})::after {
+        content: map-nth(map-nth($card-colors, $i), 2);
+      }
+    }
+
+
     .card__front,
     .card__back {
       box-shadow: none;
