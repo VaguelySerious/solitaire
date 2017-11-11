@@ -15,23 +15,6 @@
   }
 
 
-  .card {
-
-    // cards should be stacked so that the card value
-    // and color are still visible
-    margin-bottom: -100%;
-
-    // if the card is face down, save space
-    &--back {
-      margin-bottom: -115%;
-    }
-
-    &:last-child {
-      margin-bottom: 0;
-    }
-  }
-
-
   @include break(tablet) {
     margin-top: 7.5%;
   }

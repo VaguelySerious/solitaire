@@ -65,7 +65,6 @@ elements-of-type(html5-block) {
   height: 100%;
   -ms-flex-pack: start;
       justify-content: flex-start;
-  overflow: hidden;
   padding-bottom: 36px;
   padding-top: 36px;
   width: 100%; }
@@ -152,7 +151,7 @@ elements-of-type(html5-block) {
         flex-grow: 1;
     -ms-flex-pack: justify;
         justify-content: space-between;
-    padding: 8%; }
+    padding: 6% 8%; }
     .card--back .card__front {
       transform: rotateY(180deg); }
     .card--clicked .card__front, .card--clicked .card__front:hover {
@@ -301,10 +300,10 @@ elements-of-type(html5-block) {
     left: 0;
     position: absolute;
     top: 0; }
-  .board .tableau .card-placeholder {
+  .tableau .card-placeholder {
     box-shadow: none;
     height: auto; }
-    .board .tableau .card-placeholder .card {
+    .tableau .card-placeholder .card {
       left: auto;
       position: relative;
       top: auto; }
@@ -480,6 +479,7 @@ elements-of-type(html5-block) {
     box-shadow: 2.75px 1.5px 6px rgba(0, 0, 0, 0.05), -2.75px 4px 6px rgba(0, 0, 0, 0.1); }
   .foundations__foundation::after {
     color: #303e55;
+    font-family: "Helvetica Neue", "Arial", sans-serif;
     left: 50%;
     position: absolute;
     top: 50%;
@@ -672,12 +672,6 @@ elements-of-type(html5-block) {
     display: flex;
     -ms-flex-direction: column;
         flex-direction: column; }
-  .tableau .card {
-    margin-bottom: -100%; }
-    .tableau .card--back {
-      margin-bottom: -115%; }
-    .tableau .card:last-child {
-      margin-bottom: 0; }
   @media only screen and (min-width: 768px) {
     .tableau {
       margin-top: 7.5%; } }
@@ -725,7 +719,10 @@ elements-of-type(html5-block) {
   padding-right: 4.1666666667vw; }
   .board--freecell .card {
     height: 11.877962963vw;
-    width: 8.4842592593vw; }
+    width: 8.4842592593vw;
+    margin-bottom: -8.6115231481vw; }
+    .board--freecell .card--back {
+      margin-bottom: -9.7993194444vw; }
     .board--freecell .card__back, .board--freecell .card__front {
       border-radius: 0.75vw; }
     .board--freecell .card__back {
@@ -751,7 +748,10 @@ elements-of-type(html5-block) {
       padding-right: 8.3333333333vw; }
       .board--freecell .card {
         height: 10.7981481481vw;
-        width: 7.712962963vw; }
+        width: 7.712962963vw;
+        margin-bottom: -7.8286574074vw; }
+        .board--freecell .card--back {
+          margin-bottom: -8.9084722222vw; }
         .board--freecell .card__back, .board--freecell .card__front {
           border-radius: 0.75vw; }
         .board--freecell .card__back {
@@ -777,7 +777,10 @@ elements-of-type(html5-block) {
       padding-right: 16.6666666667vw; }
       .board--freecell .card {
         height: 8.6385185185vw;
-        width: 6.1703703704vw; }
+        width: 6.1703703704vw;
+        margin-bottom: -6.2629259259vw; }
+        .board--freecell .card--back {
+          margin-bottom: -7.1267777778vw; }
         .board--freecell .card__back, .board--freecell .card__front {
           border-radius: 0.75vw; }
         .board--freecell .card__back {
@@ -803,7 +806,10 @@ elements-of-type(html5-block) {
       padding-right: 20.8333333333vw; }
       .board--freecell .card {
         height: 7.5587037037vw;
-        width: 5.3990740741vw; }
+        width: 5.3990740741vw;
+        margin-bottom: -5.4800601852vw; }
+        .board--freecell .card--back {
+          margin-bottom: -6.2359305556vw; }
         .board--freecell .card__back, .board--freecell .card__front {
           border-radius: 0.75vw; }
         .board--freecell .card__back {
@@ -829,7 +835,10 @@ elements-of-type(html5-block) {
       padding-right: 29.1666666667vw; }
       .board--freecell .card {
         height: 5.3990740741vw;
-        width: 3.8564814815vw; }
+        width: 3.8564814815vw;
+        margin-bottom: -3.9143287037vw; }
+        .board--freecell .card--back {
+          margin-bottom: -4.4542361111vw; }
         .board--freecell .card__back, .board--freecell .card__front {
           border-radius: 0.75vw; }
         .board--freecell .card__back {
@@ -861,7 +870,10 @@ elements-of-type(html5-block) {
   padding-right: 4.1666666667vw; }
   .board--solitaire .card {
     height: 15.2716666667vw;
-    width: 10.9083333333vw; }
+    width: 10.9083333333vw;
+    margin-bottom: -11.0719583333vw; }
+    .board--solitaire .card--back {
+      margin-bottom: -12.599125vw; }
     .board--solitaire .card__back, .board--solitaire .card__front {
       border-radius: 0.75vw; }
     .board--solitaire .card__back {
@@ -887,7 +899,10 @@ elements-of-type(html5-block) {
       padding-right: 8.3333333333vw; }
       .board--solitaire .card {
         height: 13.8833333333vw;
-        width: 9.9166666667vw; }
+        width: 9.9166666667vw;
+        margin-bottom: -10.0654166667vw; }
+        .board--solitaire .card--back {
+          margin-bottom: -11.45375vw; }
         .board--solitaire .card__back, .board--solitaire .card__front {
           border-radius: 0.75vw; }
         .board--solitaire .card__back {
@@ -913,7 +928,10 @@ elements-of-type(html5-block) {
       padding-right: 16.6666666667vw; }
       .board--solitaire .card {
         height: 11.1066666667vw;
-        width: 7.9333333333vw; }
+        width: 7.9333333333vw;
+        margin-bottom: -8.0523333333vw; }
+        .board--solitaire .card--back {
+          margin-bottom: -9.163vw; }
         .board--solitaire .card__back, .board--solitaire .card__front {
           border-radius: 0.75vw; }
         .board--solitaire .card__back {
@@ -939,7 +957,10 @@ elements-of-type(html5-block) {
       padding-right: 20.8333333333vw; }
       .board--solitaire .card {
         height: 9.7183333333vw;
-        width: 6.9416666667vw; }
+        width: 6.9416666667vw;
+        margin-bottom: -7.0457916667vw; }
+        .board--solitaire .card--back {
+          margin-bottom: -8.017625vw; }
         .board--solitaire .card__back, .board--solitaire .card__front {
           border-radius: 0.75vw; }
         .board--solitaire .card__back {
@@ -965,7 +986,10 @@ elements-of-type(html5-block) {
       padding-right: 29.1666666667vw; }
       .board--solitaire .card {
         height: 6.9416666667vw;
-        width: 4.9583333333vw; }
+        width: 4.9583333333vw;
+        margin-bottom: -5.0327083333vw; }
+        .board--solitaire .card--back {
+          margin-bottom: -5.726875vw; }
         .board--solitaire .card__back, .board--solitaire .card__front {
           border-radius: 0.75vw; }
         .board--solitaire .card__back {

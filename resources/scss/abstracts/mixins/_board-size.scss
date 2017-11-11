@@ -10,6 +10,7 @@
   // board size helper mixin
   @mixin helper($n, $board-size) {
     $card-width: card-size($n, $board-size);
+    $card-height: $card-width * $card-ratio;
 
     padding-left: board-padding($board-size);
     padding-right: board-padding($board-size);
@@ -18,6 +19,17 @@
     // card dimensions
     .card {
       @include card-dimensions($n, $board-size);
+
+      // cards should be stacked so that the card value
+      // and color are still visible
+      margin-bottom: ($card-height * -0.725);
+
+
+      // if the card is face down, save space
+      &--back {
+        margin-bottom: ($card-height * -0.825);
+      }
+
 
       &__back,
       &__front {

@@ -6,6 +6,6 @@
 @mixin card-dimensions($n, $board-size: $board-default-size) {
   $x: card-size($n, $board-size);
 
-  height: $x * 1.4;
+  height: $x * $card-ratio;
   width: $x;
 }
