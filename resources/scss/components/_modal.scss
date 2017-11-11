@@ -44,8 +44,12 @@
 
 
     @include break(mobile-l) {
-      flex-direction: row-reverse;
-      justify-content: space-between;
+      justify-content: center;
+
+      .help & {
+        flex-direction: row-reverse;
+        justify-content: flex-end;
+      }
     }
   }
 

@@ -16,6 +16,7 @@
 
     &::after {
       color: darken(color(fiord), 5%);
+      font-family: $card-font;
       left: 50%;
       position: absolute;
       top: 50%;
