@@ -600,8 +600,8 @@ elements-of-type(html5-block) {
         .help .modal__buttons {
           -ms-flex-direction: row-reverse;
               flex-direction: row-reverse;
-          -ms-flex-pack: justify;
-              justify-content: space-between; } }
+          -ms-flex-pack: end;
+              justify-content: flex-end; } }
   .modal__checkbox {
     display: -ms-flexbox;
     display: flex;
