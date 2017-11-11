@@ -595,10 +595,13 @@ elements-of-type(html5-block) {
     max-width: 500px; }
     @media only screen and (min-width: 414px) {
       .modal__buttons {
-        -ms-flex-direction: row-reverse;
-            flex-direction: row-reverse;
-        -ms-flex-pack: justify;
-            justify-content: space-between; } }
+        -ms-flex-pack: center;
+            justify-content: center; }
+        .help .modal__buttons {
+          -ms-flex-direction: row-reverse;
+              flex-direction: row-reverse;
+          -ms-flex-pack: justify;
+              justify-content: space-between; } }
   .modal__checkbox {
     display: -ms-flexbox;
     display: flex;
