@@ -1,0 +1,20 @@
+Helpers:
+	Test if different shuffle algorithm is faster
+
+Interactions:
+	Redo _all_ of the button click events
+
+Dom:
+	Check if all the functions have been implemented
+
+CardObjects:
+	Fix card distribution on different deck sizes / double cards
+	Fix cards getting ID from constructor on board.build
+
+	Complete Merge pls
+
+GameCode:
+	?
+
+Grunt:
+	join js minified files

@@ -50,37 +50,58 @@ function Card (color, value, id, faceDown) {
 	};
 }
 
-////////////////////////
-//  BOARD DEFINITION  //
-////////////////////////
+///////////////////////////
+// BOARD/GAME DEFINITION //
+///////////////////////////
 
 // A collection of playing cards //
-function Board (size, count, colorCount, distribution, isRandom) {
+function Game (size, count, colorCount, distribution, isRandom, maxStates) {
+	this.maxStates = maxStates || 1;
 	this.count = count;
 	this.colorCount = colorCount;
 	this.isRandom = isRandom || false;
 	this.distribution = distribution || [[1,0],[1,0],[1,0],[1,0]];
+	// TODO Set text of menus
+	// TODO Track score
+	this.stats = new Stats();
 
 	// Initializing the board
-	this.stacks = [];
-	for (var i = 0; i < size; i++) {
-		this.stacks.push([]);
-	}
-	tempArr = [];
-	count = count / colorCount;
-	// for (var x = 0; x < (count * colorCount / 52)){
-		for (var h = 0; h < count; h++) {
-			for (var j = 0; j < this.colorCount; j++){
-				tempArr.push(new Card(colors[j%this.colorCount], h));
+	this.newGame = function () {
+
+		// RESET EVERYTHING
+		// (EVERYTHING!!!)
+
+		// Close all menus
+		if (toggleHelp()) toggleHelp();
+		if (toggleStats()) toggleStats();
+
+		toggleTimer(true, 0);
+		// TODO scoring
+
+		// TODO fix board being stupid and not refreshing on button click
+
+		this.stacks = [];
+		for (var i = 0; i < size; i++) {
+			this.stacks.push([]);
+		}
+		var tempArr = [];
+		var tempCount = this.count / this.colorCount;
+		// for (var x = 0; x < (count * colorCount / 52)){
+			for (var h = 0; h < tempCount; h++) {
+				for (var j = 0; j < this.colorCount; j++){
+					tempArr.push(new Card(colors[j%this.colorCount], h));
+				}
+			}
+		// }
+		tempArr = shuffleArray(tempArr);
+		for (var m = 0; m < this.distribution.length; m++) {
+			for (var l = 0; l < this.distribution[m].length; l++) {
+				this.stacks[m].push(this.distribution[m][l] == 0 ? tempArr.pop() : tempArr.pop().flip());
 			}
 		}
-	// }
-	tempArr = shuffleArray(tempArr);
-	for (var m = 0; m < this.distribution.length; m++) {
-		for (var l = 0; l < this.distribution[m].length; l++) {
-			this.stacks[m].push(this.distribution[m][l] == 0 ? tempArr.pop() : tempArr.pop().flip());
-		}
-	}
+		
+		this.applyToDom();
+	};
 
 	// Mirrors the stacks array to the DOM, returns this object
 	this.applyToDom = function () {
@@ -274,28 +295,6 @@ function Stats(maxStates, cumulative) {
 	};
 }
 
-///////////////////////
-//  GAME DEFINITION  //
-///////////////////////
-
-// A handler for a single game type, i.e. Klondike
-// Keeps track of statistics and everything for _that_ game
-// Handles cookies, save states and undos, timer, boards etc.
-function Game (distribution, maxGameStates) {
-	this.maxGameStates = maxGameStates;
-	this.stats = new Stats();
-	this.board = null;
-	// Set text of menus
-	
-	// Track score
-
-	// TODO Set timer,
-	this.new = function () {
-		this.board = new Board(13, 52, 4, distribution); // TODO
-		this.board.applyToDom();
-	};
-}
-
 function toggleTimer (reset, scoreReduction) {
 	var res = reset || false;
 	var scoreRed = scoreReduction || 0;
@@ -307,7 +306,6 @@ function toggleTimer (reset, scoreReduction) {
 	} else {
 		timer = setInterval(function() {
 			time += 1;
-			console.log(time);
 			setTime(time);
 			if (time % 10 == 0){
 				game.stats.updateScore(-scoreReduction);

@@ -1,20 +1,21 @@
-// TODO: Fix toggle timer
-
 /////////////////////////
 ////// DOM HELPERS //////
 /////////////////////////
 
 function toggleHelp () {
-	document.getElementsByClassName("help")[0].classList.toggle("modal--show");
+	return document.getElementsByClassName("help")[0].classList.toggle("modal--show");
 }
 function toggleStats () {
-	document.getElementsByClassName("statistics")[0].classList.toggle("modal--show");
+	return document.getElementsByClassName("statistics")[0].classList.toggle("modal--show");
 }
 function toggleMenu () {
-	document.getElementsByClassName("options")[0].classList.toggle("options--open");
+	return document.getElementsByClassName("options")[0].classList.toggle("options--open");
 }
-function toggleTimer () {
-	document.getElementById("timerWrapper").classList.toggle("statistics__item-hidden");
+function toggleAutoCompleteMenu () {
+	// TODO
+}
+function toggleTimerView () { // TODO
+	return document.getElementById("timerWrapper").classList.toggle("stats__item--hidden");
 }
 function setScore (str) {
 	document.getElementById("score").innerHTML = str;
@@ -22,10 +23,11 @@ function setScore (str) {
 function setTime (num) {
 	document.getElementById("timer").innerHTML = timeToString(num);
 }
+function setMenuText(str) {
+	// TODO
+}
 
-// function setMenuText
-// function toggle autocompleteMenu
-// function 
+// TODO maybe more functions
 
 // Clears all stacks in DOM, returns number of stacks cleared
 function clearDom () {

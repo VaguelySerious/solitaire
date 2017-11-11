@@ -1,5 +1,3 @@
-// TODO test if different shuffle algorithm is faster
-
 ////////////////////////
 /// HELPER FUNCTIONS ///
 ////////////////////////

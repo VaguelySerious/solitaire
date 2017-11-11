@@ -23,11 +23,15 @@
 // $("#statResetButton").click(resetStats);
 
 // $("#timerBox").click(function(){
-//   toggleTimer();
+//   toggleTimerView();
 // });
 
 // Reset board on new game button click
-// $(".controls__link--new-game").click(resetBoard);
+var newGameButtons = document.getElementsByClassName("new-game");
+function newGameFromButton () {game.newGame();  }
+for (var i = 0; i < newGameButtons.length; i++) {
+  newGameButtons[i].addEventListener("click", newGameFromButton);
+}
 
 // Undo a move on undo button click
 // $(".controls__link--undo").click(handleUndo);
