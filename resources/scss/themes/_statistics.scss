@@ -29,6 +29,7 @@
     // button color
     .button--primary {
       @include gradient(70deg, $value);
+      color: colorInvert($value);
 
       &:hover {
         @include gradient(70deg, saturate(lighten($value, 5%), 10%));

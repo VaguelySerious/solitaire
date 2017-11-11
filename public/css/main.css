@@ -2335,7 +2335,8 @@ p {
 
 .board--black .button--primary {
   background-image: -owg-linear-gradient(70deg, #1F1F1F, #1f1f1f);
-  background-image: linear-gradient(70deg, #1F1F1F, #1f1f1f); }
+  background-image: linear-gradient(70deg, #1F1F1F, #1f1f1f);
+  color: #fff; }
   .board--black .button--primary:hover {
     background-image: -owg-linear-gradient(70deg, #302727, #302729);
     background-image: linear-gradient(70deg, #302727, #302729); }
@@ -2361,7 +2362,8 @@ p {
 
 .board--gray .button--primary {
   background-image: -owg-linear-gradient(70deg, #95a5a6, #95a6a4);
-  background-image: linear-gradient(70deg, #95a5a6, #95a6a4); }
+  background-image: linear-gradient(70deg, #95a5a6, #95a6a4);
+  color: #4e5454; }
   .board--gray .button--primary:hover {
     background-image: -owg-linear-gradient(70deg, #9ab8ba, #9abab7);
     background-image: linear-gradient(70deg, #9ab8ba, #9abab7); }
@@ -2387,7 +2389,8 @@ p {
 
 .board--white .button--primary {
   background-image: -owg-linear-gradient(70deg, #FDFDFD, #fdfdfd);
-  background-image: linear-gradient(70deg, #FDFDFD, #fdfdfd); }
+  background-image: linear-gradient(70deg, #FDFDFD, #fdfdfd);
+  color: #b1b0b0; }
   .board--white .button--primary:hover {
     background-image: -owg-linear-gradient(70deg, white, white);
     background-image: linear-gradient(70deg, white, white); }
@@ -2413,7 +2416,8 @@ p {
 
 .board--royalblue .button--primary {
   background-image: -owg-linear-gradient(70deg, #4169e1, #4184e1);
-  background-image: linear-gradient(70deg, #4169e1, #4184e1); }
+  background-image: linear-gradient(70deg, #4169e1, #4184e1);
+  color: #fff; }
   .board--royalblue .button--primary:hover {
     background-image: -owg-linear-gradient(70deg, #4d76ee, #4d90ee);
     background-image: linear-gradient(70deg, #4d76ee, #4d90ee); }
@@ -2439,7 +2443,8 @@ p {
 
 .board--fiord .button--primary {
   background-image: -owg-linear-gradient(70deg, #394a65, #395165);
-  background-image: linear-gradient(70deg, #394a65, #395165); }
+  background-image: linear-gradient(70deg, #394a65, #395165);
+  color: #fff; }
   .board--fiord .button--primary:hover {
     background-image: -owg-linear-gradient(70deg, #39547e, #395f7e);
     background-image: linear-gradient(70deg, #39547e, #395f7e); }
@@ -2465,7 +2470,8 @@ p {
 
 .board--plum .button--primary {
   background-image: -owg-linear-gradient(70deg, #913D88, #8c3d91);
-  background-image: linear-gradient(70deg, #913D88, #8c3d91); }
+  background-image: linear-gradient(70deg, #913D88, #8c3d91);
+  color: #fff; }
   .board--plum .button--primary:hover {
     background-image: -owg-linear-gradient(70deg, #af39a2, #a839af);
     background-image: linear-gradient(70deg, #af39a2, #a839af); }
@@ -2491,7 +2497,8 @@ p {
 
 .board--brickred .button--primary {
   background-image: -owg-linear-gradient(70deg, #C32A46, #c32a60);
-  background-image: linear-gradient(70deg, #C32A46, #c32a60); }
+  background-image: linear-gradient(70deg, #C32A46, #c32a60);
+  color: #fff; }
   .board--brickred .button--primary:hover {
     background-image: -owg-linear-gradient(70deg, #e02749, #e02768);
     background-image: linear-gradient(70deg, #e02749, #e02768); }
@@ -2517,7 +2524,8 @@ p {
 
 .board--red .button--primary {
   background-image: -owg-linear-gradient(70deg, #F64747, #f64764);
-  background-image: linear-gradient(70deg, #F64747, #f64764); }
+  background-image: linear-gradient(70deg, #F64747, #f64764);
+  color: #fff; }
   .board--red .button--primary:hover {
     background-image: -owg-linear-gradient(70deg, #ff5858, #ff5873);
     background-image: linear-gradient(70deg, #ff5858, #ff5873); }
@@ -2543,7 +2551,8 @@ p {
 
 .board--orange .button--primary {
   background-image: -owg-linear-gradient(70deg, #FE8139, #fe6039);
-  background-image: linear-gradient(70deg, #FE8139, #fe6039); }
+  background-image: linear-gradient(70deg, #FE8139, #fe6039);
+  color: #993b05; }
   .board--orange .button--primary:hover {
     background-image: -owg-linear-gradient(70deg, #ff9152, #ff7452);
     background-image: linear-gradient(70deg, #ff9152, #ff7452); }
@@ -2569,7 +2578,8 @@ p {
 
 .board--yellow .button--primary {
   background-image: -owg-linear-gradient(70deg, #F7CA18, #f7a518);
-  background-image: linear-gradient(70deg, #F7CA18, #f7a518); }
+  background-image: linear-gradient(70deg, #F7CA18, #f7a518);
+  color: #6f5a07; }
   .board--yellow .button--primary:hover {
     background-image: -owg-linear-gradient(70deg, #ffd42a, #ffb02a);
     background-image: linear-gradient(70deg, #ffd42a, #ffb02a); }
@@ -2595,7 +2605,8 @@ p {
 
 .board--green .button--primary {
   background-image: -owg-linear-gradient(70deg, #B9C860, #c8c660);
-  background-image: linear-gradient(70deg, #B9C860, #c8c660); }
+  background-image: linear-gradient(70deg, #B9C860, #c8c660);
+  color: #5e6728; }
   .board--green .button--primary:hover {
     background-image: -owg-linear-gradient(70deg, #c8d86a, #d8d66a);
     background-image: linear-gradient(70deg, #c8d86a, #d8d66a); }
@@ -2621,7 +2632,8 @@ p {
 
 .board--emerald .button--primary {
   background-image: -owg-linear-gradient(70deg, #26A65B, #26a646);
-  background-image: linear-gradient(70deg, #26A65B, #26a646); }
+  background-image: linear-gradient(70deg, #26A65B, #26a646);
+  color: #0b2817; }
   .board--emerald .button--primary:hover {
     background-image: -owg-linear-gradient(70deg, #1fc664, #1fc649);
     background-image: linear-gradient(70deg, #1fc664, #1fc649); }
@@ -2647,7 +2659,8 @@ p {
 
 .board--mint .button--primary {
   background-image: -owg-linear-gradient(70deg, #36D7B7, #36d79c);
-  background-image: linear-gradient(70deg, #36D7B7, #36d79c); }
+  background-image: linear-gradient(70deg, #36D7B7, #36d79c);
+  color: #165e50; }
   .board--mint .button--primary:hover {
     background-image: -owg-linear-gradient(70deg, #40e6c5, #40e6aa);
     background-image: linear-gradient(70deg, #40e6c5, #40e6aa); }
@@ -2673,7 +2686,8 @@ p {
 
 .board--aqua .button--primary {
   background-image: -owg-linear-gradient(70deg, #3ca0cc, #3cb8cc);
-  background-image: linear-gradient(70deg, #3ca0cc, #3cb8cc); }
+  background-image: linear-gradient(70deg, #3ca0cc, #3cb8cc);
+  color: #1a4355; }
   .board--aqua .button--primary:hover {
     background-image: -owg-linear-gradient(70deg, #45aedc, #45c7dc);
     background-image: linear-gradient(70deg, #45aedc, #45c7dc); }
