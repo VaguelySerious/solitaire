@@ -558,6 +558,8 @@ elements-of-type(html5-block) {
   box-shadow: 3.25px 2.5px 8px rgba(0, 0, 0, 0.05), -3.25px 6px 8px rgba(0, 0, 0, 0.1);
   color: #FDFDFD;
   display: none;
+  -ms-flex-direction: column;
+      flex-direction: column;
   font-size: 1em;
   max-width: 95%;
   padding: 1.25rem;
@@ -565,7 +567,11 @@ elements-of-type(html5-block) {
   width: 600px;
   z-index: 999; }
   .modal--show {
-    display: block; }
+    display: -ms-flexbox;
+    display: flex; }
+    @media only screen and (min-width: 768px) {
+      .modal--show {
+        display: block; } }
   .modal::before {
     bottom: 0;
     left: 0;
@@ -591,8 +597,9 @@ elements-of-type(html5-block) {
         flex-wrap: wrap;
     -ms-flex-pack: center;
         justify-content: center;
-    margin: 3rem auto 0;
-    max-width: 500px; }
+    margin: auto auto 0;
+    max-width: 500px;
+    width: 100%; }
     @media only screen and (min-width: 414px) {
       .modal__buttons {
         -ms-flex-pack: center;
@@ -600,8 +607,11 @@ elements-of-type(html5-block) {
         .help .modal__buttons {
           -ms-flex-direction: row-reverse;
               flex-direction: row-reverse;
-          -ms-flex-pack: end;
-              justify-content: flex-end; } }
+          -ms-flex-pack: justify;
+              justify-content: space-between; } }
+    @media only screen and (min-width: 768px) {
+      .modal__buttons {
+        margin-top: 3rem; } }
   .modal__checkbox {
     display: -ms-flexbox;
     display: flex;
@@ -616,11 +626,6 @@ elements-of-type(html5-block) {
         -ms-flex-preferred-size: 60%;
             flex-basis: 60%;
         margin-top: 0; } }
-    @media only screen and (min-width: 1024px) {
-      .modal__checkbox {
-        left: 3rem;
-        margin-top: 0;
-        position: absolute; } }
   .modal .modal__close {
     -ms-flex-pack: center;
         justify-content: center;
@@ -658,9 +663,6 @@ elements-of-type(html5-block) {
   @media only screen and (max-width: 767px) {
     .modal {
       overflow-y: auto; } }
-  @media only screen and (min-width: 1024px) {
-    .modal {
-      width: 500px; } }
 
 .tableau {
   display: -ms-flexbox;
