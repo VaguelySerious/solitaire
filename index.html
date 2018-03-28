@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  
+
   <!-- Meta Tags -->
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -37,14 +37,14 @@
 
 
   <!-- Google Analytics -->
-<!--  <script>
+ <script>
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
   (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
   m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
   })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
   ga('create', 'UA-109446452-1', 'auto');
   ga('send', 'pageview');
-  </script> -->
+  </script>
   <!-- End Google Analytics -->
 </head>
 
@@ -52,7 +52,11 @@
 
   <!-- overlay -->
   <aside class="overlay">
-    <a class="controls__link"></a>
+    <a class="controls__link controls__link--undo">
+      <span class="controls__icon controls__icon--undo"></span>
+      <span class="controls__info valid">Undo</span>
+      <span class="controls__info invalid">Undo unavailable</span>
+    </a>
 
     <ul class="overlay__stats stats">
       <li class="stats__item">
@@ -65,18 +69,10 @@
       </li>
     </ul>
 
-    <ul class="overlay__controls controls">
-      <li class="controls__item">
-        <a class="controls__link controls__link--undo" data-tooltip="Undo">
-          <span class="controls__icon controls__icon--undo"></span>
-        </a>
-      </li>
-      <li class="controls__item">
-        <a class="controls__link controls__link--new-game" data-tooltip="New Game">
-          <span class="controls__icon controls__icon--plus"></span>
-        </a>
-      </li>
-    </ul>
+    <a class="controls__link controls__link--new-game">
+      <span class="controls__info">New Game</span>
+      <span class="controls__icon controls__icon--plus"></span>
+    </a>
   </aside>
 
   <!-- board top half -->

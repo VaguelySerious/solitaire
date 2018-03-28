@@ -37,10 +37,6 @@
 
 .stats {
   font-size: 12px;
-  left: 50%;
-  position: absolute;
-  top: 50%;
-  @include translate(-50%, -50%);
 
   &__item {
     margin-right: 36px;

@@ -3,7 +3,7 @@
 // pick the color based on the board--modifier
 //
 
-.controls__icon:hover {
+.controls__link:hover {
   @each $key, $value in $colors {
     .board--#{$key} & {
       color: $value;

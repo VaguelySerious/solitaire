@@ -3,61 +3,54 @@
 //
 
 .controls {
-  display: flex;
-
-  &__item {
-    margin-left: 20px;
-  }
 
   &__link {
     align-items: center;
     cursor: pointer;
     display: flex;
-    justify-content: center;
     height: 20px;
+    overflow: hidden;
+    transition: color 0.25s;
     width: 20px;
+
+
+    &:last-child {
+      justify-content: flex-end;
+    }
+
 
     @include break(tablet) {
       height: 30px;
-      width: 30px;
+      min-width: 160px;
+      width: auto;
     }
   }
 
+
+  &__info {
+    @include break(tablet, max) {
+      display: none;
+    }
+  }
+
+
   &__icon {
     align-items: center;
-    color: color(white);
+    color: currentColor;
     display: flex;
     font-family: $card-font;
     height: 12px;
+    margin: 0 10px;
     position: relative;
-    transition: color 0.25s;
     width: 12px;
 
+    &:first-child { margin-left: 0; }
+    &:last-child  { margin-right: 0; }
 
-    &--cross {
-      &::after,
-      &::before {
-        background: currentColor;
-        border-radius: 1px;
-        content: "";
-        display: block;
-        height: 2px;
-        position: absolute;
-        top: 50%;
-        transform: translateY(-50%);
-        width: 100%;
-      }
-      &::after {
-        transform: translateY(-50%) rotate(45deg);
-      }
-      &::before {
-        transform: translateY(-50%) rotate(-45deg);
-      }
-    }
 
     &--undo {
       &::before {
-        content: "⟲";
+        content: '⟲';
         font-size: 0.9em;
         line-height: 1;
         transform: rotate(70deg);
@@ -68,11 +61,20 @@
         }
       }
 
-      &.invalid::before {
-        content: "✕";
-        margin-top: 0;
-        transform: none;
+      &.invalid {
+        &::before {
+          content: "✕";
+          margin-top: 0;
+          transform: none;
+        }
+
+        & ~ .invalid { display: block; }
+        & ~ .valid   { display: none; }
       }
+
+
+      & ~ .invalid { display: none;}
+      & ~ .valid { display: block;}
     }
 
     &--plus {
