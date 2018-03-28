@@ -14,7 +14,7 @@
 @import "abstracts/functions";
 @import "abstracts/variables";
 
-@import "abstracts/mixins/arrow";
+// @import "abstracts/mixins/arrow";
 @import "abstracts/mixins/break";
 @import "abstracts/mixins/board-size";
 @import "abstracts/mixins/card-border-radius";
@@ -30,28 +30,28 @@
 @import "components/button";
 @import "components/card";
 @import "components/card-placeholder";
-@import "components/checkbox";
+// @import "components/checkbox";
 @import "components/deck";
 @import "components/foundations";
-@import "components/lightbulb";
+// @import "components/lightbulb";
 @import "components/modal";
 @import "components/tableau";
-@import "components/tooltip";
+// @import "components/tooltip";
 
 @import "partials/freecell";
 @import "partials/solitaire";
 
 @import "layout/core";
 @import "layout/autocomplete";
-@import "layout/controls";
-@import "layout/help";
+// @import "layout/controls";
+// @import "layout/help";
 // @import "layout/menu";
 @import "layout/overlay";
 @import "layout/statistics";
-@import "layout/tutorial";
+// @import "layout/tutorial";
 @import "layout/typography";
 
 @import "themes/cards";
 @import "themes/controls";
-@import "themes/lightbulb";
+// @import "themes/lightbulb";
 @import "themes/statistics";

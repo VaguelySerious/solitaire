@@ -1,6 +1,5 @@
 // TODO: Create cookies for saves
 // TODO: Remove scss that's not needed
-// TODO: Change js src in markup to build/
 // TODO: Fix hints
 // TODO: Make Sol function and initialize
 // TODO: Put all functions into Sol
@@ -60,6 +59,8 @@ var Sol = {
     'aqua'
   ]
 }
+document.getElementById("board").className += Sol.cardColors[Math.floor(Math.random() * Sol.cardColors.length)];
+
 
 ////////////////////
 // GAME FUNCTIONS //
@@ -597,4 +598,3 @@ document.onkeypress = function(e){
 
 // TODO: LOAD COOKIES
 resetBoard();
-document.getElementById("board").className += Sol.cardColors[Math.floor(Math.random() * Sol.cardColors.length)];
