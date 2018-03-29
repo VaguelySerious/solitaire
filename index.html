@@ -115,27 +115,20 @@
   <button class="button autocomplete">Auto Complete</button>
 
   <!-- option: modal--show -->
-  <aside class="modal modal--large statistics">
+  <aside class="modal modal--large">
     <h2 class="modal__header">Congrations! You won!</h2>
-    <ul class="statistics__list">
-      <li class="statistics__header">
-        <!-- <div class="statistics__title"></div> -->
-        <ul class="statistics__values">
-          <h3 class="modal__headline">Your score: </h3>
-          <h3 class="modal__headline">Your best score: </h3>
-          <h3 class="modal__headline">Your time: </h3>
-          <h3 class="modal__headline">Your best time: </h3>
-        </ul>
-      </li>
-      <li class="statistics__item">
-        <ul class="statistics__values">
-          <li class="statistics__content statistics__game">0:57</li>
-          <li class="statistics__content statistics__best">0:57</li>
-          <li class="statistics__content statistics__game">3:32</li>
-          <li class="statistics__content statistics__best">3:32</li>
-        </ul>
-      </li>
-    </ul>
+    <div class="modal__column">
+      <h3 class="modal__headline">Your score: </h3>
+      <h3 class="modal__headline">Your best score: </h3>
+      <h3 class="modal__headline">Your time: </h3>
+      <h3 class="modal__headline">Your best time: </h3>
+    </div>
+    <div class="modal__column">
+      <span class="modal__content modal__game">0:57</span>
+      <span class="modal__content">0:57</span>
+      <span class="modal__content modal__game">3:32</span>
+      <span class="modal__content">3:32</span>
+    </div>
     <div class="modal__buttons">
       <button class="button button--primary new-game">Start new game</button>
     </div>

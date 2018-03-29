@@ -520,8 +520,24 @@ elements-of-type(html5-block) {
     background-image: -o-linear-gradient(70deg, #273244, #273744);
     background-image: linear-gradient(70deg, #273244, #273744);
     z-index: -1; }
+  .modal__column {
+    display: flex; }
+  .modal__header {
+    font-size: 2em; }
+  .modal__content {
+    color: #6c7d98;
+    font-weight: bold;
+    margin-right: 5%;
+    padding-right: 2.2em;
+    position: relative;
+    text-align: right;
+    width: 33.3333333333%; }
+  .modal__game {
+    color: #FDFDFD; }
   .modal__headline {
     color: #556e96;
+    font-size: 1em;
+    padding: 1em 0.3em;
     margin-bottom: 0.25rem; }
   .modal__buttons {
     align-items: center;
@@ -917,6 +933,82 @@ button {
   .autocomplete--visible {
     display: block; }
 
+.controls__link {
+  align-items: center;
+  cursor: pointer;
+  display: flex;
+  height: 20px;
+  overflow: hidden;
+  transition: color 0.25s;
+  width: 20px; }
+  .controls__link:last-child {
+    justify-content: flex-end; }
+  @media only screen and (min-width: 768px) {
+    .controls__link {
+      height: 30px;
+      min-width: 160px;
+      width: auto; } }
+
+@media only screen and (max-width: 767px) {
+  .controls__info {
+    display: none; } }
+
+.controls__icon {
+  align-items: center;
+  color: currentColor;
+  display: flex;
+  font-family: "Helvetica Neue", "Arial", sans-serif;
+  height: 12px;
+  margin: 0 10px;
+  position: relative;
+  width: 12px; }
+  .controls__icon:first-child {
+    margin-left: 0; }
+  .controls__icon:last-child {
+    margin-right: 0; }
+  .controls__icon--undo::before {
+    content: '⟲';
+    font-size: 0.9em;
+    line-height: 1;
+    transform: rotate(70deg); }
+    @media only screen and (min-width: 768px) {
+      .controls__icon--undo::before {
+        font-size: 1.5rem; } }
+  .controls__icon--undo.invalid::before {
+    content: "✕";
+    margin-top: 0;
+    transform: none; }
+  .controls__icon--undo.invalid ~ .invalid {
+    display: block; }
+  .controls__icon--undo.invalid ~ .valid {
+    display: none; }
+  .controls__icon--undo ~ .invalid {
+    display: none; }
+  .controls__icon--undo ~ .valid {
+    display: block; }
+  .controls__icon--plus::after, .controls__icon--plus::before {
+    background: currentColor;
+    border-radius: 1px;
+    bottom: 0;
+    content: "";
+    height: 100%;
+    position: absolute;
+    top: 0;
+    width: 2px; }
+  .controls__icon--plus::before {
+    left: 50%;
+    margin-left: -1px; }
+  .controls__icon--plus::after {
+    left: 5px;
+    transform: rotate(90deg); }
+    @media only screen and (min-width: 768px) {
+      .controls__icon--plus::after {
+        left: 8px; } }
+  @media only screen and (min-width: 768px) {
+    .controls__icon {
+      height: 18px;
+      width: 18px; } }
+
 .overlay {
   background-image: -owg-linear-gradient(45deg, #303e55, #304455);
   background-image: -webkit-linear-gradient(45deg, #303e55, #304455);
@@ -948,15 +1040,7 @@ button {
       padding-top: 18px; } }
 
 .stats {
-  font-size: 12px;
-  left: 50%;
-  position: absolute;
-  top: 50%;
-  -webkit-transform: translate(-50%, -50%);
-  -moz-transform: translate(-50%, -50%);
-  -ms-transform: translate(-50%, -50%);
-  -o-transform: translate(-50%, -50%);
-  transform: translate(-50%, -50%); }
+  font-size: 12px; }
   .stats__item {
     margin-right: 36px; }
     .stats__item:last-child {
@@ -980,46 +1064,6 @@ button {
   @media only screen and (min-width: 768px) {
     .stats {
       font-size: 16px; } }
-
-.statistics {
-  font-size: 1.2em; }
-  .statistics__header {
-    margin-bottom: 0.75rem; }
-  .statistics__item {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 1.5rem;
-    text-transform: lowercase; }
-  .statistics__title {
-    display: block;
-    width: 33.3333333333%; }
-  .statistics__values {
-    display: flex;
-    margin-left: auto;
-    width: 66.6666666667%; }
-  .statistics__content {
-    color: #6c7d98;
-    flex: 0 0 25%;
-    font-weight: bold;
-    margin-right: 5%;
-    position: relative;
-    text-align: right;
-    width: 33.3333333333%; }
-  .statistics__game {
-    color: #FDFDFD; }
-  .statistics__average {
-    margin-right: 5px; }
-  .statistics__change {
-    height: 100%;
-    flex: 0 0 10%;
-    font-size: 0.6em;
-    font-weight: bold;
-    letter-spacing: 0.05em;
-    margin-top: -2px; }
-    .statistics__change--positive {
-      color: #30d072; }
-    .statistics__change--negative {
-      color: #d84863; }
 
 body {
   font: 400 16px/1.4 sans-serif; }
@@ -1236,46 +1280,46 @@ p {
 .board--aqua .card--clicked .card__front, .board--aqua .card--clicked .card__front:hover {
   box-shadow: 0 0 15px 2px #a7cfe1; }
 
-.board--black .controls__icon:hover {
+.board--black .controls__link:hover {
   color: #1F1F1F; }
 
-.board--gray .controls__icon:hover {
+.board--gray .controls__link:hover {
   color: #95a5a6; }
 
-.board--white .controls__icon:hover {
+.board--white .controls__link:hover {
   color: #FDFDFD; }
 
-.board--royalblue .controls__icon:hover {
+.board--royalblue .controls__link:hover {
   color: #4169e1; }
 
-.board--fiord .controls__icon:hover {
+.board--fiord .controls__link:hover {
   color: #394a65; }
 
-.board--plum .controls__icon:hover {
+.board--plum .controls__link:hover {
   color: #913D88; }
 
-.board--brickred .controls__icon:hover {
+.board--brickred .controls__link:hover {
   color: #C32A46; }
 
-.board--red .controls__icon:hover {
+.board--red .controls__link:hover {
   color: #F64747; }
 
-.board--orange .controls__icon:hover {
+.board--orange .controls__link:hover {
   color: #FE8139; }
 
-.board--yellow .controls__icon:hover {
+.board--yellow .controls__link:hover {
   color: #F7CA18; }
 
-.board--green .controls__icon:hover {
+.board--green .controls__link:hover {
   color: #B9C860; }
 
-.board--emerald .controls__icon:hover {
+.board--emerald .controls__link:hover {
   color: #26A65B; }
 
-.board--mint .controls__icon:hover {
+.board--mint .controls__link:hover {
   color: #36D7B7; }
 
-.board--aqua .controls__icon:hover {
+.board--aqua .controls__link:hover {
   color: #3ca0cc; }
 
 .board--black .statistics__content--new {

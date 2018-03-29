@@ -386,7 +386,7 @@ function winGame () {
     updateScore();
 
     // Calculate stats
-    var statboard = document.getElementsByClassName("statistics__content");
+    var statboard = document.getElementsByClassName("modal__content");
     if (Sol.stats.gameTime < Sol.stats.bestTime){
       Sol.stats.bestTime = Sol.stats.gameTime;
     }
@@ -399,7 +399,7 @@ function winGame () {
     statboard[1].innerHTML = Sol.stats.bestScore;
     statboard[2].innerHTML = timeToString(Sol.stats.gameTime);
     statboard[3].innerHTML = timeToString(Sol.stats.bestTime);
-    document.getElementsByClassName("statistics")[0].classList.toggle("modal--show");
+    document.getElementsByClassName("modal--large")[0].classList.toggle("modal--show");
 }
 
 function autoComplete() {
@@ -572,7 +572,7 @@ document.getElementsByClassName("controls__link--new-game")[0].addEventListener(
 document.getElementsByClassName("controls__link--undo")[0].addEventListener('click', handleUndo);
 // Restart game from scorescreen
 document.getElementsByClassName("new-game")[0].addEventListener('click', function(){
-  document.getElementsByClassName("statistics")[0].classList.toggle("modal--show");
+  document.getElementsByClassName("modal--large")[0].classList.toggle("modal--show");
   resetBoard();
 });
 

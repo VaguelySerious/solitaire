@@ -1,4 +1,4 @@
-$statistics-title-width: (100% / 3);
+
 
 
 .statistics {
@@ -27,26 +27,12 @@ $statistics-title-width: (100% / 3);
 
 
   &__values {
-    display: flex;
-    margin-left: auto;
+    // display: flex;
+    // margin-left: auto;
     width: (100% - $statistics-title-width);
   }
 
 
-  &__content {
-    color: desaturate(lighten($modal-color, 30%), 10%);
-    flex: 0 0 (100% / 4);
-    font-weight: bold;
-    margin-right: 5%;
-    position: relative;
-    text-align: right;
-    width: ((100% - $statistics-title-width) / 2);
-  }
-
-
-  &__game {
-    color: color(white);
-  }
 
 
   &__average {
