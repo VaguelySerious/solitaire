@@ -82,17 +82,18 @@ SOL.generate = function (card) {
 SOL.lookup = function (id) {
   var i;
   var j;
-  for (i = 0; i < SOL.stacks.length; i++) {
-    for (j = 0; j < SOL.stacks.length; j++) {
-      if (SOL.stacks[i][j] && SOL.stacks[i][j].id === id) {
+  for (i = 0; i < SOL.game.stacks.length; i++) {
+    for (j = 0; j < SOL.game.stacks[i].length; j++) {
+      if (SOL.game.stacks[i][j] && SOL.game.stacks[i][j].id === id) {
         return {
-          card: SOL.stacks[i][j],
+          card: SOL.game.stacks[i][j],
           stack: i,
           pos: j
         }
       }
     }
   }
+  throw new Error('Lookup could not find the card by ID');
 };
 
 // Adds a card to bottom of stack
@@ -278,7 +279,7 @@ SOL.shuffle = function (arr) {
 
 document.body.addEventListener("click", function(event){
   if (event.target.classList.contains('card')){
-    SOL.clickCard(SOL.lookup(event.target.id));
+    SOL.clickCard(SOL.lookup(+event.target.id));
   } else if (event.target.classList.contains('stack')) {
     SOL.clickStack(+event.target.id.slice(-1));
   }
