@@ -35,7 +35,7 @@
 
 
   @include break(mobile) {
-    font-size: calc((100vw - #{$board-column-gutter * 2} * var(--columns)) / var(--columns) / 5);
+    font-size: calc((100vw - #{$board-column-gutter * 2} * var(--columns)) / var(--columns) / 5.5);
   }
 
   @include break(tablet) {
@@ -43,7 +43,7 @@
   }
 
   @include break(desktop) {
-    font-size: calc((100vw - #{$board-column-gutter * 2} * var(--columns)) / var(--columns) / 8);
+    font-size: calc((var(--width) - #{$board-column-gutter * 2} * var(--columns)) / var(--columns) / 5.5);
   }
 
 
@@ -159,9 +159,9 @@
     }
 
     &::before {
-      content: 'A';
+      content: var(--card-color);
       display: flex;
-      font-size: 120%;
+      font-size: 200%;
       justify-content: center;
       left: 50%;
       letter-spacing: 0.2em;
@@ -182,51 +182,55 @@
       // 2.2 Number Handling
       // pretty-print the card value
       //
-      @each $key, $value in $card-values {
-        $number: number($key);
+      // @media screen and (min-width: 500px), screen and (orientation: landscape) {
+      @media screen and (min-width: 768px) {
+        font-size: 120%;
+        @each $key, $value in $card-values {
+          $number: number($key);
 
-        .card-#{$key} & {
-          $output: '';
+          .card-#{$key} & {
+            $output: '';
 
-          // numerical values
-          @if $number AND $number < 10 {
-            @for $i from 0 through $number {
+            // numerical values
+            @if $number AND $number < 10 {
+              @for $i from 0 through $number {
 
 
-              @if ($number < 3) OR
-                  ($number %2 != 0 AND $number < 7 AND ($i %2 != 0)) OR
-                  (($number == 4 OR $number == 6 OR $number == 9)
-                      AND ($i == 1 OR $i == 2 OR $i == 4 OR $i == 6 OR $i == 7)) OR
-                  ($number == 7 AND ($i == 1 OR $i == 2 OR $i == 4 OR $i == 5)) OR
-                  ($number == 8 AND ($i == 1 OR $i == 3 OR $i == 4 OR $i == 6 OR $i == 8)) {
-                $output: $output var(--card-color) '\a';
+                @if ($number < 3) OR
+                    ($number %2 != 0 AND $number < 7 AND ($i %2 != 0)) OR
+                    (($number == 4 OR $number == 6 OR $number == 9)
+                        AND ($i == 1 OR $i == 2 OR $i == 4 OR $i == 6 OR $i == 7)) OR
+                    ($number == 7 AND ($i == 1 OR $i == 2 OR $i == 4 OR $i == 5)) OR
+                    ($number == 8 AND ($i == 1 OR $i == 3 OR $i == 4 OR $i == 6 OR $i == 8)) {
+                  $output: $output var(--card-color) '\a';
+                }
+
+                @else {
+                  $output: $output var(--card-color);
+                }
               }
 
-              @else {
-                $output: $output var(--card-color);
+              content: $output;
+            }
+
+            // non-numerical values and ace
+            @if $number AND $number >= 10 OR $number == 0 {
+              font: bold 300%/1 $font-text;
+
+              @if $number != 0 {
+                content: $value;
               }
             }
 
-            content: $output;
-          }
-
-          // non-numerical values and ace
-          @if $number AND $number >= 10 OR $number == 0 {
-            font: bold 300%/1 $font-text;
-
-            @if $number != 0 {
-              content: $value;
+            // 3-line cards
+            @if $number == 2 OR $number == 4 OR $number == 5 {
+              line-height: 1.8;
             }
-          }
 
-          // 3-line cards
-          @if $number == 2 OR $number == 4 OR $number == 5 {
-            line-height: 1.8;
-          }
-
-          // multiple lines
-          @elseif $number >= 6 {
-            line-height: 1;
+            // multiple lines
+            @elseif $number >= 6 {
+              line-height: 0.9;
+            }
           }
         }
       }

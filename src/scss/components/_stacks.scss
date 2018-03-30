@@ -73,6 +73,15 @@
       }
 
 
+      @media only screen and (max-width: 768px) and (orientation: landscape) {
+        margin-bottom: -60%;
+
+        &.facedown {
+          margin-bottom: -80%;
+        }
+      }
+
+
       @include break(tablet) {
         margin-bottom: -110%;
 
