@@ -21,6 +21,11 @@ SOL.scoring = {
 };
 
 
+{
+  color: '',
+  value: '',
+  id: 0
+}
 
 // Make a move
 SOL.move = function () {
