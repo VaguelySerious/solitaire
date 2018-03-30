@@ -24,9 +24,14 @@ SOL.scoring = {
 };
 
 
-// Make a move
-SOL.tryMove = function () {
+// Resolve rules for clicking on card
+SOL.clickCard = function (cardInfo) {
+  console.log(cardInfo);
+};
 
+// Make a move
+SOL.clickStack = function (stack) {
+  console.log(stack);
 };
 
 

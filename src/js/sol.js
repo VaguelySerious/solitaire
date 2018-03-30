@@ -85,7 +85,11 @@ SOL.lookup = function (id) {
   for (i = 0; i < SOL.stacks.length; i++) {
     for (j = 0; j < SOL.stacks.length; j++) {
       if (SOL.stacks[i][j] && SOL.stacks[i][j].id === id) {
-
+        return {
+          card: SOL.stacks[i][j],
+          stack: i,
+          pos: j
+        }
       }
     }
   }
