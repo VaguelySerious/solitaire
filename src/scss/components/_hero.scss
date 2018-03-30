@@ -1,0 +1,50 @@
+.hero {
+  animation: fadeIn $hero-appear-duration $transition-easing;
+  color: $color-base;
+  padding: $spacing-x-large 0 $spacing-x-large;
+
+
+  @include break(mobile) {
+    padding-top: $spacing-large;
+  }
+
+  @include break(tablet) {
+    padding-bottom: $spacing-xx-large;
+  }
+
+  @media only screen and (orientation: portrait) {
+    min-height: initial;
+
+    &__text,
+    &__button {
+      display: none;
+    }
+  }
+
+
+  &__logo {
+    display: block;
+    margin: 0 auto;
+    max-width: $card-fixed-width;
+    min-width: $card-fixed-width-min;
+    width: $card-fixed-width-max;
+  }
+
+
+  &__content {
+    @extend %text;
+  }
+
+
+  &__filter {
+    position: relative;
+  }
+
+  &__sort {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 99;
+  }
+}

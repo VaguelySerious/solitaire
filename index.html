@@ -7,7 +7,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="initial-scale=1.0">
   <title>Klondike</title>
-  <link rel="stylesheet" href="build/css/main.css">
+  <link rel="stylesheet" href="build/css/styles.css">
 
   <!-- Apple Stuff -->
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -47,93 +47,95 @@
   </script>
   <!-- End Google Analytics -->
 </head>
-
-<body class="board board--solitaire board--" id="board">
-
-  <!-- overlay -->
-  <aside class="overlay">
-    <a class="controls__link controls__link--undo">
-      <span class="controls__icon controls__icon--undo"></span>
-      <span class="controls__info valid">Undo</span>
-      <span class="controls__info invalid">Undo unavailable</span>
-    </a>
-
-    <ul class="overlay__stats stats">
-      <li class="stats__item">
-        <span class="stats__label">Score</span>
-        <span class="stats__value" id="score">0</span>
-      </li>
-      <li class="stats__item" id="timerWrapper">
-        <span class="stats__label">Time</span>
-        <span class="stats__value" id="timer">0:00</span>
-      </li>
-    </ul>
-
-    <a class="controls__link controls__link--new-game">
-      <span class="controls__info">New Game</span>
-      <span class="controls__icon controls__icon--plus"></span>
-    </a>
-  </aside>
-
-  <!-- board top half -->
-  <div class="board__top">
-
-    <!-- board top left -->
-    <div class="board__deck deck">
-
-      <!-- stack0 -->
-      <div class="card-placeholder deck__stock deck__stock--cycle" id="stack0"></div>
-      <button class="card-placeholder deck__button" id="cycleButton"></button>
-
-      <!-- stack1 -->
-      <div class="card-placeholder deck__waste" id="stack1"></div>
-
+<body class="landing">
+  <header class="hero">
+    <div class="hero__logo logo">
+      <div class="card card-12 hearts fixed">
+        <div class="card__front"><span class="card__values"></span></div>
+        <div class="card__back"></div>
+      </div>
+      <div class="card card-11 hearts facedown fixed">
+        <div class="card__front"><span class="card__values"></span></div>
+        <div class="card__back"></div>
+      </div>
+      <div class="card card-10 hearts fixed">
+        <div class="card__front"><span class="card__values"></span></div>
+        <div class="card__back"></div>
+      </div>
+      <div class="card card-9 hearts facedown fixed">
+        <div class="card__front"><span class="card__values"></span></div>
+        <div class="card__back"></div>
+      </div>
+      <div class="card card-0 hearts fixed">
+        <div class="card__front"><span class="card__values"></span></div>
+        <div class="card__back"></div>
+      </div>
     </div>
 
-    <!-- board top right -->
-    <div class="board__foundations foundations">
-      <div class="card-placeholder foundations__foundation" id="stack2"></div>
-      <div class="card-placeholder foundations__foundation" id="stack3"></div>
-      <div class="card-placeholder foundations__foundation" id="stack4"></div>
-      <div class="card-placeholder foundations__foundation" id="stack5"></div>
+    <div class="hero__content">
+      <h1>Solitaire Collection</h1>
+      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Soluta culpa quam ullam dolorem rem, velit earum, impedit odio ipsam! Ipsam!</p>
     </div>
+  </header>
 
+  <!-- Games List -->
+  <div class="games-list container">
+    <div class="games-list__item tile" style="--primary: #3a47d5; --secondary: #00d2ff;">
+      <div class="tile__info">
+        <span class="tile__sign">K</span>
+        <span class="tile__name">Klondike</span>
+      </div>
+      <div class="tile__menu">
+        <a href="klondike" class="tile__link">Resume</a>
+        <a href="" class="tile__link">Leaderboard</a>
+      </div>
+    </div>
+    <div class="games-list__item tile" style="--primary: #009432; --secondary: #3ad59f;">
+      <div class="tile__info">
+        <span class="tile__sign">F</span>
+        <span class="tile__name">Freecell</span>
+      </div>
+      <div class="tile__menu">
+        <a href="freecell" class="tile__link">Resume</a>
+        <a href="leaderboard" class="tile__link">Leaderboard</a>
+      </div>
+    </div>
+    <div class="games-list__item tile" style="--primary: #6F1E51; --secondary: #FC466B;">
+      <div class="tile__info">
+        <span class="tile__sign">S</span>
+        <span class="tile__name">Spider Solitaire</span>
+      </div>
+      <div class="tile__menu">
+        <a href="spider-solitaire" class="tile__link">Resume</a>
+        <a href="leaderboard" class="tile__link">Leaderboard</a>
+      </div>
+    </div>
+    <div class="games-list__item tile" style="--primary: #F79F1F; --secondary: #f8ff00;">
+      <div class="tile__info">
+        <span class="tile__sign">P</span>
+        <span class="tile__name">Pyramids</span>
+      </div>
+      <div class="tile__menu">
+        <a href="pyramids" class="tile__link">Resume</a>
+        <a href="leaderboard" class="tile__link">Leaderboard</a>
+      </div>
+    </div>
+    <div class="games-list__item tile" style="--primary: #3F2B96; --secondary: #A8C0FF;">
+      <div class="tile__info">
+        <span class="tile__sign">G</span>
+        <span class="tile__name">Gaps</span>
+      </div>
+      <div class="tile__menu">
+        <a href="gaps" class="tile__link">Resume</a>
+        <a href="leaderboard" class="tile__link">Leaderboard</a>
+      </div>
+    </div>
   </div>
 
-  <!-- tableau -->
-  <div class="board__tableau tableau">
-    <div class="card-placeholder tableau__column" id="stack6"></div>
-    <div class="card-placeholder tableau__column" id="stack7"></div>
-    <div class="card-placeholder tableau__column" id="stack8"></div>
-    <div class="card-placeholder tableau__column" id="stack9"></div>
-    <div class="card-placeholder tableau__column" id="stack10"></div>
-    <div class="card-placeholder tableau__column" id="stack11"></div>
-    <div class="card-placeholder tableau__column" id="stack12"></div>
-  </div>
 
-
-  <button class="button autocomplete">Auto Complete</button>
-
-  <!-- option: modal--show -->
-  <aside class="modal modal--large">
-    <h2 class="modal__header">Congrations! You won!</h2>
-    <div class="modal__column">
-      <h3 class="modal__headline">Your score: </h3>
-      <h3 class="modal__headline">Your best score: </h3>
-      <h3 class="modal__headline">Your time: </h3>
-      <h3 class="modal__headline">Your best time: </h3>
-    </div>
-    <div class="modal__column">
-      <span class="modal__content modal__game">0:57</span>
-      <span class="modal__content">0:57</span>
-      <span class="modal__content modal__game">3:32</span>
-      <span class="modal__content">3:32</span>
-    </div>
-    <div class="modal__buttons">
-      <button class="button button--primary new-game">Start new game</button>
-    </div>
-  </aside>
-
-  <script src="build/js/solitaire.min.js"></script>
+  <footer class="footer container">
+    <span class="footer__notice">&copy; 2018 solitaire-collection.com</span>
+    <a href="/imprint" class="footer__link">Imprint</a>
+  </footer>
 </body>
 </html>

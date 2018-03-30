@@ -1,0 +1,13 @@
+.footer {
+  display: flex;
+  color: $color-link;
+  font-size: $fs-small;
+  justify-content: space-between;
+  margin: 0 0 $spacing-base;
+
+
+  &__link {
+    font-weight: bold;
+    text-transform: uppercase;
+  }
+}

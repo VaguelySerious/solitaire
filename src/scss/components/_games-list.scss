@@ -1,0 +1,18 @@
+.games-list {
+  display: grid;
+  grid-gap: $spacing-small;
+  grid-template: auto / repeat(2, 1fr);
+  margin: $spacing-base 0;
+
+  @include break(mobile) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  @include break(tablet) {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  @include break(desktop) {
+    grid-template-columns: repeat(5, 1fr);
+  }
+}

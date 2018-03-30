@@ -120,11 +120,6 @@
       transform: rotateY(180deg);
     }
 
-    &:hover ~ & {
-      @include elevate(1);
-      transform: rotateY(180deg);
-    }
-
     &::after {
       padding-bottom: 100% * $card-ratio !important;
     }

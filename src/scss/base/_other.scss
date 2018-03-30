@@ -14,6 +14,9 @@ $transition-easing-bounce:  cubic-bezier(0.68, -0.55, 0.265, 1.55);
 $transition:                $transition-duration $transition-easing;
 
 $hero-appear-duration:  0.4s;
+$logo-cards:            5;
+$logo-cards-offset:     -40;
+$logo-cards-duration:   0.7s;
 
 $button-padding-s:      ($spacing-small * 1.5) $spacing-base;
 $button-padding:        ($spacing-small * 1.5) ($spacing-base * 1.25);
