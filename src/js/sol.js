@@ -102,18 +102,39 @@ SOL.push = function (stack, card) {
 // Removes a card from bottom of stack
 // Returns the id of the removed card
 SOL.pop = function (stack) {
-  var children = SOL.DOM.stacks[stack];
+  var children = SOL.DOM.stacks[stack].childNodes;
   if (SOL.game.stacks[stack].length > 0) {
     children[children.length - 1].outerHTML = '';
     return SOL.game.stacks[stack].pop();
   } else {
-    throw new Error('Can not pop empty stack');
+    throw new Error('Cannot pop empty stack');
   }
 };
 
 // Moves a card from one location to another
-SOL.move = function (from, to, amount, reverse) {
+SOL.move = function (from, to, amount, flip, reverse) {
+  var cards = [];
+  var i;
 
+  // Remove the cards from the origin stack
+  for (i = 0; i < amount; i++) {
+    cards.push(SOL.pop(from));
+
+    if (flip) {
+      cards[i].facedown = !cards[i].facedown;
+    }
+  }
+
+  // Push the cards to the target stack
+  for (i = 0; i < amount; i++) {
+    if (reverse) {
+      SOL.push(to, cards.shift());
+    } else {
+      SOL.push(to, cards.pop());
+    }
+  }
+
+  return cards[cards.length - 1] != null;
 };
 
 // Create new deck
@@ -246,12 +267,7 @@ function sprintf(text) {
 }
 
 // Template for card DOM objects
-SOL.template = `
-<div class="card card-%s %s %s" id="%s">
-  <div class="card__front">
-    <span class="card__values"></span>
-  </div>
-<div class="card__back"></div></div>`;
+SOL.template = '<div class="card card-%s %s %s" id="%s"><div class="card__front"><span class="card__values"></span></div><div class="card__back"></div></div>';
 
 // Shuffles an array in place (CBR)
 SOL.shuffle = function (arr) {

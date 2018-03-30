@@ -1299,7 +1299,7 @@ h3, .text-block h3, .text-block .h3, .text-block .label {
     margin-right: -70%;
     position: relative; }
     .stack.horizontal .card.facedown {
-      margin-bottom: -90%; }
+      margin-right: -90%; }
 
 .landing {
   display: flex;
