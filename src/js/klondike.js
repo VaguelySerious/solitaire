@@ -20,13 +20,6 @@ SOL.scoring = {
   afterTenSeconds: -2
 };
 
-
-{
-  color: '',
-  value: '',
-  id: 0
-}
-
 // Make a move
 SOL.move = function () {
 

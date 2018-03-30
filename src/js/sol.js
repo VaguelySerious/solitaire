@@ -67,6 +67,41 @@ var SOL = {
 };
 SOL.DOM.board.className += SOL.cardColors[Math.floor(Math.random() * SOL.cardColors.length)];
 
+// Generates a DOM Node from card object
+SOL.generate = function (card) {
+  // TODO Set facedown class according to card
+
+  return 'DOMSTRING';
+};
+// Get the card object from the id
+SOL.lookup = function (id) {
+  return {};
+};
+// Adds a card to bottom of stack
+SOL.push = function (stack, card) {
+  var domCard = SOL.generate(card);
+  SOL.game.stacks[stack].append(card);
+  SOL.DOM.stacks[stack].append(SOL.generate(card));
+};
+// Removes a card from bottom of stack
+// Returns the id of the removed card
+SOL.pop = function (stack) {
+  var children = SOL.DOM.stacks[stack];
+  if (SOL.game.stacks[stack].length > 0) {
+    children[children.length - 1].outerHTML = '';
+    return SOL.game.stacks[stack].pop();
+  } else {
+    throw new Error('Can not pop empty stack');
+  }
+};
+// Moves a card from one location to another
+SOL.move = function (from, to, amount, onebyone) {
+
+};
+// Rebuilds DOM from stack variable
+SOL.rebuild = function () {
+
+};
 // Go back in time once and decrease score
 SOL.undo = function () {
 
@@ -75,31 +110,14 @@ SOL.undo = function () {
 SOL.save = function () {
 
 };
-// Moves a card from one location to another
-SOL.move = function () {
-
-};
-// Adds a card to bottom of stack
-SOL.push = function (stack, card) {
-
-};
-// Removes a card from bottom of stack 
-// Returns the id of the removed card
-SOL.pop = function (stack) {
-  return 0;
-}
-// Rebuilds DOM from stack variable
-SOL.rebuild = function () {
-
-};
 // Calculates score and shows win screen / stats
 SOL.win = function () {
 
 };
 
-// //////////////////////
-// TIME AND SCORE DOM //
-// //////////////////////
+// /////////////////////////////
+// TIME SCORE DOM AND HELPERS //
+// /////////////////////////////
 
 // Updates score in DOM
 SOL.stats.updateScore = function (change, set) {
@@ -118,12 +136,12 @@ SOL.DOM.updateTime = function (seconds) {
 };
 // Starts the timer interval
 SOL.stats.time.start = function () {
-  this.timer = setInterval(() => {
-    this.now += 1;
-    if (this.now % 10 === 0) {
+  this.timer = setInterval(function () {
+    SOL.stats.time.now += 1;
+    if (SOL.stats.time.now % 10 === 0) {
       SOL.stats.updateScore(SOL.scoring.afterTenSeconds);
     }
-    SOL.DOM.updateTime(this.now);
+    SOL.DOM.updateTime(SOL.stats.time.now);
   }, 1000);
 };
 // Only stops the timer
@@ -135,3 +153,13 @@ SOL.stats.time.stop = function () {
 SOL.stats.time.reset = function () {
   SOL.DOM.updateTime(0);
 };
+// Shuffles an array in place (CBR)
+SOL.shuffle = function (arr) {
+    var j, temp, i;
+    for (i = arr.length - 1; i > 0; i--) {
+        j = Math.floor(Math.random() * (i + 1));
+        temp = arr[i];
+        arr[i] = arr[j];
+        arr[j] = temp;
+    }
+}
