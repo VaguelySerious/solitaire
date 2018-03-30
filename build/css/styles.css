@@ -1010,13 +1010,13 @@ h3, .text-block h3, .text-block .h3, .text-block .label {
   width: 100%; }
   @media only screen and (min-width: 500px) {
     .card {
-      font-size: calc((100vw - 1vw * var(--columns)) / var(--columns) / 5); } }
+      font-size: calc((100vw - 1vw * var(--columns)) / var(--columns) / 5.5); } }
   @media only screen and (min-width: 768px) {
     .card {
       font-size: calc((100vw - 1vw * var(--columns)) / var(--columns) / 7); } }
   @media only screen and (min-width: 1336px) {
     .card {
-      font-size: calc((100vw - 1vw * var(--columns)) / var(--columns) / 8); } }
+      font-size: calc((var(--width) - 1vw * var(--columns)) / var(--columns) / 5.5); } }
   .card::after {
     content: '';
     display: block;
@@ -1099,9 +1099,9 @@ h3, .text-block h3, .text-block .h3, .text-block .label {
     .facedown .card__front {
       transform: rotateY(180deg); }
     .card__front::before {
-      content: 'A';
+      content: var(--card-color);
       display: flex;
-      font-size: 120%;
+      font-size: 200%;
       justify-content: center;
       left: 50%;
       letter-spacing: 0.2em;
@@ -1115,46 +1115,49 @@ h3, .text-block h3, .text-block .h3, .text-block .label {
       width: 2em;
       width: 2ch;
       word-wrap: break-word; }
-      .card-0 .card__front::before {
-        content: "" var(--card-color) "\a";
-        font: bold 300%/1 "Helvetica Neue", "Trebuchet MS", "Helvetica", "Arial", sans-serif; }
-      .card-1 .card__front::before {
-        content: "" var(--card-color) "\a" var(--card-color) "\a"; }
-      .card-2 .card__front::before {
-        content: "" var(--card-color) "\a" var(--card-color) "\a" var(--card-color) "\a";
-        line-height: 1.8; }
-      .card-3 .card__front::before {
-        content: "" var(--card-color) var(--card-color) "\a" var(--card-color) var(--card-color) "\a"; }
-      .card-4 .card__front::before {
-        content: "" var(--card-color) var(--card-color) "\a" var(--card-color) "\a" var(--card-color) var(--card-color) "\a";
-        line-height: 1.8; }
-      .card-5 .card__front::before {
-        content: "" var(--card-color) var(--card-color) "\a" var(--card-color) var(--card-color) "\a" var(--card-color) var(--card-color) "\a";
-        line-height: 1.8; }
-      .card-6 .card__front::before {
-        content: "" var(--card-color) var(--card-color) "\a" var(--card-color) "\a" var(--card-color) var(--card-color) "\a" var(--card-color) var(--card-color) "\a";
-        line-height: 1; }
-      .card-7 .card__front::before {
-        content: "" var(--card-color) var(--card-color) "\a" var(--card-color) "\a" var(--card-color) var(--card-color) "\a" var(--card-color) "\a" var(--card-color) var(--card-color);
-        line-height: 1; }
-      .card-8 .card__front::before {
-        content: "" var(--card-color) var(--card-color) "\a" var(--card-color) var(--card-color) "\a" var(--card-color) "\a" var(--card-color) var(--card-color) "\a" var(--card-color) var(--card-color) "\a";
-        line-height: 1; }
-      .card-9 .card__front::before {
-        content: "" var(--card-color) var(--card-color) "\a" var(--card-color) "\a" var(--card-color) var(--card-color) "\a" var(--card-color) var(--card-color) "\a" var(--card-color) "\a" var(--card-color) var(--card-color);
-        line-height: 1; }
-      .card-10 .card__front::before {
-        font: bold 300%/1 "Helvetica Neue", "Trebuchet MS", "Helvetica", "Arial", sans-serif;
-        content: "J";
-        line-height: 1; }
-      .card-11 .card__front::before {
-        font: bold 300%/1 "Helvetica Neue", "Trebuchet MS", "Helvetica", "Arial", sans-serif;
-        content: "Q";
-        line-height: 1; }
-      .card-12 .card__front::before {
-        font: bold 300%/1 "Helvetica Neue", "Trebuchet MS", "Helvetica", "Arial", sans-serif;
-        content: "K";
-        line-height: 1; }
+      @media screen and (min-width: 768px) {
+        .card__front::before {
+          font-size: 120%; }
+          .card-0 .card__front::before {
+            content: "" var(--card-color) "\a";
+            font: bold 300%/1 "Helvetica Neue", "Trebuchet MS", "Helvetica", "Arial", sans-serif; }
+          .card-1 .card__front::before {
+            content: "" var(--card-color) "\a" var(--card-color) "\a"; }
+          .card-2 .card__front::before {
+            content: "" var(--card-color) "\a" var(--card-color) "\a" var(--card-color) "\a";
+            line-height: 1.8; }
+          .card-3 .card__front::before {
+            content: "" var(--card-color) var(--card-color) "\a" var(--card-color) var(--card-color) "\a"; }
+          .card-4 .card__front::before {
+            content: "" var(--card-color) var(--card-color) "\a" var(--card-color) "\a" var(--card-color) var(--card-color) "\a";
+            line-height: 1.8; }
+          .card-5 .card__front::before {
+            content: "" var(--card-color) var(--card-color) "\a" var(--card-color) var(--card-color) "\a" var(--card-color) var(--card-color) "\a";
+            line-height: 1.8; }
+          .card-6 .card__front::before {
+            content: "" var(--card-color) var(--card-color) "\a" var(--card-color) "\a" var(--card-color) var(--card-color) "\a" var(--card-color) var(--card-color) "\a";
+            line-height: 0.9; }
+          .card-7 .card__front::before {
+            content: "" var(--card-color) var(--card-color) "\a" var(--card-color) "\a" var(--card-color) var(--card-color) "\a" var(--card-color) "\a" var(--card-color) var(--card-color);
+            line-height: 0.9; }
+          .card-8 .card__front::before {
+            content: "" var(--card-color) var(--card-color) "\a" var(--card-color) var(--card-color) "\a" var(--card-color) "\a" var(--card-color) var(--card-color) "\a" var(--card-color) var(--card-color) "\a";
+            line-height: 0.9; }
+          .card-9 .card__front::before {
+            content: "" var(--card-color) var(--card-color) "\a" var(--card-color) "\a" var(--card-color) var(--card-color) "\a" var(--card-color) var(--card-color) "\a" var(--card-color) "\a" var(--card-color) var(--card-color);
+            line-height: 0.9; }
+          .card-10 .card__front::before {
+            font: bold 300%/1 "Helvetica Neue", "Trebuchet MS", "Helvetica", "Arial", sans-serif;
+            content: "J";
+            line-height: 0.9; }
+          .card-11 .card__front::before {
+            font: bold 300%/1 "Helvetica Neue", "Trebuchet MS", "Helvetica", "Arial", sans-serif;
+            content: "Q";
+            line-height: 0.9; }
+          .card-12 .card__front::before {
+            font: bold 300%/1 "Helvetica Neue", "Trebuchet MS", "Helvetica", "Arial", sans-serif;
+            content: "K";
+            line-height: 0.9; } }
   .card__values {
     display: flex;
     height: 100%;
@@ -1275,6 +1278,11 @@ h3, .text-block h3, .text-block .h3, .text-block .label {
     transform: translate3d(0, -3px, 0); }
   .stack.vertical .card.facedown {
     margin-bottom: -95%; }
+  @media only screen and (max-width: 768px) and (orientation: landscape) {
+    .stack.vertical .card {
+      margin-bottom: -60%; }
+      .stack.vertical .card.facedown {
+        margin-bottom: -80%; } }
   @media only screen and (min-width: 768px) {
     .stack.vertical .card {
       margin-bottom: -110%; }
