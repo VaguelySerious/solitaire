@@ -19,19 +19,28 @@ module.exports = function (grunt) {
           dest: destination+'js/',
           ext: '.min.js'
         }]
+      },
+      dev: {
+        files: [{
+          mangle: false,
+          compress: false,
+          expand: true,
+          beautify: true,
+          cwd: assetpath+'js/',
+          src: '*.js',
+          dest: destination+'js/',
+          ext: '.min.js'
+        }]
       }
     },
 
     // Watch
     watch: {
-      files: [assetpath+'scss/**/*.scss'],
+      files: [assetpath+'scss/**/*.scss', assetpath+'js/*.js'],
       tasks: [
-        'sass:dev'
+        'sass:dev',
+        'uglify:dev'
       ]
-      // files: [assetpath+'js/*.js'],
-      // tasks: [
-      //   'uglify'
-      // ]
     },
 
     // Sass/Scss

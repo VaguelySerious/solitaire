@@ -1,1 +1,0 @@
-// Space for the game logic of spider solitaire
