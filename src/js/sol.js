@@ -47,10 +47,6 @@ var SOL = {
     help: document.getElementById('//TODO'),
     cookie: document.getElementById('//TODO'),
 
-    // Logic
-    activeCard: null,
-    possibleMove: true,
-    autoCompletable: false
   },
   cardColors: [
     'royalblue',
