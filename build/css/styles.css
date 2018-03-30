@@ -1099,11 +1099,11 @@ h3, .text-block h3, .text-block .h3, .text-block .label {
     .card__front::before {
       content: 'A';
       display: flex;
-      font-size: 150%;
+      font-size: 120%;
       justify-content: center;
       left: 50%;
       letter-spacing: 0.2em;
-      line-height: 4;
+      line-height: 3.75;
       margin-left: 0.1em;
       position: absolute;
       text-align: center;
@@ -1120,15 +1120,15 @@ h3, .text-block h3, .text-block .h3, .text-block .label {
         content: "" var(--card-color) "\a" var(--card-color) "\a"; }
       .card-2 .card__front::before {
         content: "" var(--card-color) "\a" var(--card-color) "\a" var(--card-color) "\a";
-        line-height: 2; }
+        line-height: 1.8; }
       .card-3 .card__front::before {
         content: "" var(--card-color) var(--card-color) "\a" var(--card-color) var(--card-color) "\a"; }
       .card-4 .card__front::before {
         content: "" var(--card-color) var(--card-color) "\a" var(--card-color) "\a" var(--card-color) var(--card-color) "\a";
-        line-height: 2; }
+        line-height: 1.8; }
       .card-5 .card__front::before {
         content: "" var(--card-color) var(--card-color) "\a" var(--card-color) var(--card-color) "\a" var(--card-color) var(--card-color) "\a";
-        line-height: 2; }
+        line-height: 1.8; }
       .card-6 .card__front::before {
         content: "" var(--card-color) var(--card-color) "\a" var(--card-color) "\a" var(--card-color) var(--card-color) "\a" var(--card-color) var(--card-color) "\a";
         line-height: 1; }

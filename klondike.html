@@ -126,54 +126,22 @@
   <!-- Board -->
   <main class="board" id="board" style="--width: 65%; --columns: 7;">
     <div class="row">
-      <div class="stack">
-        <div class="card facedown card-3 hearts">
-          <div class="card__front"><span class="card__values"></span></div>
-          <div class="card__back"></div>
-        </div>
-      </div>
-      <div class="stack horizontal">
-        <div class="card card-10 hearts">
-          <div class="card__front"><span class="card__values"></span></div>
-          <div class="card__back"></div>
-        </div>
-        <div class="card card-0 spades">
-          <div class="card__front"><span class="card__values"></span></div>
-          <div class="card__back"></div>
-        </div>
-        <div class="card card-7 spades">
-          <div class="card__front"><span class="card__values"></span></div>
-          <div class="card__back"></div>
-        </div>
-      </div>
+      <div class="stack" id="stack-0"></div>
+      <div class="stack horizontal" id="stack-1"></div>
       <div class="spacer fixed"></div>
-      <div class="stack">
-        <div class="card card-0 diamonds">
-          <div class="card__front"><span class="card__values"></span></div>
-          <div class="card__back"></div>
-        </div>
-        <div class="card card-1 diamonds">
-          <div class="card__front"><span class="card__values"></span></div>
-          <div class="card__back"></div>
-        </div>
-      </div>
-      <div class="stack">
-        <div class="card card-0 hearts">
-          <div class="card__front"><span class="card__values"></span></div>
-          <div class="card__back"></div>
-        </div>
-      </div>
-      <div class="stack"></div>
-      <div class="stack"></div>
+      <div class="stack" id="stack-2"></div>
+      <div class="stack" id="stack-3"></div>
+      <div class="stack" id="stack-4"></div>
+      <div class="stack" id="stack-5"></div>
     </div>
     <div class="row">
-      <div class="stack vertical"></div>
-      <div class="stack vertical"></div>
-      <div class="stack vertical"></div>
-      <div class="stack vertical"></div>
-      <div class="stack vertical"></div>
-      <div class="stack vertical"></div>
-      <div class="stack vertical"></div>
+      <div class="stack vertical" id="stack-6"></div>
+      <div class="stack vertical" id="stack-7"></div>
+      <div class="stack vertical" id="stack-8"></div>
+      <div class="stack vertical" id="stack-9"></div>
+      <div class="stack vertical" id="stack-10"></div>
+      <div class="stack vertical" id="stack-11"></div>
+      <div class="stack vertical" id="stack-12"></div>
     </div>
   </main>
   <!-- /Board -->
@@ -258,5 +226,7 @@
   </aside>
   <!-- /Scoreboard -->
 
+  <script type="text/javascript" src="src/js/sol.js"></script>
+  <script type="text/javascript" src="src/js/klondike.js"></script>
 </body>
 </html>

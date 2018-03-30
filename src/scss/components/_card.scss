@@ -161,11 +161,11 @@
     &::before {
       content: 'A';
       display: flex;
-      font-size: 150%;
+      font-size: 120%;
       justify-content: center;
       left: 50%;
       letter-spacing: 0.2em;
-      line-height: 4;
+      line-height: 3.75;
       margin-left: 0.1em;                // readjust the letter-spacing
       position: absolute;
       text-align: center;
@@ -221,7 +221,7 @@
 
           // 3-line cards
           @if $number == 2 OR $number == 4 OR $number == 5 {
-            line-height: 2;
+            line-height: 1.8;
           }
 
           // multiple lines
