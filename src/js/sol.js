@@ -22,12 +22,12 @@ var SOL = {
   DOM: {
 
     // General
-    board: document.getElementById('board //TODO'),
-    stacks: document.getElementsByClassName('stack //TODO'),
+    board: document.getElementById('board'),
+    stacks: document.getElementsByClassName('stack'),
 
     // Buttons
-    undo: document.getElementById('undo //TODO'),
-    newgames: document.getElementsByClassName('newgame //TODO'),
+    undo: document.getElementById('undo'),
+    newgames: document.getElementsByClassName('newgame//TODO'),
     autocomplete: document.getElementById('//TODO'),
     cycle: document.getElementById('//TODO'), // TODO CHECK IF NULL
 
@@ -69,9 +69,13 @@ var SOL = {
 
 // Generates a DOM Node from card object
 SOL.generate = function (card) {
-  // TODO Set facedown class according to card
-
-  return 'DOMSTRING';
+  return sprintf(
+    SOL.template,
+    card.value,
+    card.color,
+    card.facedown ? 'facedown' : '',
+    card.id
+  );
 };
 
 // Get the card object from the id
@@ -83,7 +87,7 @@ SOL.lookup = function (id) {
 SOL.push = function (stack, card) {
   var domCard = SOL.generate(card);
   SOL.game.stacks[stack].push(card);
-  // SOL.DOM.stacks[stack].append(SOL.generate(card));
+  SOL.DOM.stacks[stack].insertAdjacentHTML('beforeend', SOL.generate(card));
 };
 
 // Removes a card from bottom of stack
@@ -105,11 +109,13 @@ SOL.move = function (from, to, amount, onebyone) {
 
 // Create new deck
 SOL.new = function () {
-  var deck = [],
-      tempNumber = '',
-      currentStack = 0,
-      tempIsFacedown = true,
-      i, j, len;
+  var deck = [];
+  var tempNumber = '';
+  var currentStack = 0;
+  var tempIsFacedown = true;
+  var i;
+  var j;
+  var len;
 
   for (i = 0, len = SOL.game.cards; i < len; i++) {
     deck.push({
@@ -126,26 +132,26 @@ SOL.new = function () {
     if (/[0-9]/.test(SOL.game.distribution[i])) {
       tempNumber += SOL.game.distribution[i];
     } else {
-      switch(SOL.game.distribution[i]) {
-        case '/':
-          currentStack++;
-          break;
+      switch (SOL.game.distribution[i]) {
+      case '/':
+        currentStack++;
+        break;
 
-        case 'u': // falls through
-          tempIsFacedown = true;
-        case 'd':
-          for (j = 0; j < +tempNumber; j++) {
-            var tempCard = deck.pop();
-            tempCard.facedown = tempIsFacedown;
-            SOL.push(currentStack, tempCard);
-          }
+      case 'u':
+        tempIsFacedown = false;
+        // falls through
+      case 'd':
+        for (j = 0; j < +tempNumber; j++) {
+          var tempCard = deck.pop();
+          tempCard.facedown = tempIsFacedown;
+          SOL.push(currentStack, tempCard);
+        }
 
-          tempIsFacedown = false;
-          break;
+        tempIsFacedown = true;
+        break;
 
-        default:
-          throw new Error('Invalid fen string for cards distribution');
-          break;
+      default:
+        throw new Error('Invalid fen string for cards distribution');
       }
 
       tempNumber = '';
@@ -173,9 +179,9 @@ SOL.win = function () {
 
 };
 
-// /////////////////////////////
-// TIME SCORE DOM AND HELPERS //
-// /////////////////////////////
+// /////////////////
+// TIME SCORE DOM //
+// /////////////////
 
 // Updates score in DOM
 SOL.stats.updateScore = function (change, set) {
@@ -216,13 +222,37 @@ SOL.stats.time.reset = function () {
   SOL.DOM.updateTime(0);
 };
 
+
+// /////////////////
+// TIME SCORE DOM //
+// /////////////////
+
+// Sprintf
+function sprintf(text) {
+  var i = 1;
+  var args = arguments;
+  return text.replace(/%s/g, function () {
+    return i < args.length ? args[i++] : '';
+  });
+}
+
+// Template for card DOM objects
+SOL.template = `
+<div class="card card-%s %s %s" id="%s">
+  <div class="card__front">
+    <span class="card__values"></span>
+  </div>
+<div class="card__back"></div></div>`;
+
 // Shuffles an array in place (CBR)
 SOL.shuffle = function (arr) {
-  var j, temp, i;
+  var j;
+  var temp;
+  var i;
   for (i = arr.length - 1; i > 0; i--) {
     j = Math.floor(Math.random() * (i + 1));
     temp = arr[i];
     arr[i] = arr[j];
     arr[j] = temp;
   }
-}
+};

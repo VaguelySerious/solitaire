@@ -9,7 +9,7 @@ SOL.game = {
   cards: 52,
   colors: ['hearts', 'diamonds', 'clubs', 'spades'],
   stacks: [[], [], [], [], [], [], [], [], [], [], [], [], []],
-  distribution: '24d//////1u/1u1d/2u1d/3u1d/4u1d/5u1d/6u1d',
+  distribution: '24d//////1u/1d1u/2d1u/3d1u/4d1u/5d1u/6d1u',
   history: []
 };
 
