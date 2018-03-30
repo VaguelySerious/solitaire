@@ -1,0 +1,15 @@
+///
+/// Game-related variables
+///
+
+$game-actions:      4;
+$game-tile-actions: $game-actions - 1;
+
+$board-column-gutter:     0.5vw;
+$board-column-gutter-s:   0.25vw;
+$board-column-width-raw:  '(100% - #{$board-column-gutter * 2} * var(--columns)) / var(--columns)';
+$board-column-width-raw:  '(100% - var(--spacing) * var(--columns)) / var(--columns)';
+$board-column-width:      calc(#{$board-column-width-raw});
+$board-column-width-s:    calc((100% - #{$board-column-gutter-s * 2} * var(--columns)) / var(--columns);
+$board-column-width-s:    calc((100% - var(--spacing) * var(--columns)) / var(--columns);
+$board-card-height:       '((#{$board-column-width-raw}) * #{$card-ratio})';

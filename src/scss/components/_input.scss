@@ -1,0 +1,24 @@
+.input {
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid $color-input-inactive;
+  color: $color-input;
+  font-size: inherit;
+  outline: 0;
+  padding: $spacing-small $spacing-x-small;
+  transition: all $transition;
+  width: 100%;
+
+
+
+  &:focus {
+    border-bottom-color: $color-science-blue;
+    border-bottom-color: $color-primary;
+  }
+
+
+
+  &::placeholder {
+    color: $color-input-inactive;
+  }
+}

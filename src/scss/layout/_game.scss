@@ -1,0 +1,191 @@
+///
+///
+/// Game Component Styles
+///
+/// ------------------------------------------------------------------
+///
+/// This holds the flow and restrictions for cards inside a game or
+/// distribution.
+///
+/// The board receives a number of columns it should display the cards
+/// in. That number determines the card size and the spacing,
+/// depending on the viewport size;
+///
+/// ------------------------------------------------------------------
+///
+/// 1. Variables
+///
+/// 2. Controls
+///
+/// 3. Board
+///    3.1 Board components
+///
+/// 4. Card stacks
+///    Moved to global styles, `components/_stacks.scss` since the
+///    styling also needs to affect the cards the stacks are holding.
+///
+///    4.1   Default: cards stacked on top of each other
+///    4.2   Vertically stacked cards
+///    4.3   Horizontally stacked cards
+///
+/// 5. Scoreboard
+///
+///
+
+//
+// 1. Variables
+//
+$controls-switch-bp:      'tablet-l';
+
+
+//
+// 2. Controls
+//
+.controls {
+  align-items: center;
+  bottom: 0;
+  display: flex;
+  left: 0;
+  right: 0;
+  position: fixed;
+  transition: all $transition;
+  z-index: $layer-controls;
+
+
+  @include break($controls-switch-bp) {
+    flex-direction: column;
+    padding: $spacing-small 0;
+    right: auto;
+    top: 0;
+  }
+
+  @include break(desktop) {
+    width: $controls-width;
+  }
+
+
+  .settings {
+    margin-left: auto;
+
+
+    @include break(tablet-l) {
+      margin-left: 0;
+    }
+  }
+
+
+  .icon-button {
+    animation: slideInFromLeft $transition;
+  }
+}
+
+
+
+//
+// 3. Board
+//
+.board {
+  display: flex;
+  flex-flow: column nowrap;
+  height: 100%;
+  padding: $board-column-gutter-s;
+  perspective: 1200px;
+  transition: all $transition;
+
+  --width: 92%;
+  --columns: 7;
+
+
+  @include break(mobile, max) {
+    &#board {
+      --spacing: 0vw;
+    }
+  }
+
+
+  @include break(mobile) {
+    padding: $spacing-small 0;
+    margin: 0 $spacing-small;
+
+    @include break(desktop, max) {
+      --spacing: 0.25vw;
+    }
+  }
+
+
+  @include break($controls-switch-bp) {
+    padding: $spacing-base 0;
+    margin: 0 $controls-width;
+  }
+
+
+  @include break(desktop) {
+    --spacing: 0.5vw;
+    margin: 0 auto;
+    max-width: var(--width);
+  }
+}
+
+
+// 4. Board components
+.row {
+  align-items: flex-start;
+  align-content: flex-start;
+  display: flex;
+  flex-flow: row nowrap;
+  flex: 0 0 auto;
+  width: 100%;
+
+
+  &:not(.flex), &:not(:empty) {
+    height: 30%;
+    height: calc((100vw / var(--spacing) * var(--columns)) * var(--columns) * 1.4);
+  }
+
+
+  &.flex, &:empty {
+    flex: 1;
+  }
+
+
+  .stacked & {
+    margin-bottom: calc(100vw / var(--columns) * 0.3 * -1);
+  }
+}
+
+
+.stack {
+  margin: var(--spacing);
+}
+
+
+.spacer {
+  &.flex {
+    flex: 1;
+    width: auto;
+  }
+
+  &.shrink {
+    flex-shrink: 1;
+    width: auto;
+  }
+}
+
+
+.flex {
+  @include break(mobile, max) {
+    &:empty {
+      display: none;
+    }
+  }
+}
+
+
+//
+// 5. Scoreboard
+//
+
+.scores {
+  display: block;
+  margin: $spacing-large 0 $spacing-x-large;
+}

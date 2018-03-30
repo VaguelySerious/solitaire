@@ -1,214 +1,320 @@
-//
-// card styles
-//
-// this file does not contain any size-related properties to
-// make sure the card width is always relative to the board
-// settings
-//
+///
+///
+/// Card component
+///
+/// ------------------------------------------------------------------
+///
+/// 1. Interaction
+///
+/// 2. Card colors and values
+///    2.1  Large card value in the middle
+///    2.2  Number handlingg
+///
+/// 3. Corner card values
+///
+/// 4. Card Back
+///
+///
+
 
 .card {
-  box-sizing: border-box;
-  @include card-colors;
+  border-radius: $card-border-radius;
+  @include elevate(1);
+  color: $card-color;
   cursor: pointer;
-  display: flex;
   flex-shrink: 0;
+  font: bold #{$card-font-size}/1 $font-text;
+  font-size: calc((100vw - #{$board-column-gutter * 2} * var(--columns)) / var(--columns) / 4);
+  overflow: hidden;
   position: relative;
-  transform: translateZ(0px);
+  transition: box-shadow $transition, transform $transition;
+  transform: translate3d(0,0,0);
+  transform-origin: center;
+  transform-style: preserve-3d;
+  width: $card-width;
 
-  &--hearts,
-  &--diamonds {
-    color: color(brickred);
+
+  @include break(mobile) {
+    font-size: calc((100vw - #{$board-column-gutter * 2} * var(--columns)) / var(--columns) / 5);
   }
 
-  &--clubs,
-  &--spades {
-    color: color(black);
+  @include break(tablet) {
+    font-size: calc((100vw - #{$board-column-gutter * 2} * var(--columns)) / var(--columns) / 7);
+  }
+
+  @include break(desktop) {
+    font-size: calc((100vw - #{$board-column-gutter * 2} * var(--columns)) / var(--columns) / 8);
   }
 
 
-  &--dragged {
-    display: none;
-  }
-
-
-  // general card styles
-  &__back,
-  &__front {
-    @include backface-visibility(hidden);
-    box-sizing: border-box;
-    @include card-border-radius;
-    @include elevate(1);
-    height: 100%;
-    overflow: hidden;
-    transition: all 0.18s ease;
+  // Force card aspect ratio
+  &::after {
+    content: '';
+    display: block;
+    height: 0;
+    padding-bottom: (100% * $card-ratio);
     width: 100%;
 
-    .card:hover & {
-      @include elevate(7);
+
+    @media only screen and (max-width: 768px) and (orientation: landscape) {
+      padding-bottom: (100% * $card-ratio-s);
     }
   }
 
 
-  // card front
-  &__front {
-    background: color(white);
-    border: 1px solid darken(color(white), 10%);
-    display: flex;
-    flex-direction: column;
-    flex-grow: 1;
-    justify-content: space-between;
-    padding: 6% 8%;
 
-    // make room for back of card
-    .card--back & {
+  //
+  // 1. Card interaction
+  //
+  &:hover {
+    @include elevate(25);
+  }
+
+  &:hover {
+    transform: translate3d(0, -3px, 0);
+  }
+
+
+  &.clicked {
+    @include elevate(
+      $level:   3,
+      $color:   adjust-color($color-primary, $lightness: 30%, $saturation: 100%),
+      $opacity: 0.5
+    );
+
+    &:hover {
+      @include elevate(
+        $level:   10,
+        $color:   adjust-color($color-primary, $lightness: 30%, $saturation: 100%),
+        $opacity: 0.5
+      );
+    }
+  }
+
+
+  &.facedown {
+    transform: translate3d(0,0,0) rotateY(180deg);
+
+
+    &:not(:last-child) {
+      cursor: default;
+      pointer-events: none;
+    }
+
+    &:hover {
+      @include elevate(25);
+      transform: translate3d(0, -3px, 0) rotateY(180deg);
+    }
+  }
+
+
+  &.fixed {
+    font-size: $card-font-size;
+    max-width: $card-fixed-width;
+    min-width: $card-fixed-width-min;
+    pointer-events: all;
+    width: $card-fixed-width-max;
+
+    &:hover {
+      @include elevate(25);
       transform: rotateY(180deg);
     }
 
-    // click focus
-    .card--clicked & {
-      &, &:hover {
-        box-shadow: 0 0 15px 2px desaturate(lighten($card-default, 25%), 10%);
-      }
+    &:hover ~ & {
+      @include elevate(1);
+      transform: rotateY(180deg);
     }
 
-    .card--flash & {
-      animation: cardFlash 0.125s;
-      animation-iteration-count: 2;
+    &::after {
+      padding-bottom: 100% * $card-ratio !important;
+    }
+  }
 
-      &, &:hover {
-        box-shadow: none;
-      }
 
-      @include keyframes(cardFlash) {
-        0% {
-          transform: rotate(0);
-        }
-        25% {
-          transform: rotate(3deg);
-        }
-        50% {
-          transform: rotate(0);
-        }
-        75% {
-          transform: rotate(-3deg);
-        }
-        100% {
-          transform: rotate(0);
-        }
-      }
+
+
+  //
+  // 2. Card colors and values
+  //
+  &.hearts, &.diamonds { color: $color-red; }
+
+  @each $key, $color in $card-colors {
+    &.#{$key} { --card-color: '#{$color}'; }
+  }
+
+  @each $key, $value in $card-values {
+    &.card-#{$key} { --card-value: '#{$value}'; }
+  }
+
+
+
+  //
+  // 2.1 Large card value
+  //
+  &__front {
+    background: $color-base;
+    height: 100%;
+    pointer-events: none;
+    position: absolute;
+    transition: transform $transition;
+    width: 100%;
+
+    .facedown & {
+      transform: rotateY(180deg);
     }
 
-
-    // centered color icon
     &::before {
+      content: 'A';
+      display: flex;
+      font-size: 150%;
+      justify-content: center;
       left: 50%;
-      line-height: 1;
-      font-family: $card-font;
+      letter-spacing: 0.2em;
+      line-height: 4;
+      margin-left: 0.1em;                // readjust the letter-spacing
       position: absolute;
-      top: 47.5%;
+      text-align: center;
+      top: 50%;
       transform: translate(-50%, -50%);
-    }
+      white-space: pre;
+      width: 2em;
+      width: 2ch;
+      word-wrap: break-word;
 
 
-    // loop through card colors
-    @each $key, $value in $card-colors {
-      .card--#{$key} &::before {
-        content: $value;
-        font-family: $card-font;
+
+      //
+      // 2.2 Number Handling
+      // pretty-print the card value
+      //
+      @each $key, $value in $card-values {
+        $number: number($key);
+
+        .card-#{$key} & {
+          $output: '';
+
+          // numerical values
+          @if $number AND $number < 10 {
+            @for $i from 0 through $number {
+
+
+              @if ($number < 3) OR
+                  ($number %2 != 0 AND $number < 7 AND ($i %2 != 0)) OR
+                  (($number == 4 OR $number == 6 OR $number == 9)
+                      AND ($i == 1 OR $i == 2 OR $i == 4 OR $i == 6 OR $i == 7)) OR
+                  ($number == 7 AND ($i == 1 OR $i == 2 OR $i == 4 OR $i == 5)) OR
+                  ($number == 8 AND ($i == 1 OR $i == 3 OR $i == 4 OR $i == 6 OR $i == 8)) {
+                $output: $output var(--card-color) '\a';
+              }
+
+              @else {
+                $output: $output var(--card-color);
+              }
+            }
+
+            content: $output;
+          }
+
+          // non-numerical values and ace
+          @if $number AND $number >= 10 OR $number == 0 {
+            font: bold 300%/1 $font-text;
+
+            @if $number != 0 {
+              content: $value;
+            }
+          }
+
+          // 3-line cards
+          @if $number == 2 OR $number == 4 OR $number == 5 {
+            line-height: 2;
+          }
+
+          // multiple lines
+          @elseif $number >= 6 {
+            line-height: 1;
+          }
+        }
       }
     }
   }
 
 
-  // card backdrop
-  &__back {
-    $decorative-border-x: 4%;
-    $decorative-border-y: 5%;
 
-    border-color: color(white);
-    border-style: solid;
+  //
+  // 3. Corner card values
+  //
+  &__values {
+    display: flex;
+    height: 100%;
+    justify-content: space-between;
     left: 0;
+    padding: $card-padding;
     position: absolute;
     top: 0;
-    transform: rotateY(180deg);
+    width: 100%;
 
     &::after,
     &::before {
-      border: 1px solid;
-      content: "";
-      position: absolute;
-
-      @include break(tablet) {
-        border-width: 2px;
-      }
+      content: var(--card-value)'\a'var(--card-color);
+      text-align: center;
+      text-transform: uppercase;
+      white-space: pre;
     }
 
     &::before {
-      border-radius: 0.75vw;
-      @include abs-position($decorative-border-x, $decorative-border-y);
+      align-self: flex-start;
     }
 
     &::after {
-      border-radius: 0.5vw;
-      @include abs-position(($decorative-border-x * 2), ($decorative-border-y * 2 + 1));
-    }
-
-    // reverse rotation when back of card should be visible
-    .card--back & {
-      transform: rotateY(0);
+      align-self: flex-end;
+      transform: rotate(180deg);
     }
   }
 
 
-  // card icons
-  &__color {
-    display: block;
-    font-weight: bold;
-    text-align: center;
 
-    &::before {
-      display: block;
-      line-height: 1;
+  //
+  // 4. Card back
+  //
+  &__back {
+    background: $color-primary;
+    border: $card-back-border solid $color-base;
+    height: 100%;
+    -webkit-backface-visibility: hidden;
+    left: 0;
+    overflow: hidden;
+    pointer-events: none;
+    position: absolute;
+    top: 0;
+    transform: translateZ(0) rotateY(180deg);
+    transition: transform $transition;
+    width: 100%;
+
+
+    .facedown & {
+      transform: translateZ(0) rotateY(0deg);
     }
 
+    &::after,
+    &::before {
+      content: '';
+      position: absolute;
+      height: 150%;
+      opacity: 0.25;
+      background: darken($color-primary, 15%);
+      mix-blend-mode: multiply;
+      top: 0;
+      width: 100%;
+    }
 
     &::after {
-      display: block;
-      font-size: 0.5em;
-      line-height: 1;
-
-      @include break(tablet) {
-        font-size: 0.875em;
-      }
+      left: 37.5%;
+      transform: rotate(#{$card-diagonal-angle}deg);
     }
 
-
-    &:first-child{
-      align-self: flex-start;
-    }
-    &:last-child {
-      align-self: flex-end;
-      transform: rotate(180deg);
-    }
-
-
-    // loop through card values
-    @each $key, $value in $card-values {
-      .card--#{$key} & {
-        &::before {
-          content: $value;
-        }
-      }
-    }
-
-
-    // loop throuh card colors
-    @each $key, $value in $card-colors {
-      .card--#{$key} & {
-        &::after {
-          content: $value;
-        }
-      }
+    &::before {
+      right: 37.5%;
+      transform: rotate(#{$card-diagonal-angle * -1}deg);
     }
   }
 }

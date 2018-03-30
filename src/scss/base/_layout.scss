@@ -1,0 +1,36 @@
+///
+/// Layout variables
+///
+
+$breakpoints: (
+  'mobile':             500px,
+  'tablet':             768px,
+  'tablet-l':           1024px,
+  'desktop':            1336px,
+  'hd':                 1600px,
+  '4k':                 2400px
+);
+
+$controls-width:        72px;
+$container-width:       100%;
+$container-narrow:      500px;
+
+$spacing-base:          20px;
+$spacing-x-small:       $spacing-base * 0.25;
+$spacing-small:         $spacing-base * 0.5;
+$spacing-medium:        $spacing-base * 1.25;
+$spacing-large:         $spacing-base * 2;
+$spacing-x-large:       $spacing-base * 3;
+$spacing-xx-large:      $spacing-base * 4;
+
+$icon-button-size:      48px;
+$icon-button-padding:   $icon-button-size / 4;
+$icon-button-size-s:    42px;
+$icon-button-padding-s: $icon-button-size-s / 4;
+$icon-button-stroke:    2px;
+
+$game-tile-ratio:       0.75;
+
+$games-list-item-margin: $spacing-x-small;
+$games-list-columns-init: 2;
+$games-list-columns: 620px, 900px, 'desktop';

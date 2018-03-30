@@ -1,0 +1,28 @@
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(5%);
+    visibility: hidden;
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+    visibility: visible;
+  }
+}
+
+
+@keyframes fadeInLarge {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+    visibility: hidden;
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+    visibility: visible;
+  }
+}

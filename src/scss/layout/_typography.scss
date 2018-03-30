@@ -1,46 +1,65 @@
-//
-// typography
-//
+///
+/// Basic typography styles
+///
+/// ------------------------------------------------------------------
+///
+/// Include the fonts, as well as general or default font styles here.
+/// More specific styles should be grouped in a separate file, such as
+/// `headlines`.
+///
 
-body {
-  font: 400 #{$document-font-size}px/1.4 $font-text;
-}
 
-h2 {
-  font-size: $font-large;
-  font-weight: bold;
-  margin-bottom: 1em;
-
+html {
+  font-size: $fs-document-s;
 
   @include break(tablet) {
-    margin-bottom: 2em;
+    font-size: $fs-document;
   }
 }
 
-h3 {
-  font-size: $font-x-small;
-  font-weight: bold;
-  letter-spacing: 0.1em;
-  line-height: 1.1;
-  text-transform: uppercase;
-}
+body {
+  font: #{$fs-small}/#{$lh-base} $font-text;
 
-h4 {
-  font-size: $font-medium;
-  font-weight: bold;
-  line-height: 1.1;
-  margin-bottom: 4px;
+  @include break(tablet-l) {
+    font-size: $fs-base;
+    line-height: $lh-large;
+  }
 
-  & + p {
-    font-size: $font-small;
-    line-height: 1.2;
+  @include break(desktop) {
+    font-size: $fs-medium;
   }
 }
 
-a {
-  cursor: pointer;
+strong {
+  font-weight: bold;
 }
+
+em {
+  font-style: italic;
+}
+
 
 p {
   margin-bottom: 0.5em;
+
+  &.intro {
+    font-size: $fs-medium;
+  }
+
+  & + .button {
+    margin-top: $spacing-large;
+  }
+}
+
+
+a {
+  color: $color-link;
+  cursor: pointer;
+  text-decoration: none;
+  transition: color $transition;
+
+
+  &:hover {
+    color: $color-link-hover;
+  }
 }

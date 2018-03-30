@@ -1,0 +1,40 @@
+%icon-button {
+  -webkit-appearance: none;
+  background: transparent;
+  border: 0;
+  color: $color-base;
+  cursor: pointer;
+  display: block;
+  height: $icon-button-size-s;
+  outline: 0;
+  padding: $icon-button-padding-s;
+  position: relative;
+  transition: all $transition;
+  width: $icon-button-size-s;
+
+
+  @include break(tablet) {
+    height: $icon-button-size;
+    padding: $icon-button-padding;
+    width: $icon-button-size;
+  }
+
+
+  &:hover {
+    color: $color-primary-full;
+  }
+
+  * {
+    fill: currentColor;
+
+    &[stroke] {
+      fill: none;
+      stroke: currentColor;
+    }
+  }
+
+  svg-icon {
+    height: 100%;
+    width: 100%;
+  }
+}

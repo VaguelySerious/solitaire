@@ -1,0 +1,29 @@
+///
+/// Mixin to give the illusion of the item being elevated.
+/// Applies multiple box-shadows.
+///
+
+@mixin elevate($level: 1, $color: #000, $opacity: 0.12) {
+  $x1: 2px + (($level - 1) * 0.25);
+  $y1: 3px + (($level - 1) * 0.25);
+  $b1: 10px + ($level - 1);
+
+  $x2: -(1px + (($level - 1) * 0.3));
+  $y2: 2px + (($level - 1) * 0.2);
+  $b2: 5px + (($level - 1) * 0.5);
+
+  @if ($opacity > 0.5) {
+    $opacity: 0.5;
+  }
+
+  box-shadow: $x1 $y1 $b1 rgba($color, $opacity),
+      $x2 $y2 $b2 rgba($color, $opacity * 2),
+      0 -1px 3px rgba($color, $opacity * 2);
+
+
+  //
+  // favro box-shadow
+  //
+  // box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25),
+  //    0 10px 10px rgba(0, 0, 0, 0.22)
+}

@@ -1,0 +1,30 @@
+//
+// mobile-first breakpoint mixin
+//
+
+@mixin break($breakpoint, $modifier: 'min') {
+
+  @if map-has-key($breakpoints, $breakpoint) {
+    $size: map-get($breakpoints, $breakpoint);
+
+    @if ($modifier == 'max') {
+      $size: $size - 1;
+    }
+
+    @media only screen and (#{$modifier}-width: $size) {
+      @content;
+    }
+  }
+
+  @else {
+    @if $breakpoint / $breakpoint != 1 {
+      @warn 'Invalid breakpoint: Either choose a pixel value or a breakpoint from the predefined breakpoints mixin.';
+    }
+
+    @else {
+      @media only screen and (#{$modifier}-width: $breakpoint) {
+        @content;
+      }
+    }
+  }
+}

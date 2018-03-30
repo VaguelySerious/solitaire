@@ -1,0 +1,63 @@
+///
+/// Color variables
+///
+/// ------------------------------------------------------------------
+///
+/// Starts off with `absolute` color variables saving the different
+/// colors we'll be using with their name from
+/// [Name That Color](http://chir.ag/projects/name-that-color).
+///
+/// At the bottom of this file, there are the relative color names,
+/// separating the actual color from its purpose.
+///
+
+$color-white:           #FFFFFF;
+$color-gray:            #333333;
+
+$color-lightning:       #FFC312;
+$color-tree-poppy:      #F79F1F;
+$color-flamingo:        #EE5A24;
+$color-crimson:         #EA2027;
+$color-pear:            #C4E538;
+$color-fun-green:       #009432;
+$color-java:            #12CBC4;
+$color-science-blue:    #0652DD;
+$color-lucky-point:     #1B1464;
+$color-portage:         #9980FA;
+$color-lavender-rose:   #FDA7DF;
+$color-mandy:           #ED4C67;
+$color-hibiscus:        #B53471;
+
+
+//
+// relative colors
+//
+
+$color-background:      $color-gray;          // board background
+$color-base:            $color-white;         // default focus
+$color-primary:         $color-science-blue;  // default accent
+$color-primary:         $color-mandy;
+$color-primary-full:    saturate($color-primary, 100%);
+
+$color-red:             mix($color-crimson, $color-mandy);
+$color-board:           mix(mix($color-lucky-point, $color-fun-green, 80%), $color-hibiscus, 90%);
+$color-link:            lighten($color-board, 35%);
+$color-link-hover:      $color-primary;
+$color-link-hover:      saturate(lighten($color-link, 15%), 100%);
+$color-text-soft:       mix($color-link, $color-base, 75%);
+
+$color-input:           $color-gray;
+$color-input-inactive:  mix($color-gray, $color-base, 40%);
+
+$color-error:           $color-primary;
+$color-info:            $color-science-blue;
+$color-success:         mix($color-java, $color-fun-green, 60%);
+
+$state-colors: (
+  'warning':  $color-error,
+  'info':     $color-info,
+  'success':  $color-success
+);
+
+$modal-background:      linear-gradient(70deg, darken($color-board, 5%),
+                          darken(mix($color-board, $color-science-blue), 15%))

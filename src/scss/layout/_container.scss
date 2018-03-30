@@ -1,0 +1,19 @@
+///
+/// Basic text container
+///
+
+.container {
+  padding: 0 $spacing-small;
+  width: 100%;
+
+
+  &.narrow {
+    margin: 0 auto;
+    max-width: $container-narrow;
+  }
+
+
+  @include break(tablet) {
+    padding: 0 $spacing-base;
+  }
+}

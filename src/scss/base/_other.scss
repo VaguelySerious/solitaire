@@ -1,0 +1,22 @@
+///
+/// Other variables / preferences
+///
+/// ------------------------------------------------------------------
+///
+/// Variables that don't match any specific category or would require
+/// a separate file for just one. Because that's kinda annoying and
+/// bloating, I'm just gonna collect them here.
+///
+
+$transition-duration:       0.2s;
+$transition-easing:         ease-out;
+$transition-easing-bounce:  cubic-bezier(0.68, -0.55, 0.265, 1.55);
+$transition:                $transition-duration $transition-easing;
+
+$hero-appear-duration:  0.4s;
+
+$button-padding-s:      ($spacing-small * 1.5) $spacing-base;
+$button-padding:        ($spacing-small * 1.5) ($spacing-base * 1.25);
+$button-border-radius:  $fs-x-large;
+$button-font-size:      $fs-base;
+$button-font-weight:    900;

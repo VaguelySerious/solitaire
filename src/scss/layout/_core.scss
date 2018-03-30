@@ -1,19 +1,63 @@
-//
-// core styles
-//
+///
+///
+/// Core Styles
+///
+/// ------------------------------------------------------------------
+///
+/// Reset basic styling and fix some behavior, such as the default
+/// box-sizing.
+///
+///
+
+
+$background-color-a: mix($color-science-blue, $color-board);
 
 html {
-  font-family: $font-text;
+  background: $color-science-blue
+      radial-gradient(circle at bottom, $background-color-a, $color-board 80%)
+      fixed;
+  box-sizing: border-box;
+  color: $color-base;
   height: 100%;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
   width: 100%;
+
+  *,
+  *::after,
+  *::before {
+    box-sizing: inherit;
+  }
 }
 
+body {
+  height: 100%;
+  margin: 0;
+  min-height: 100%;
+  position: relative;
+  width: 100%;
 
-button {
-  appearance: none;
-  background: transparent;
-  border: none;
-  color: color(white);
-  cursor: pointer;
-  text-transform: lowercase;
+
+  &.overlay-acitve {
+    overflow: hidden;
+  }
+}
+
+svg, svg.ng-scope {
+  height: 100%;
+  width: 100%;
+
+  * {
+    fill: currentColor;
+
+    &[stroke] {
+      fill: none;
+      stroke: currentColor;
+    }
+  }
+}
+
+img {
+  display: block;
+  max-width: 100%;
 }

@@ -1,0 +1,40 @@
+@import "../util/math";
+
+$card-border-radius:    5px;
+$card-back-border:      0;
+
+$card-ratio:            1.4;
+$card-ratio-s:          0.9;
+$card-width:            100%;
+$card-height:           $card-width * $card-ratio;
+$card-diagonal-angle:   tan($card-height / $card-width) * 6;
+$card-padding:          7.5% 10%;
+$card-spacing:          0;
+$card-fixed-width:      8vw;
+$card-fixed-width-min:  75px;
+$card-fixed-width-max:  130px;
+
+$card-color:            $color-background;
+$card-font-size:        $card-width * 1.25;
+$card-colors: (
+  diamonds: '♦',
+  hearts: '♥',
+  spades: '♠',
+  clubs: '♣'
+);
+
+$card-values: (
+  '0': 'A',
+  '1': '2',
+  '2': '3',
+  '3': '4',
+  '4': '5',
+  '5': '6',
+  '6': '7',
+  '7': '8',
+  '8': '9',
+  '9': '10',
+  '10': 'J',
+  '11': 'Q',
+  '12': 'K'
+);

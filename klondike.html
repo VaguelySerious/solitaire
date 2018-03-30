@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+  <!-- Meta Tags -->
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="initial-scale=1.0">
+  <title>Klondike</title>
+  <link rel="stylesheet" href="build/css/styles.css">
+
+  <!-- Apple Stuff -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Klondike Solitaire">
+  <meta property="og:url" content="https://vaguelyserious.github.io/solitaire/">
+  <meta property="og:image" content="build/images/klondike-og.png">
+  <meta property="og:description" content="An open, light-weight Klondike Solitaire game">
+
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image">
+  <meta property="twitter:title" content="Klondike Solitaire">
+  <meta property="twitter:description" content="An open, light-weight Klondike Solitaire game">
+  <meta property="twitter:image:src" content="build/images/klondike-twitter.png">
+
+  <!-- Favicons -->
+  <link rel="apple-touch-icon" sizes="180x180" href="build/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="build/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="build/favicon-16x16.png">
+  <link rel="manifest" href="build/manifest.json">
+  <link rel="mask-icon" href="build/safari-pinned-tab.svg" color="#e5501e">
+  <meta name="msapplication-config" content="build/browserconfig.xml">
+  <meta name="theme-color" content="#ffffff">
+
+
+  <!-- Google Analytics -->
+ <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-109446452-1', 'auto');
+  ga('send', 'pageview');
+  </script>
+  <!-- End Google Analytics -->
+</head>
+
+<body>
+  <!-- Menu -->
+  <nav class="menu fullscreen-modal" id="help">
+    <section class="menu__actions">
+      <a class="menu__action">Resume</a>
+      <a class="menu__action">New Game</a>
+      <a href="/leaderboard" class="menu__action">Leaderboard</a>
+    </section>
+
+    <section class="container menu__games">
+      <h3 class="label">Other games</h3>
+
+      <!-- Games list: LAZY LOAD TO IMPROVE PERFORMANCE -->
+    </section>
+
+    <button class="icon-button close" id="menu-close">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 25 25">
+        <path fill="none" stroke="#FFFFFF" stroke-width="2.5" stroke-linecap="round" stroke-miterlimit="10" d="M23.5,1.5l-22,22 M23.5,23.5l-22-22"/>
+      </svg>
+      <span class="icon-button__text">Close menu</span>
+    </button>
+  </nav>
+  <!-- /Menu -->
+
+  <!-- RulesView -->
+  <aside class="help fullscreen-modal" id="help">
+    <section class="help__rules">
+      <div class="container narrow">
+        <h2>Klondike</h2>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rerum qui totam numquam iste enim odit architecto perspiciatis libero veritatis atque!</p>
+
+        <img src="assets/img/previews/klondike.png" alt="Klondike distribution preview">
+      </div>
+    </section>
+
+    <section class="help__shortcuts">
+      <div class="container narrow">
+        <h3 class="label">Shortcuts</h3>
+        <ul class="help__shortcuts__list">
+          <li class="help__shortcuts__item">
+            <span class="description">Undo</span>
+            <span>
+              <span class="key">U</span>
+              <span class="key">Z</span>
+            </span>
+          </li>
+          <li class="help__shortcuts__item">
+            <span class="description">New Game</span>
+            <span class="key">N</span>
+          </li>
+          <li class="help__shortcuts__item">
+            <span class="description">Menu</span>
+            <span class="key">M</span>
+          </li>
+          <li class="help__shortcuts__item">
+            <span class="description">Go to homepage</span>
+            <span class="key">ESC</span>
+          </li>
+          <li class="help__shortcuts__item">
+            <span class="description">Help &amp; Rules</span>
+            <span class="key">H</span>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <button class="icon-button close" id="help-close">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 25 25">
+        <path fill="none" stroke="#FFFFFF" stroke-width="2.5" stroke-linecap="round" stroke-miterlimit="10" d="M23.5,1.5l-22,22 M23.5,23.5l-22-22"/>
+      </svg>
+      <span class="icon-button__text">Close help</span>
+    </button>
+  </aside>
+  <!-- /RulesView -->
+
+  <!-- Board -->
+  <main class="board" id="board">
+    <div class="row">
+      <div class="stack">
+        <div class="card facedown card-3 hearts">
+          <div class="card__front"><span class="card__values"></span></div>
+          <div class="card__back"></div>
+        </div>
+      </div>
+      <div class="stack horizontal">
+        <div class="card card-10 hearts">
+          <div class="card__front"><span class="card__values"></span></div>
+          <div class="card__back"></div>
+        </div>
+        <div class="card card-0 spades">
+          <div class="card__front"><span class="card__values"></span></div>
+          <div class="card__back"></div>
+        </div>
+        <div class="card card-7 spades">
+          <div class="card__front"><span class="card__values"></span></div>
+          <div class="card__back"></div>
+        </div>
+      </div>
+      <div class="spacer fixed"></div>
+      <div class="stack">
+        <div class="card card-0 diamonds">
+          <div class="card__front"><span class="card__values"></span></div>
+          <div class="card__back"></div>
+        </div>
+        <div class="card card-1 diamonds">
+          <div class="card__front"><span class="card__values"></span></div>
+          <div class="card__back"></div>
+        </div>
+      </div>
+      <div class="stack">
+        <div class="card card-0 hearts">
+          <div class="card__front"><span class="card__values"></span></div>
+          <div class="card__back"></div>
+        </div>
+      </div>
+      <div class="stack"></div>
+      <div class="stack"></div>
+    </div>
+    <div class="row">
+      <div class="stack vertical"></div>
+      <div class="stack vertical"></div>
+      <div class="stack vertical"></div>
+      <div class="stack vertical"></div>
+      <div class="stack vertical"></div>
+      <div class="stack vertical"></div>
+      <div class="stack vertical"></div>
+    </div>
+  </main>
+  <!-- /Board -->
+
+  <!-- Controls -->
+  <aside class="controls">
+    <button class="icon-button" id="menu-open">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+        <path fill="none" stroke="#FFFFFF" stroke-miterlimit="10" stroke-width="2" d="M1.5,4.7h21 M1.5,12h12.6" stroke-linejoin="round" stroke-linecap="round" />
+        <path fill="none" stroke="#FFFFFF" stroke-miterlimit="10" stroke-width="2" d="M1.5,19.3h21" stroke-linejoin="round" stroke-linecap="round" />
+      </svg>
+      <span class="icon-button__text">Open menu</span>
+    </button>
+
+    <button class="icon-button new-game">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+        <path fill="none" stroke="#ffffff" stroke-miterlimit="10" stroke-width="2" d="M12,1.7v20.7 M22.3,12H1.7" stroke-linejoin="round" stroke-linecap="round" />
+      </svg>
+      <span class="icon-button__text">Start new game</span>
+    </button>
+
+    <button class="icon-button" id="autocomplete">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+        <path fill="none" stroke="#FFFFFF" stroke-miterlimit="10" stroke-width="2" d="M1.5,13l7.2,7.2L22.5,5.8" stroke-linejoin="round" stroke-linecap="round" />
+      </svg>
+      <span class="icon-button__text"></span>
+    </button>
+    <button class="icon-button" id="undo">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+        <path d="M10.2 39.6A26 26 0 1 1 54.4 55" fill="none" stroke="#FFFFFF" stroke-miterlimit="10" stroke-width="5" stroke-linejoin="round" stroke-linecap="round"></path>
+        <path fill="none" stroke="#FFFFFF" stroke-miterlimit="10" stroke-width="5" d="M2 28.6l8 12 11.1-10" stroke-linejoin="round" stroke-linecap="round"></path>
+      </svg>
+      <span class="icon-button__text"></span>
+    </button>
+  </aside>
+  <!-- /Controls -->
+
+  <!-- Scoreboard -->
+  <aside class="modal scoreboard" id="scoreboard">
+    <h2>Congratulations, you won!</h2>
+
+    <h3 class="label">Game Score</h3>
+    <ul class="scoreboard__scores">
+      <li class="scoreboard__score">
+        <span class="scoreboard__score__label">Score:</span>
+        <span class="scoreboard__score__value" id="scoreboard-score"></span>
+      </li>
+      <li class="scoreboard__score">
+        <span class="scoreboard__score__label">Time Bonus:</span>
+        <span class="scoreboard__score__value" id="scoreboard-bonus"></span>
+      </li>
+      <li class="scoreboard__score">
+        <span class="scoreboard__score__label">Total Score:</span>
+        <span class="scoreboard__score__value" id="scoreboard-total"></span>
+      </li>
+      <li class="scoreboard__score">
+        <span class="scoreboard__score__label">Time:</span>
+        <span class="scoreboard__score__value" id="scoreboard-time"></span>
+      </li>
+    </ul>
+
+    <h3 class="label">Statistics</h3>
+    <ul class="scoreboard__scores">
+      <li class="scoreboard__score">
+        <span class="scoreboard__score__label">High Score:</span>
+        <span class="scoreboard__score__value" id="scoreboard-highscore"></span>
+      </li>
+      <li class="scoreboard__score"></li>
+      <li class="scoreboard__score">
+        <span class="scoreboard__score__label">Games played:</span>
+        <span class="scoreboard__score__value" id="scoreboard-gamesCount"></span>
+      </li>
+      <li class="scoreboard__score">
+        <span class="scoreboard__score__label">Games won:</span>
+        <span class="scoreboard__score__value" id="scoreboard-gamesWonCount"></span>
+      </li>
+    </ul>
+
+    <div class="scoreboard__buttons">
+      <button class="button primary new-game">Play again</button>
+    </div>
+  </aside>
+  <!-- /Scoreboard -->
+
+</body>
+</html>

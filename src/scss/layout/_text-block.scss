@@ -1,0 +1,41 @@
+///
+/// Basic text container
+///
+
+
+.text-block {
+  color: $color-base;
+  font-size: $fs-medium;
+  line-height: 1.5;
+  padding: $spacing-x-large $spacing-base $spacing-xx-large;
+  margin: 0 auto;
+  max-width: $container-narrow;
+  width: 100%;
+
+
+  &__headline {
+    font-weight: normal;
+    font-size: 1.75em;
+    margin-bottom: 1em;
+  }
+
+
+  &:first-of-type {
+    padding-top: $spacing-base * 5;
+  }
+
+  .p {
+    margin-bottom: 0.6em;
+  }
+
+  .intro {
+    font-size: $fs-medium;
+    margin-bottom: $spacing-base;
+  }
+
+
+  h3, .h3, .label {
+    @extend h3;
+    position: relative;
+  }
+}

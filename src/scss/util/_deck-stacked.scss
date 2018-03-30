@@ -1,0 +1,59 @@
+@mixin deck-stacked($direction: false) {
+  @if not($direction) {
+    .card,
+    [card] {
+      $x: -1px;
+      $n: 1;
+
+      @include elevate(
+        $level: 1,
+        $opacity: 0.025
+      );
+      position: absolute;
+      top: 0;
+      width: 100%;
+
+
+      &:last-child {
+        border-bottom: 0;
+      }
+
+      &:nth-last-child(-n+3) {
+        @include elevate(
+          $level: 1,
+          $opacity: 0.05
+        );
+      }
+
+
+      @include at-least(14) {
+        &:last-child {
+          top: -3px;
+
+          @include break(tablet) {
+            top: -5px;
+          }
+        }
+      }
+
+
+      @for $i from $n through 4 {
+        &:nth-child(n+#{$i + $n}) {
+          @if $i < 3 {
+            top: $x;
+          }
+
+          @else {
+            @include break(600px) {
+              top: $x;
+            }
+          }
+        }
+
+        $x: $x - 1;
+        $n: $n * 2;
+      }
+    }
+
+  }
+}

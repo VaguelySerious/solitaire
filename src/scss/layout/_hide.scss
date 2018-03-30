@@ -1,0 +1,15 @@
+.hide {
+  @each $key, $value in $breakpoints {
+    @include break($key) {
+      &-#{$key}-up {
+        display: none;
+      }
+    }
+
+    @include break($key, max) {
+      &-#{$key} {
+        display: none;
+      }
+    }
+  }
+}

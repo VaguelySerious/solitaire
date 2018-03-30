@@ -1,0 +1,28 @@
+///
+/// Simple loading animation
+///
+
+.spinner {
+  animation: loadingSpinner 1s $transition-easing-bounce infinite;
+  border-radius: 50%;
+  border: $fs-small/2 solid rgba($color-base, 0.2);
+  height: ($fs-base * 4);
+  left: 50%;
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: ($fs-base * 4);
+
+
+  &::after {
+    border: $fs-small/2 solid transparent;
+    border-left: $fs-small/2 solid $color-base;
+    border-radius: inherit;
+    content: '';
+    height: inherit;
+    left: -$fs-small/2;
+    position: absolute;
+    top: -$fs-small/2;
+    width: inherit;
+  }
+}

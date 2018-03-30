@@ -1,0 +1,106 @@
+
+.stack,
+.spacer {
+  margin: $board-column-gutter-s;
+  position: relative;
+  width: $board-column-width-s;
+
+
+  @include break(tablet) {
+    margin: $board-column-gutter;
+    width: $board-column-width;
+  }
+}
+
+.spacer {
+  z-index: -999;
+
+  &:not(.fixed) {
+    flex: 1;
+  }
+}
+
+.stack {
+  &:empty {
+    &::before {
+      content: '';
+    }
+  }
+
+  &::before {
+    background: saturate(darken($color-board, 7%), 20%);
+    border-radius: $card-border-radius;
+    display: table;
+    left: 0;
+    opacity: 0.4;
+    padding-bottom: (100% * $card-ratio-s);
+    pointer-events: none;
+    position: relative;
+    top: 0;
+    width: 100%;
+    z-index: -1;
+
+
+    @include break(tablet) {
+      padding-bottom: (100% * $card-ratio);
+    }
+  }
+
+  &:empty::before {
+    position: relative;
+  }
+
+
+  // 3.1 Default
+  &.default,
+  &:not(.vertical):not(.horizontal) {
+    @include deck-stacked;
+  }
+
+
+  // 3.2 Vertically stacked cards
+  &.vertical {
+    .card {
+      margin-bottom: -80%;
+      position: relative;
+
+      &:hover ~ .card {
+        transform: translate3d(0, -3px, 0);
+      }
+
+      &.facedown {
+        margin-bottom: -95%;
+      }
+
+
+      @include break(tablet) {
+        margin-bottom: -110%;
+
+        &.facedown {
+          margin-bottom: -125%;
+        }
+      }
+    }
+  }
+
+
+  // 3.3 Horizontally stacked cards
+  &.horizontal {
+    display: flex;
+    flex-direction: row;
+
+    &::before {
+      position: absolute;
+    }
+
+    .card {
+      flex: 0 0 100%;
+      margin-right: -70%;
+      position: relative;
+
+      &.facedown {
+        margin-bottom: -90%;
+      }
+    }
+  }
+}

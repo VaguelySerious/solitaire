@@ -1,0 +1,66 @@
+.form {
+
+
+  &__row {
+    margin-bottom: $spacing-small;
+    position: relative;
+
+
+    input + span,
+    & > span:last-child {
+      border-radius: 3px;
+      height: $spacing-base;
+      margin-top: $spacing-base * -0.5;
+      position: absolute;
+      right: 0;
+      top: 50%;
+      transition: all $transition;
+      width: $spacing-base;
+
+
+      &::after {
+        background: transparent center/contain no-repeat;
+        content: '';
+        height: 57%;
+        left: 50%;
+        position: absolute;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        transition: all $transition;
+        width: 57%;
+      }
+
+
+      &.loading {
+        background: transparent !important;
+
+        &::after {
+          opacity: 0;
+        }
+
+
+        &::before {
+          animation: loadingSpinner 1s $transition-easing-bounce infinite;
+          border-radius: 50%;
+          border: 3px solid rgba($color-primary, 0.2);
+          border-left-color: $color-primary;
+          content: '';
+          height: 100%;
+          position: absolute;
+          width: 100%;
+        }
+      }
+    }
+  }
+
+
+  &__submit {
+    margin: $spacing-large 0;
+    text-align: center;
+
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+}

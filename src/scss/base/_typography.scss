@@ -1,0 +1,29 @@
+///
+/// Typography variables
+///
+/// ------------------------------------------------------------------
+///
+/// Typoraphy stuff to leave nothing to chance.
+///
+
+$font-serif:    'Libre Baskerville', 'Georgia', 'Times New Roman', 'Times', serif;
+$font-sans:     'HK Grotesk Pro', 'Helvetica Neue', 'Arial', sans-serif;
+$font-sans:     'Arial', 'Helvetica Neue', sans-serif;
+$font-sans:     'Helvetica Neue', 'Trebuchet MS', 'Helvetica', 'Arial', sans-serif;
+
+$font-text:     $font-sans;
+$font-display:  $font-sans;
+
+$lh-base:       1.3;
+$lh-large:      1.5;
+$lh-small:      1;
+
+$fs-document-s: 14px;
+$fs-document:   16px;
+
+$fs-base:       1em;
+$fs-small:      0.875em;
+$fs-medium:     1.125em;
+$fs-large:      1.5em;
+$fs-x-large:    2em;
+$fs-xx-large:   2.5em;

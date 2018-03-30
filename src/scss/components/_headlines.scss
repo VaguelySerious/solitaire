@@ -1,0 +1,58 @@
+///
+/// Headline Styles
+///
+
+%headlines {
+  font-family: $font-display;
+  // font-weight: bold;
+  line-height: 1.2;
+  margin-bottom: 0.5em;
+}
+
+h1 {
+  @extend %headlines;
+  font-size: $fs-xx-large;
+}
+
+h2 {
+  @extend %headlines;
+  font-size: $fs-large;
+
+  @include break(tablet) {
+    font-size: $fs-x-large;
+  }
+}
+
+h3 {
+  @extend %headlines;
+  color: $color-link;
+  font-size: $fs-small;
+  font-weight: bold;
+  letter-spacing: 0.05em;
+  margin-bottom: 1em;
+  text-align: center;
+  text-transform: uppercase;
+
+
+  &.label {
+    align-items: center;
+    display: flex;
+    margin: 2.5em -7.5% 1em;
+
+    &::after,
+    &::before {
+      border-bottom: 1px solid $color-link;
+      content: '';
+      display: inline-block;
+      flex-basis: 100%;
+    }
+
+    &::after {
+      margin-left: $spacing-base;
+    }
+
+    &::before {
+      margin-right: $spacing-base;
+    }
+  }
+}

@@ -1,0 +1,26 @@
+///
+///
+/// Solitaire Collection
+///
+/// ------------------------------------------------------------------
+///
+/// The basic bitch among the solitaires - uses as little resources as
+/// possible and thus is as lightweight as can be while still being
+/// pretty.
+///
+///
+
+// variables
+@import "base/_base";
+
+// abstract helpers
+@import "util/_util";
+
+// layout elements
+@import "layout/_layout";
+
+// modular components
+@import "components/_components";
+
+// theming
+@import "themes/_themes";

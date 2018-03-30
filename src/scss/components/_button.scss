@@ -1,20 +1,182 @@
+///
+/// Button component
+///
+
+.icon-button {
+  @extend %icon-button;
+}
+
 .button {
-  background: darken(color(fiord), 15%);
-  border-radius: 3px;
-  color: color(white);
-  display: block;
-  font-size: $font-medium;
-  line-height: 1;
-  outline: none;
-  padding: 10px 16px 12px;
+  align-items: center;
+  appearance: none;
+  background: $color-base;
+  border: 0;
+  border-radius: $button-border-radius;
+  @include elevate(1);
+  color: $color-board;
+  cursor: pointer;
+  display: inline-flex;
+  font: $button-font-weight #{$button-font-size}/1 $font-text;
+  outline: 0;
+  padding: $button-padding-s;
+  position: relative;
+  text-decoration: none;
+  transition: all $transition;
 
 
-  &:hover {
-    background: darken(color(fiord), 17%);
+  @include break(tablet) {
+    padding: $button-padding;
   }
 
 
   & + & {
-    margin-left: rem(8);
+    margin-left: $spacing-small;
   }
+
+
+  //
+  // Interaction
+  //
+  &:hover {
+    background-size: 200% 100%;
+    color: $color-board;
+    @include elevate(20);
+    transform: translateY(-3px);
+  }
+
+  &:active {
+    @include elevate(1);
+    opacity: 0.9;
+    transform: translateY(1px);
+  }
+
+
+  //
+  // Variants
+  //
+  &.primary {
+    $color-b: $color-primary;
+    $color-a: lighten(adjust-hue($color-b, 10%), 5%);
+    background: $color-b 0 0/100% 100%;
+    background-image: linear-gradient(to right, $color-a, $color-b);
+    color: $color-base;
+
+
+    &:hover {
+      background-size: 200% 100%;
+      color: $color-base;
+    }
+  }
+
+
+  &.clear {
+    background: transparent;
+    box-shadow: none;
+    color: $color-base;
+
+    &:hover {
+      background: rgba($color-link,0.2);
+      box-shadow: none;
+      color: $color-base;
+      transform: none;
+    }
+  }
+
+
+  &.fadedout {
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY($spacing-base);
+  }
+
+
+  &.loading {
+  }
+
+  &.loading & {
+    &__text {
+      opacity: 0;
+      transform: translateY(-100%);
+    }
+
+    &__icon {
+      align-items: center;
+      display: flex;
+      height: 100%;
+      justify-content: center;
+      left: 0;
+      position: absolute;
+      top: 0;
+      width: 100%;
+
+      span {
+        animation: loadingDot 0.75s ease infinite;
+        background: currentColor;
+        border-radius: 50px;
+        height: 4px;
+        display: inline-block;
+        margin: 2px;
+        width: 4px;
+
+
+        &:nth-child(2) {
+          animation-delay: $transition-duration / 2;
+        }
+        &:nth-child(3) {
+          animation-delay: $transition-duration;
+        }
+
+
+        @keyframes loadingDot {
+          0% {
+            transform: translateY(0);
+          }
+
+          50% {
+            transform: translateY(-100%);
+          }
+
+          100% {
+            transform: translateY(0);
+          }
+        }
+      }
+    }
+  }
+
+
+  &:disabled,
+  &[disabled],
+  &.disabled {
+    color: $color-gray;
+    opacity: 0.75;
+    pointer-events: none;
+  }
+
+
+
+  //
+  // Elements
+  //
+  &__text {
+    display: block;
+    position: relative;
+    transition: all $transition;
+  }
+
+
+  svg {
+    height: $spacing-base;
+    margin-bottom: -2px;
+    margin-right: $spacing-base;
+    width: $spacing-base;
+  }
+}
+
+
+
+.button-between {
+  color: $color-link;
+  display: inline-block;
+  margin: 0 $spacing-small;
 }

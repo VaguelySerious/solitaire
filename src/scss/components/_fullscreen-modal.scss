@@ -1,0 +1,53 @@
+.fullscreen-modal {
+  background: rgba($color-board, 0.95);
+  color: $color-base;
+  height: 100%;
+  left: 0;
+  opacity: 0;
+  overflow: auto;
+  position: fixed;
+  top: 0;
+  transition: all $transition;
+  visibility: hidden;
+  width: 100%;
+  z-index: 999;
+
+
+  &.visible {
+    opacity: 1;
+    visibility: visible;
+
+    & ~ .board,
+    & ~ .controls {
+      opacity: 0;
+    }
+  }
+
+
+  .container {
+    position: relative;
+  }
+
+
+  .close {
+    left: 0;
+    top: 0;
+    position: absolute;
+
+
+    @include break(tablet-l) {
+      top: $spacing-small;
+    }
+
+    @include break(desktop) {
+      width: $controls-width;
+    }
+  }
+
+
+  .label {
+    margin-left: 0;
+    margin-right: 0;
+    white-space: nowrap;
+  }
+}

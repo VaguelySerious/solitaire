@@ -1,9 +1,0 @@
-//
-// Spider Solitaire-specific styles
-//
-
-.board--spider {
-
-  // spider solitaire board needs space for 10 cards in the tableau
-  @include board-size(10);
-}

@@ -1,0 +1,61 @@
+///
+/// Hero Layout for the landing page
+///
+
+.logo {
+  margin: 0 auto;
+  max-width: $card-fixed-width;
+  min-width: $card-fixed-width-min;
+  padding: $spacing-base 0;
+  position: relative;
+  width: $card-fixed-width-max;
+
+
+  &::after {
+    content: '';
+    display: table;
+    padding-bottom: (100% * $card-ratio);
+  }
+
+
+  &-card {
+    @include elevate(1);
+    cursor: default;
+    position: absolute;
+    transform: rotateY(0);
+    transform-origin: center;
+    transition: all 0.4s $transition-easing;
+
+
+    &:hover {
+      @include elevate(30);
+    }
+
+
+    @for $i from 1 through $logo-cards {
+      $value: $logo-cards-offset + ($i * 10);
+
+      &:nth-child(#{$i}) {
+        transform: translate3d(#{$value}px, 0, 0) rotate(#{$value}deg);
+
+        &:hover {
+          transform: translate3d(#{$value + 1}px, -3px, 0) rotate(#{$value}deg);
+        }
+      }
+
+      @keyframes cardsFan#{$i} {
+        0% {
+          transform: rotateY(0);
+        }
+
+        #{$hero-appear-duration / ($logo-cards-duration + $hero-appear-duration) * 100%} {
+          transform: rotateY(0);
+        }
+
+        100% {
+          transform: translate3d(#{$value}px, 0, 0) rotate(#{$value}deg);
+        }
+      }
+    }
+  }
+}

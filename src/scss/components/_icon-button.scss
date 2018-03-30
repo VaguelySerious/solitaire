@@ -1,0 +1,25 @@
+///
+/// Icon Button Component
+///
+
+//
+// Buttons
+//
+
+
+.icon-button {
+  font: inherit;
+
+  &__text {
+    left: -9999px;
+    position: absolute;
+    visibility: hidden;
+  }
+
+
+  &.close {
+    svg * {
+      stroke: currentColor;
+    }
+  }
+}

@@ -1,0 +1,17 @@
+//
+// Mixin to calculate the width of items in a row,
+// based on total items in a row and margins
+//
+
+@mixin items-per-row($total, $margin: 0.5%, $flex: true) {
+  $width: ((100% - $margin * $total * 2) / $total);
+  margin: $margin;
+
+  @if $flex {
+    flex: 0 0 $width;
+  }
+
+  @else {
+    width: $width;
+  }
+}
