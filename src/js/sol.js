@@ -80,7 +80,15 @@ SOL.generate = function (card) {
 
 // Get the card object from the id
 SOL.lookup = function (id) {
-  return {};
+  var i;
+  var j;
+  for (i = 0; i < SOL.stacks.length; i++) {
+    for (j = 0; j < SOL.stacks.length; j++) {
+      if (SOL.stacks[i][j] && SOL.stacks[i][j].id === id) {
+
+      }
+    }
+  }
 };
 
 // Adds a card to bottom of stack
@@ -103,7 +111,7 @@ SOL.pop = function (stack) {
 };
 
 // Moves a card from one location to another
-SOL.move = function (from, to, amount, onebyone) {
+SOL.move = function (from, to, amount, reverse) {
 
 };
 
@@ -256,3 +264,18 @@ SOL.shuffle = function (arr) {
     arr[j] = temp;
   }
 };
+
+
+
+// ////////////
+// MAIN CODE //
+// ////////////
+
+
+document.body.addEventListener("click", function(event){
+  if (event.target.classList.contains('card')){
+    SOL.clickCard(SOL.lookup(event.target.id));
+  } else if (event.target.classList.contains('stack')) {
+    SOL.clickStack(+event.target.id.slice(-1));
+  }
+});
