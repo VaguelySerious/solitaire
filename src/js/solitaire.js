@@ -4,47 +4,57 @@
 // TODO: Make Sol function and initialize
 // TODO: Put all functions into Sol
 
+// TODO: Abstract modal and visibility toggle as OO
+
 //////////////////////
 // GLOBAL VARIABLES //
 //////////////////////
 
-var Sol = {
-  settings: {
-    maxGameStates: 1,
-    progressiveUndo: 1,
-    cycleTimes: 2
-  },
-  scoring: {
-    pileToTableau: 5,
-    tableauToFoundation: 10,
-    undo: -10,
-    foundationToTableau: -15,
-    uncoverFaceDown: 5
-  },
-  gamedata: {
-    colors: ["hearts", "diamonds", "clubs", "spades"],
-    stacks: [[],[],[],[],[],[],[],[],[],[],[],[],[]],
-    gameStates: []
-  },
+var SOL = {
+  game: null,
+  scoring: null,
+  settings: null,
   stats: {
     score: 0,
-    gameTime: 0,
-    bestTime: 9999999,
-    bestScore: 0,
-    timerStarted: false,
-    timerInterval: null,
-    scoreNode: null,
-    timerNode: null
+    moves: 0,
+    time: {
+      now: 0,
+      interval: null
+    }
+    scores: [] // Array of {score, time, moves, wasWin}
   },
-  cardstate: {
-    toDeleteCard: null,
-    toDeleteLastCard: null,
-    lastCard: null,
-    autoCompletable: false,
-    possibleMove: true
-  },
-  dom: {
+  DOM: {
 
+    // General
+    board: document.getElementById("board //TODO"),
+    stacks: document.getElementsByClassName('stack //TODO'),
+
+    // Buttons
+    undo: document.getElementById("undo //TODO"),
+    newgames: document.getElementsByClassName("newgame //TODO"),
+    autocomplete: document.getElementById("//TODO"),
+    cycle: document.getElementById("//TODO"), //TODO CHECK IF NULL
+
+    // Menu
+    menu: {
+      modal: document.getElementById("menu"),
+      openbutton: document.getElementById("menu-open"),
+      closebutton: document.getElementById("menu-close")
+    }
+
+    // Text info
+    timer: document.getElementById("timer //TODO"),
+    score: document.getElementById("score //TODO"),
+
+    // Modals
+    scoreboard: document.getElementById("//TODO"),
+    help: document.getElementById("//TODO"),
+    cookie: document.getElementById("//TODO")
+
+    // Logic
+    activeCard: null,
+    possibleMove: true,
+    autoCompletable: false
   },
   cardColors: [
     'royalblue',
@@ -58,8 +68,72 @@ var Sol = {
     'mint',
     'aqua'
   ]
+},
+// SOL.DOM.board.className += Sol.cardColors[Math.floor(Math.random() * Sol.cardColors.length)];
+
+// Go back in time once and decrease score
+SOL.undo = function () {
+
+},
+// Creates a gamestate and pushes it to cookies
+SOL.save = function () {
+
+},
+// Moves a card from one location to another
+SOL.move = function () {
+
+},
+// Adds a card to stack and DOM
+SOL.add = function () {
+
+},
+// Rebuilds DOM from stack variable
+SOL.rebuild = function () {
+
+},
+// Calculates score and shows win screen / stats
+SOL.win = function () {
+  
+},
+
+////////////////////////
+// TIME AND SCORE DOM //
+////////////////////////
+
+// Updates score in DOM
+SOL.stats.updateScore = function (change, set) {
+  if (typeof set === 'number') {
+    this.score = set;
+  } else {
+    this.score += change;
+  }
+  SOL.DOM.score.innerHTML = this.score;
+},
+// Updates time in DOM
+SOL.DOM.updateTime = function (seconds) {
+  SOL.DOM.timer.innerHTML = (seconds/3600>=1 ? (Math.floor(seconds/3600) + ":") : "") +
+  (Math.floor(seconds/60)%60).toString().padStart(2, "0") + ":" +
+  (seconds%60).toString().padStart(2, "0");
+},
+// Starts the timer interval
+SOL.stats.time.start = function () {
+  this.timer = setInterval(() => {
+    this.now += 1;
+    if (this.now % 10 === 0) {
+      SOL.stats.updateScore(SOL.scoring.afterTenSeconds);
+    }
+    SOL.DOM.updateTime(this.now);
+  }, 1000);
+},
+// Only stops the timer
+SOL.stats.time.stop = function () {
+  clearInterval(this.timer);
+  this.timer = null;
+},
+// Only sets the timer to zero
+SOL.stats.time.reset = function () {
+  SOL.DOM.updateTime(0);
 }
-document.getElementById("board").className += Sol.cardColors[Math.floor(Math.random() * Sol.cardColors.length)];
 
 
 ////////////////////
@@ -228,12 +302,12 @@ function cardInteraction(card){
     }
 
     // Un-highlight both cards
-    Sol.cardstate.toDeleteCard = card;
-    Sol.cardstate.toDeleteLastCard = Sol.cardstate.lastCard;
+    var toDeleteCard = card;
+    var toDeleteLastCard = Sol.cardstate.lastCard;
     Sol.cardstate.lastCard = null;
     setTimeout(function(){
-      Sol.cardstate.toDeleteCard.classList.toggle("card--clicked");
-      Sol.cardstate.toDeleteLastCard.classList.toggle("card--clicked");
+      toDeleteCard.classList.toggle("card--clicked");
+      toDeleteLastCard.classList.toggle("card--clicked");
     },500);
   }
   checkConditions();
@@ -450,12 +524,6 @@ function info (cardNum) {
   };
 }
 
-function timeToString (seconds) {
-  return (seconds/3600>=1 ? (Math.floor(seconds/3600) + ":") : "") +
-  (Math.floor(seconds/60)%60).toString().padStart(2, "0") + ":" +
-  (seconds%60).toString().padStart(2, "0");
-}
-
 ////////////////
 // GAME SETUP //
 ////////////////
@@ -521,33 +589,6 @@ function rebaseDom () {
   }
 }
 
-function startTimer() {
-  Sol.stats.timerStarted = true;
-  spanValue = document.getElementById('timer');
-  Sol.stats.timerInterval = setInterval(function() {
-    Sol.stats.gameTime += 1;
-    // Scoring
-    if (Sol.stats.gameTime % 10 === 0) {
-      Sol.stats.score -= 2;
-      document.getElementById("score").innerHTML = Sol.stats.score;
-    }
-    spanValue.innerHTML = Sol.stats.gameTime/3600>=1 ? (Math.floor(Sol.stats.gameTime/3600) + ":") :  "" + Math.floor(Sol.stats.gameTime/60)%60 + ":" + (Sol.stats.gameTime%60).toString().padStart(2, "0");
-  }, 1000);
-}
-
-function stopTimer() {
-  Sol.stats.timerStarted = false; 
-  clearInterval(Sol.stats.timerInterval);
-}
-
-function clearTimer() {
-  Sol.stats.gameTime = 0;
-  document.getElementById('timer').innerText = '0:00';
-}
-
-function updateScore () {
-   document.getElementById('score').innerHTML = Sol.stats.score;
-}
 
 
 /////////////////////
@@ -562,19 +603,19 @@ document.body.addEventListener("click", function(event){
   }
 });
 
-// Autocomplete on pressing the autocomplete button
-document.getElementsByClassName("autocomplete")[0].addEventListener('click', autoComplete);
-// Cyckle the deck on empty deck click
-document.getElementById("cycleButton").addEventListener('click', handleCycle);
-// Reset board on new game button click
-document.getElementsByClassName("controls__link--new-game")[0].addEventListener('click', resetBoard);
-// Undo a move on undo button click
-document.getElementsByClassName("controls__link--undo")[0].addEventListener('click', handleUndo);
-// Restart game from scorescreen
-document.getElementsByClassName("new-game")[0].addEventListener('click', function(){
-  document.getElementsByClassName("modal--large")[0].classList.toggle("modal--show");
-  resetBoard();
-});
+// // Autocomplete on pressing the autocomplete button
+// document.getElementsByClassName("autocomplete")[0].addEventListener('click', autoComplete);
+// // Cyckle the deck on empty deck click
+// document.getElementById("cycleButton").addEventListener('click', handleCycle);
+// // Reset board on new game button click
+// document.getElementsByClassName("controls__link--new-game")[0].addEventListener('click', resetBoard);
+// // Undo a move on undo button click
+// document.getElementsByClassName("controls__link--undo")[0].addEventListener('click', handleUndo);
+// // Restart game from scorescreen
+// document.getElementsByClassName("new-game")[0].addEventListener('click', function(){
+//   document.getElementsByClassName("modal--large")[0].classList.toggle("modal--show");
+//   resetBoard();
+// });
 
 // Hotkeys
 document.onkeypress = function(e){
@@ -597,4 +638,4 @@ document.onkeypress = function(e){
 ////////////////////
 
 // TODO: LOAD COOKIES
-resetBoard();
+// resetBoard();
