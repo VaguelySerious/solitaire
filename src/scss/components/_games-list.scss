@@ -2,6 +2,7 @@
   display: grid;
   grid-gap: $spacing-small;
   grid-template: auto / repeat(2, 1fr);
+  flex: 0 0 auto;
   margin: $spacing-base 0;
 
   @include break(mobile) {
