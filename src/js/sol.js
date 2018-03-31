@@ -245,32 +245,48 @@ SOL.rebuild = function () {
   }
 };
 
-// Go back in time once and decrease score
+// Go back in time once and update score
 SOL.undo = function () {
-  var lastState = JSON.parse(SOL.game.history.pop());
+  if (SOL.game.history.length > 0) {
+    var lastState = JSON.parse(SOL.game.history.pop());
 
-  SOL.stats.moves += 1;
-  SOL.game.stacks = lastState.stacks;
-  SOL.stats.score = lastState.score + SOL.scoring.undo;
+    SOL.stats.moves += 1;
+    SOL.game.stacks = lastState.stacks;
+    SOL.stats.score = lastState.score + SOL.scoring.undo;
 
-  SOL.rebuild();
+    SOL.rebuild();
+
+    // Last available gamestate, disable the button
+    if (SOL.game.history.length <= 0) {
+      SOL.DOM.undo.setAttribute('disabled', 'true');
+    }
+  } else {
+    throw new Error('Undo unavailable');
+  }
 };
 
 // Creates a gamestate and pushes it to cookies
 SOL.save = function () {
-  var state = {
+  var state = JSON.stringify({
     score: SOL.stats.score,
     scores: SOL.stats.scores,
     time: SOL.stats.time.now,
     moves: SOL.stats.moves,
     stacks: SOL.game.stacks
-  };
+  });
 
-  SOL.game.history.push(JSON.stringify(state));
+  SOL.game.history.push(state);
   SOL.stats.moves += 1;
+
+  document.cookie = 'gamestate' + state + ';';
 
   if (SOL.game.history.length > SOL.game.maxGameStates) {
     SOL.game.history.shift();
+  }
+
+  // Game is undoable, so enable the button
+  if (SOL.game.history.length >= 1) {
+    SOL.DOM.undo.removeAttribute('disabled');
   }
 };
 
@@ -278,6 +294,7 @@ SOL.save = function () {
 SOL.win = function () {
 
 };
+
 
 // /////////////////
 // TIME SCORE DOM //
@@ -366,4 +383,8 @@ document.body.addEventListener("click", function(event){
   } else if (event.target.classList.contains('stack')) {
     SOL.clickStack(+event.target.id.slice(-1));
   }
+});
+
+SOL.DOM.undo.addEventListener('click', function() {
+  SOL.undo();
 });

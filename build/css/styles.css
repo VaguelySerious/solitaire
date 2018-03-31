@@ -264,7 +264,11 @@ a {
       .controls .settings {
         margin-left: 0; } }
   .controls .icon-button {
-    animation: slideInFromLeft 0.2s ease-out; }
+    animation: slideInFromLeft 0.2s ease-out;
+    transition: all 0.2s ease-out; }
+    .controls .icon-button.disabled, .controls .icon-button[disabled] {
+      color: #3c4b92;
+      pointer-events: none; }
 
 .board {
   display: flex;
