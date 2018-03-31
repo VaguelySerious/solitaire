@@ -1226,84 +1226,87 @@ h3, .text-block h3, .text-block .h3, .text-block .label {
   .spacer:not(.fixed) {
     flex: 1; }
 
-.stack:empty::before {
-  content: ''; }
-
-.stack::before {
-  background: #121c4c;
-  border-radius: 5px;
-  display: table;
-  left: 0;
-  opacity: 0.4;
-  padding-bottom: 90%;
-  pointer-events: none;
-  position: relative;
-  top: 0;
-  width: 100%;
-  z-index: -1; }
-  @media only screen and (min-width: 768px) {
-    .stack::before {
-      padding-bottom: 140%; } }
-
-.stack:empty::before {
-  position: relative; }
-
-.stack.default .card, .stack:not(.vertical):not(.horizontal) .card {
-  box-shadow: 2px 3px 10px rgba(0, 0, 0, 0.025), -1px 2px 5px rgba(0, 0, 0, 0.05), 0 -1px 3px rgba(0, 0, 0, 0.05);
-  position: absolute;
-  top: 0;
-  width: 100%; }
-  .stack.default .card:last-child, .stack:not(.vertical):not(.horizontal) .card:last-child {
-    border-bottom: 0; }
-  .stack.default .card:nth-last-child(-n+3), .stack:not(.vertical):not(.horizontal) .card:nth-last-child(-n+3) {
-    box-shadow: 2px 3px 10px rgba(0, 0, 0, 0.05), -1px 2px 5px rgba(0, 0, 0, 0.1), 0 -1px 3px rgba(0, 0, 0, 0.1); }
-  .stack.default .card:nth-last-child(n+14):last-child, .stack.default .card:nth-last-child(n+14) ~ .card:last-child, .stack:not(.vertical):not(.horizontal) .card:nth-last-child(n+14):last-child, .stack:not(.vertical):not(.horizontal) .card:nth-last-child(n+14) ~ .card:last-child {
-    top: -3px; }
+.stack {
+  background: transparent center/40% no-repeat; }
+  .stack:empty::before {
+    content: ''; }
+  .stack::before {
+    background: #121c4c;
+    border-radius: 5px;
+    display: table;
+    left: 0;
+    opacity: 0.4;
+    padding-bottom: 90%;
+    pointer-events: none;
+    position: relative;
+    top: 0;
+    width: 100%;
+    z-index: -1; }
     @media only screen and (min-width: 768px) {
-      .stack.default .card:nth-last-child(n+14):last-child, .stack.default .card:nth-last-child(n+14) ~ .card:last-child, .stack:not(.vertical):not(.horizontal) .card:nth-last-child(n+14):last-child, .stack:not(.vertical):not(.horizontal) .card:nth-last-child(n+14) ~ .card:last-child {
-        top: -5px; } }
-  .stack.default .card:nth-child(n+2), .stack:not(.vertical):not(.horizontal) .card:nth-child(n+2) {
-    top: -1px; }
-  .stack.default .card:nth-child(n+4), .stack:not(.vertical):not(.horizontal) .card:nth-child(n+4) {
-    top: -2px; }
-  @media only screen and (min-width: 600px) {
-    .stack.default .card:nth-child(n+7), .stack:not(.vertical):not(.horizontal) .card:nth-child(n+7) {
-      top: -3px; } }
-  @media only screen and (min-width: 600px) {
-    .stack.default .card:nth-child(n+12), .stack:not(.vertical):not(.horizontal) .card:nth-child(n+12) {
-      top: -4px; } }
-
-.stack.vertical .card {
-  margin-bottom: -80%;
-  position: relative; }
-  .stack.vertical .card:hover ~ .card {
-    transform: translate3d(0, -3px, 0); }
-  .stack.vertical .card.facedown {
-    margin-bottom: -95%; }
-  @media only screen and (max-width: 768px) and (orientation: landscape) {
-    .stack.vertical .card {
-      margin-bottom: -60%; }
-      .stack.vertical .card.facedown {
-        margin-bottom: -80%; } }
-  @media only screen and (min-width: 768px) {
-    .stack.vertical .card {
-      margin-bottom: -110%; }
-      .stack.vertical .card.facedown {
-        margin-bottom: -125%; } }
-
-.stack.horizontal {
-  display: flex;
-  flex-direction: row; }
-  .stack.horizontal::before {
-    position: absolute; }
-  .stack.horizontal .card {
-    flex: 0 0 100%;
-    margin-right: -70%;
+      .stack::before {
+        padding-bottom: 140%; } }
+  .stack:empty::before {
     position: relative; }
-    .stack.horizontal .card.facedown {
-      margin-right: -90%; }
-    .stack.horizontal .card:not(:last-child) {
-      pointer-events: none; }
+  .stack.default .card, .stack:not(.vertical):not(.horizontal) .card {
+    box-shadow: 2px 3px 10px rgba(0, 0, 0, 0.025), -1px 2px 5px rgba(0, 0, 0, 0.05), 0 -1px 3px rgba(0, 0, 0, 0.05);
+    position: absolute;
+    top: 0;
+    width: 100%; }
+    .stack.default .card:last-child, .stack:not(.vertical):not(.horizontal) .card:last-child {
+      border-bottom: 0; }
+    .stack.default .card:nth-last-child(-n+3), .stack:not(.vertical):not(.horizontal) .card:nth-last-child(-n+3) {
+      box-shadow: 2px 3px 10px rgba(0, 0, 0, 0.05), -1px 2px 5px rgba(0, 0, 0, 0.1), 0 -1px 3px rgba(0, 0, 0, 0.1); }
+    .stack.default .card:nth-last-child(n+14):last-child, .stack.default .card:nth-last-child(n+14) ~ .card:last-child, .stack:not(.vertical):not(.horizontal) .card:nth-last-child(n+14):last-child, .stack:not(.vertical):not(.horizontal) .card:nth-last-child(n+14) ~ .card:last-child {
+      top: -3px; }
+      @media only screen and (min-width: 768px) {
+        .stack.default .card:nth-last-child(n+14):last-child, .stack.default .card:nth-last-child(n+14) ~ .card:last-child, .stack:not(.vertical):not(.horizontal) .card:nth-last-child(n+14):last-child, .stack:not(.vertical):not(.horizontal) .card:nth-last-child(n+14) ~ .card:last-child {
+          top: -5px; } }
+    .stack.default .card:nth-child(n+2), .stack:not(.vertical):not(.horizontal) .card:nth-child(n+2) {
+      top: -1px; }
+    .stack.default .card:nth-child(n+4), .stack:not(.vertical):not(.horizontal) .card:nth-child(n+4) {
+      top: -2px; }
+    @media only screen and (min-width: 600px) {
+      .stack.default .card:nth-child(n+7), .stack:not(.vertical):not(.horizontal) .card:nth-child(n+7) {
+        top: -3px; } }
+    @media only screen and (min-width: 600px) {
+      .stack.default .card:nth-child(n+12), .stack:not(.vertical):not(.horizontal) .card:nth-child(n+12) {
+        top: -4px; } }
+  .stack.vertical .card {
+    margin-bottom: -80%;
+    position: relative; }
+    .stack.vertical .card:hover ~ .card {
+      transform: translate3d(0, -3px, 0); }
+    .stack.vertical .card.facedown {
+      margin-bottom: -95%; }
+    @media only screen and (max-width: 768px) and (orientation: landscape) {
+      .stack.vertical .card {
+        margin-bottom: -60%; }
+        .stack.vertical .card.facedown {
+          margin-bottom: -80%; } }
+    @media only screen and (min-width: 768px) {
+      .stack.vertical .card {
+        margin-bottom: -110%; }
+        .stack.vertical .card.facedown {
+          margin-bottom: -125%; } }
+  .stack.horizontal {
+    display: flex;
+    flex-direction: row; }
+    .stack.horizontal::before {
+      position: absolute; }
+    .stack.horizontal .card:not(:nth-last-child(-n + 3)) {
+      display: none; }
+    .stack.horizontal .card {
+      flex: 0 0 100%;
+      margin-right: -70%;
+      position: relative; }
+      .stack.horizontal .card.facedown {
+        margin-right: -90%; }
+      .stack.horizontal .card:not(:last-child) {
+        pointer-events: none; }
+  .stack.cycle {
+    background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCI+CiAgPHBhdGggZD0iTTEwLjE2OCAzNC45NDdhMjYuMDE2IDI2LjAxNiAwIDEgMSA3LjQ1IDE1LjQzMiIgZmlsbD0ibm9uZSIgc3Ryb2tlPSJyZ2JhKDAsMCwwLDAuMikiIHN0cm9rZS1taXRlcmxpbWl0PSIxMCIgc3Ryb2tlLXdpZHRoPSI1IiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBzdHJva2UtbGluZWNhcD0icm91bmQiPjwvcGF0aD4KICA8cGF0aCBmaWxsPSJub25lIiBzdHJva2U9InJnYmEoMCwwLDAsMC4yKSIgc3Ryb2tlLW1pdGVybGltaXQ9IjEwIiBzdHJva2Utd2lkdGg9IjUiIGQ9Ik0yIDIzbDguMTY4IDExLjk0N0wyMC45ODYgMjUiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCI+PC9wYXRoPgo8L3N2Zz4K"); }
+  .stack.error {
+    background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNSAyNSI+CiAgPHBhdGggZmlsbD0ibm9uZSIgc3Ryb2tlPSJyZ2JhKDAsMCwwLDAuMikiIHN0cm9rZS13aWR0aD0iMi41IiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1taXRlcmxpbWl0PSIxMCIgZD0iTTIzLjUsMS41bC0yMiwyMiBNMjMuNSwyMy41bC0yMi0yMiIvPgo8L3N2Zz4K"); }
 
 .landing {
   display: flex;
