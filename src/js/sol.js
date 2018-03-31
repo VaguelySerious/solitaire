@@ -63,6 +63,45 @@ var SOL = {
 };
 // SOL.DOM.board.className += SOL.cardColors[Math.floor(Math.random() * SOL.cardColors.length)];
 
+// Create object with dynamic dom bindings
+function Modal (modalID, visibleClass, closers, openers) {
+  this.modal = document.getElementById(modalID);
+  this.visibleClass = visibleClass;
+  if (typeof openers === 'string') {
+    var openNodes = document.getElementsByClassName(openers);
+    for (var i = 0; i < openNodes.length; i++){
+      openNodes[i].addEventListener('click', this.open.bind(this));
+    }
+  } else {
+    for (var i = 0; i < openers.length; i++){
+      if (closers.length === 0) {
+        document.getElementById(openers[i]).addEventListener('click', this.toggle.bind(this));
+      } else {
+        document.getElementById(openers[i]).addEventListener('click', this.open.bind(this));
+      }
+    }
+  }
+  if (typeof closers === 'string') {
+    var closeNodes = document.getElementsByClassName(closers);
+    for (var i = 0; i < closeNodes.length; i++){
+      closeNodes[i].addEventListener('click', this.open.bind(this));
+    }
+  } else {
+    for (var i = 0; i < closers.length; i++){
+      document.getElementById(closers[i]).addEventListener('click', this.close.bind(this));
+    }
+  }
+}
+Modal.prototype.open = function(){
+  this.modal.classList.remove(this.visibleClass);
+};
+Modal.prototype.close = function(){
+  this.modal.classList.add(this.visibleClass);
+};
+Modal.prototype.toggle = function(){
+  this.modal.classList.toggle(this.visibleClass);
+};
+
 // Generates a DOM Node from card object
 SOL.generate = function (card) {
   return sprintf(

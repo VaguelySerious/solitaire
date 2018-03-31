@@ -40,6 +40,10 @@ SOL.clickCard = function (cardInfo) {
   // Clicking on deck
   if (cardInfo.stack === 0) {
     console.log('Deck cycle');
+    // var deckCards = SOL.DOM.stacks[1].childNodes;
+    // for (var i = 1; i <= deckCards.length || i < 4; i++) {
+      // deckCards[deckCards.length-i].classList.add('hidden');
+    // }
     SOL.move(0, 1, 3, true, true);
     SOL.deselectLast();
 
