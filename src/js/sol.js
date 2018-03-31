@@ -1,4 +1,4 @@
-// TODO: Create cookies for saves
+// TODO: Read cookies on startup
 // TODO: Remove scss that's not needed
 // TODO: Fix hints
 
@@ -6,20 +6,17 @@
 // GLOBAL VARIABLES //
 // ////////////////////
 
-var SOL = {
-  game: null,
-  scoring: null,
-  stats: {
-    score: 0,
-    moves: 0,
-    time: {
-      now: 0,
-      interval: null
-    },
-    // Array of {score, time, moves, wasWin}
-    scores: []
+SOL.stats = {
+  score: 0,
+  moves: 0,
+  time: {
+    now: 0,
+    interval: null
   },
-  DOM: {
+  // Array of {score, time, moves, wasWin}
+  scores: []
+};
+SOL.DOM = {
 
     // General
     board: document.getElementById('board'),
@@ -27,21 +24,15 @@ var SOL = {
 
     // Buttons
     undo: document.getElementById('undo'),
-    newgames: document.getElementsByClassName('newgame//TODO'),
+    newgames: document.getElementsByClassName('new-game'),
     autocomplete: document.getElementById('//TODO'),
     cycle: document.getElementById('//TODO'), // TODO CHECK IF NULL
 
     // Text info
     timer: document.getElementById('printinfo'),
     score: document.getElementById('printinfo'),
-
-    // Modals
-    scoreboard: document.getElementById('//TODO'),
-    help: document.getElementById('//TODO'),
-    cookie: document.getElementById('//TODO'),
-
-  },
-  cardColors: [
+};
+SOL.cardColors = [
     'royalblue',
     'plum',
     'brickred',
@@ -52,45 +43,23 @@ var SOL = {
     'emerald',
     'mint',
     'aqua'
-  ]
-};
-// SOL.DOM.board.className += SOL.cardColors[Math.floor(Math.random() * SOL.cardColors.length)];
+];
 
 // Create object with dynamic dom bindings
-function Modal (modalID, visibleClass, openers, closers) {
+function Modal (modalID, visibleClass, toggles) {
   this.modal = document.getElementById(modalID);
   this.visibleClass = visibleClass;
-  if (typeof openers === 'string') {
-    var openNodes = document.getElementsByClassName(openers);
-    for (var i = 0; i < openNodes.length; i++){
-      openNodes[i].addEventListener('click', this.open.bind(this));
+  if (typeof toggles === 'string') {
+    var toggleNodes = document.getElementsByClassName(toggles);
+    for (var i = 0; i < toggleNodes.length; i++){
+      toggleNodes[i].addEventListener('click', this.toggle.bind(this));
     }
   } else {
-    for (var i = 0; i < openers.length; i++){
-      if (closers.length === 0) {
-        document.getElementById(openers[i]).addEventListener('click', this.toggle.bind(this));
-      } else {
-        document.getElementById(openers[i]).addEventListener('click', this.open.bind(this));
-      }
-    }
-  }
-  if (typeof closers === 'string') {
-    var closeNodes = document.getElementsByClassName(closers);
-    for (var i = 0; i < closeNodes.length; i++){
-      closeNodes[i].addEventListener('click', this.open.bind(this));
-    }
-  } else {
-    for (var i = 0; i < closers.length; i++){
-      document.getElementById(closers[i]).addEventListener('click', this.close.bind(this));
+    for (var i = 0; i < toggles.length; i++){
+      document.getElementById(toggles[i]).addEventListener('click', this.toggle.bind(this));
     }
   }
 }
-Modal.prototype.open = function(){
-  this.modal.classList.remove(this.visibleClass);
-};
-Modal.prototype.close = function(){
-  this.modal.classList.add(this.visibleClass);
-};
 Modal.prototype.toggle = function(){
   this.modal.classList.toggle(this.visibleClass);
 };
@@ -288,6 +257,24 @@ SOL.win = function () {
 
 };
 
+// Checks if two cards have different colors
+SOL.differentColor = function (color1, color2) {
+  return (SOL.game.colors.indexOf(color1) > 1
+      && SOL.game.colors.indexOf(color2) < 2)
+    || (SOL.game.colors.indexOf(color1) < 2
+      && SOL.game.colors.indexOf(color2) > 1)
+};
+
+// Highlight certain card
+SOL.highlight = function (cardInfo) {
+  document.getElementById(cardInfo.card.id).classList.add('clicked');
+};
+
+// Dehighlight certain card
+SOL.dehighlight = function (cardInfo) {
+  document.getElementById(cardInfo.card.id).classList.remove('clicked');
+};
+
 
 // /////////////////
 // TIME SCORE DOM //
@@ -365,15 +352,15 @@ SOL.shuffle = function (arr) {
 
 
 
-// ////////////
-// MAIN CODE //
-// ////////////
+// ///////////////
+// DOM BINDINGS //
+// ///////////////
 
-var modals = {
-  m: new Modal('menu', 'visible', ['menu-open'], ['menu-close']),
-  h: new Modal('help', 'visible', ['help-open'], ['help-close']),
-  // s: new Modal('scoreboard', 'visible', [], ['new-game'])
-}
+modal_menu = new Modal('menu', 'visible', 'menu-toggle');
+modal_help = new Modal('help', 'visible', 'help-toggle');
+modal_score = new Modal('scoreboard', 'visible', 'score-toggle');
+modal_score = new Modal('scoreboard', 'visible', 'new-game');
+modal_cookie = new Modal('cookie', 'hidden', 'cookie-toggle');
 
 document.body.addEventListener("click", function(event){
   if (event.target.classList.contains('card')){
@@ -383,20 +370,44 @@ document.body.addEventListener("click", function(event){
   }
 });
 
+SOL.DOM.undo.addEventListener('click', function() { 
+  SOL.undo(); 
+});
+for (var i = 0; i < SOL.DOM.newgames.length; i++){
+  SOL.DOM.newgames[i].addEventListener('click', function() { 
+    SOL.new(); 
+  }); 
+}
+
 document.onkeypress = function(e){
+  console.log(e.which);
   switch(e.which) {
+    // CTRL-Z
+    case 26: SOL.undo();
+    break; 
     // U
     case 85: SOL.undo();
     break; 
     // N
-    case 78: SOL.new();
+    case 110: SOL.new();
     break;
     // H
-    case 72: modals.h.open();
+    case 104: modal_help.toggle();
+    break;
+    // M
+    case 109: modal_menu.toggle();
+    break;
+    // S
+    case 115: modal_score.toggle();
     break;
   }
 };
 
-SOL.DOM.undo.addEventListener('click', function() { 
-  SOL.undo(); 
-}); 
+
+// ////////////
+// MAIN CODE //
+// ////////////
+
+document.body.className += SOL.cardColors[Math.floor(Math.random() * SOL.cardColors.length)];
+SOL.new();
+  

@@ -1,6 +1,7 @@
 // TODO Fix SOL.complete to actually do that
-// TODO SOL.save() on cardinteraction
-// TODO Different color
+// TODO Errorflash
+
+var SOL = {};
 
 // General
 SOL.game = {
@@ -40,12 +41,9 @@ SOL.clickCard = function (cardInfo) {
   // Clicking on deck
   if (cardInfo.stack === 0) {
     console.log('Deck cycle');
-    // var deckCards = SOL.DOM.stacks[1].childNodes;
-    // for (var i = 1; i <= deckCards.length || i < 4; i++) {
-      // deckCards[deckCards.length-i].classList.add('hidden');
-    // }
     SOL.move(0, 1, 3, true, true);
     SOL.deselectLast();
+    setTimeout(SOL.save, 0);
 
   // Uncover face down card
   } else if (cardInfo.card.facedown) {
@@ -55,6 +53,7 @@ SOL.clickCard = function (cardInfo) {
     cardInfo.card.facedown = false;
     document.getElementById(cardInfo.card.id).classList.remove('facedown');
     SOL.deselectLast();
+    setTimeout(SOL.save, 0);
 
   // Select card
   } else if (SOL.game.activeCard === null) {
@@ -70,6 +69,7 @@ SOL.clickCard = function (cardInfo) {
         if (SOL.game.stacks[j].length === 0) {
           SOL.move(SOL.game.activeCard.stack, j, 1);
           console.log('Move to empty foundation doubleclick');
+          setTimeout(SOL.save, 0);
           break;
         }
       }
@@ -83,6 +83,7 @@ SOL.clickCard = function (cardInfo) {
             && SOL.game.activeCard.card.color === lastCard.color){
             console.log('Move to non-empty foundation double-click');
             SOL.move(SOL.game.activeCard.stack, j, 1);
+            setTimeout(SOL.save, 0);
             break;
           }
         }
@@ -102,13 +103,16 @@ SOL.clickCard = function (cardInfo) {
       SOL.move(
         SOL.game.activeCard.stack,
         cardInfo.stack,
-        SOL.game.stacks[SOL.game.activeCard.stack].length - SOL.game.activeCard.pos);
+        SOL.game.stacks[SOL.game.activeCard.stack].length - SOL.game.activeCard.pos
+      );
+      setTimeout(SOL.save, 0);
 
     // Wrong selection
     } else if (SOL.game.activeCard.card.value === cardInfo.card.value + 1
       && SOL.game.activeCard.card.color === cardInfo.card.color){
       console.log('Move to non-empty foundation double-click');
       SOL.move(SOL.game.activeCard.stack, cardInfo.stack, 1);
+      setTimeout(SOL.save, 0);
     } else {
       console.log('Two-card interaction failure');
       // TODO Errorflash
@@ -152,9 +156,16 @@ SOL.clickStack = function (stack) {
 
 // Check for win or autocompleteabilty
 SOL.check = function () {
-
+  var won = true;
+  for (var i = 2; i < 6; i++) {
+    if (SOL.game.stacks[i].length < 13) {
+      won = false;
+    }
+  }
+  if (won) {
+    SOL.win();
+  }
 };
-
 
 // Move all cards to wincondition
 SOL.complete = function () {
@@ -162,27 +173,11 @@ SOL.complete = function () {
   SOL.rebuild();
 };
 
-SOL.new();
-
 // Deselect Active Card
 SOL.deselectLast = function () {
   if (SOL.game.activeCard !== null) {
     SOL.dehighlight(SOL.game.activeCard);
     SOL.game.activeCard = null;
   }
-}
+};
 
-// Highlight certain card
-SOL.highlight = function (cardInfo) {
-  document.getElementById(cardInfo.card.id).classList.add('clicked');
-}
-
-// Dehighlight certain card
-SOL.dehighlight = function (cardInfo) {
-  document.getElementById(cardInfo.card.id).classList.remove('clicked');
-}
-
-// Checks if two cards have different colors
-SOL.differentColor = function (card1, card2) {
-  return true;
-}

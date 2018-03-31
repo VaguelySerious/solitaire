@@ -56,7 +56,7 @@
   <!-- Menu -->
   <nav class="menu fullscreen-modal" id="menu">
     <section class="menu__actions">
-      <a class="menu__action">Resume</a>
+      <a class="menu__action menu-toggle">Resume</a>
       <a class="menu__action">New Game</a>
       <a href="/leaderboard" class="menu__action">Leaderboard</a>
     </section>
@@ -67,7 +67,7 @@
       <!-- Games list: LAZY LOAD TO IMPROVE PERFORMANCE -->
     </section>
 
-    <button class="icon-button close" id="menu-close">
+    <button class="icon-button close menu-toggle">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 25 25">
         <path fill="none" stroke="#FFFFFF" stroke-width="2.5" stroke-linecap="round" stroke-miterlimit="10" d="M23.5,1.5l-22,22 M23.5,23.5l-22-22"/>
       </svg>
@@ -118,7 +118,7 @@
       </div>
     </section>
 
-    <button class="icon-button close" id="help-close">
+    <button class="icon-button close help-toggle">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 25 25">
         <path fill="none" stroke="#FFFFFF" stroke-width="2.5" stroke-linecap="round" stroke-miterlimit="10" d="M23.5,1.5l-22,22 M23.5,23.5l-22-22"/>
       </svg>
@@ -152,7 +152,7 @@
 
   <!-- Controls -->
   <aside class="controls">
-    <button class="icon-button" id="menu-open">
+    <button class="icon-button menu-toggle">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
         <path fill="none" stroke="#FFFFFF" stroke-miterlimit="10" stroke-width="2" d="M1.5,4.7h21 M1.5,12h12.6" stroke-linejoin="round" stroke-linecap="round" />
         <path fill="none" stroke="#FFFFFF" stroke-miterlimit="10" stroke-width="2" d="M1.5,19.3h21" stroke-linejoin="round" stroke-linecap="round" />
@@ -183,7 +183,7 @@
     </button>
 
 
-    <button class="icon-button help" id="help-open">
+    <button class="icon-button help help-toggle">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
         <circle cx="32" cy="32" r="30" fill="none" stroke="#FFFFFF" stroke-miterlimit="10" stroke-width="5" stroke-linejoin="round" stroke-linecap="round"></circle>
         <path d="M24 24.528C24 21.647 26.206 17 32.47 17S40 22.628 40 24.528s-.59 4.092-4.057 7.558C32.477 35.552 32 37.353 32 39v2" fill="none" stroke="#FFFFFF" stroke-miterlimit="10" stroke-width="5" stroke-linejoin="round" stroke-linecap="round"></path>
@@ -240,7 +240,7 @@
   </aside>
   <!-- /Scoreboard -->
 
-  <script type="text/javascript" src="src/js/sol.js"></script>
   <script type="text/javascript" src="src/js/klondike.js"></script>
+  <script type="text/javascript" src="src/js/sol.js"></script>
 </body>
 </html>
