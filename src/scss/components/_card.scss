@@ -76,18 +76,10 @@
 
 
   &.clicked {
-    @include elevate(
-      $level:   3,
-      $color:   adjust-color($color-primary, $lightness: 30%, $saturation: 100%),
-      $opacity: 0.5
-    );
+    box-shadow: 0 0 15px 4px saturate(lighten($color-primary, 20%), 100%);
 
     &:hover {
-      @include elevate(
-        $level:   10,
-        $color:   adjust-color($color-primary, $lightness: 30%, $saturation: 100%),
-        $opacity: 0.5
-      );
+      box-shadow: 0 3px 15px 4px saturate(lighten($color-primary, 25%), 100%);
     }
   }
 

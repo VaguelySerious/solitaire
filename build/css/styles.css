@@ -1031,9 +1031,9 @@ h3, .text-block h3, .text-block .h3, .text-block .label {
   .card:hover {
     transform: translate3d(0, -3px, 0); }
   .card.clicked {
-    box-shadow: 2.5px 3.5px 12px rgba(255, 211, 218, 0.5), -1.6px 2.4px 6px #ffd3da, 0 -1px 3px #ffd3da; }
+    box-shadow: 0 0 15px 4px #ffa0b0; }
     .card.clicked:hover {
-      box-shadow: 4.25px 5.25px 19px rgba(255, 211, 218, 0.5), -3.7px 3.8px 9.5px #ffd3da, 0 -1px 3px #ffd3da; }
+      box-shadow: 0 3px 15px 4px #ffbac5; }
   .card.facedown {
     transform: translate3d(0, 0, 0) rotateY(180deg); }
     .card.facedown:not(:last-child) {
