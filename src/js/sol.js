@@ -31,13 +31,6 @@ var SOL = {
     autocomplete: document.getElementById('//TODO'),
     cycle: document.getElementById('//TODO'), // TODO CHECK IF NULL
 
-    // Menu
-    menu: {
-      modal: document.getElementById('menu'),
-      openbutton: document.getElementById('menu-open'),
-      closebutton: document.getElementById('menu-close')
-    },
-
     // Text info
     timer: document.getElementById('printinfo'),
     score: document.getElementById('printinfo'),
@@ -64,7 +57,7 @@ var SOL = {
 // SOL.DOM.board.className += SOL.cardColors[Math.floor(Math.random() * SOL.cardColors.length)];
 
 // Create object with dynamic dom bindings
-function Modal (modalID, visibleClass, closers, openers) {
+function Modal (modalID, visibleClass, openers, closers) {
   this.modal = document.getElementById(modalID);
   this.visibleClass = visibleClass;
   if (typeof openers === 'string') {
@@ -376,15 +369,34 @@ SOL.shuffle = function (arr) {
 // MAIN CODE //
 // ////////////
 
+var modals = {
+  m: new Modal('menu', 'visible', ['menu-open'], ['menu-close']),
+  h: new Modal('help', 'visible', ['help-open'], ['help-close']),
+  // s: new Modal('scoreboard', 'visible', [], ['new-game'])
+}
 
 document.body.addEventListener("click", function(event){
   if (event.target.classList.contains('card')){
     SOL.clickCard(SOL.lookup(+event.target.id));
   } else if (event.target.classList.contains('stack')) {
-    SOL.clickStack(+event.target.id.slice(-1));
+    SOL.clickStack(+event.target.id.slice(event.target.id.indexOf('-')+1));
   }
 });
 
-SOL.DOM.undo.addEventListener('click', function() {
-  SOL.undo();
-});
+document.onkeypress = function(e){
+  switch(e.which) {
+    // U
+    case 85: SOL.undo();
+    break; 
+    // N
+    case 78: SOL.new();
+    break;
+    // H
+    case 72: modals.h.open();
+    break;
+  }
+};
+
+SOL.DOM.undo.addEventListener('click', function() { 
+  SOL.undo(); 
+}); 
