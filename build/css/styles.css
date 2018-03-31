@@ -912,10 +912,10 @@ h3, .text-block h3, .text-block .h3, .text-block .label {
     transform: translateY(0); }
 
 .help__rules {
-  transition-delay: 0.2s; }
+  transition-delay: 0; }
 
 .help__shortcuts {
-  transition-delay: 0.3s; }
+  transition-delay: 0.125s; }
   .help__shortcuts__list {
     display: flex;
     flex-flow: row wrap;
