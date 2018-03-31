@@ -39,8 +39,8 @@ var SOL = {
     },
 
     // Text info
-    timer: document.getElementById('timer //TODO'),
-    score: document.getElementById('score //TODO'),
+    timer: document.getElementById('printinfo'),
+    score: document.getElementById('printinfo'),
 
     // Modals
     scoreboard: document.getElementById('//TODO'),
@@ -249,6 +249,7 @@ SOL.stats.time.stop = function () {
 
 // Only sets the timer to zero
 SOL.stats.time.reset = function () {
+  SOL.stats.time.now = 0;
   SOL.DOM.updateTime(0);
 };
 
