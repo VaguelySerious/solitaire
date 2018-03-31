@@ -110,6 +110,10 @@
       &.facedown {
         margin-right: -90%;
       }
+
+      &:not(:last-child) {
+        pointer-events: none;
+      }
     }
   }
 }
