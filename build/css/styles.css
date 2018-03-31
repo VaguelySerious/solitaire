@@ -269,6 +269,8 @@ a {
     .controls .icon-button.disabled, .controls .icon-button[disabled] {
       color: #3c4b92;
       pointer-events: none; }
+    .controls .icon-button.help {
+      margin-top: auto; }
 
 .board {
   display: flex;

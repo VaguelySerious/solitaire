@@ -84,6 +84,11 @@ $controls-switch-bp:      'tablet-l';
       color: lighten($color-board, 15%);
       pointer-events: none;
     }
+
+
+    &.help {
+      margin-top: auto;
+    }
   }
 }
 
