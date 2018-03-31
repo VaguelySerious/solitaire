@@ -208,12 +208,31 @@ SOL.rebuild = function () {
 
 // Go back in time once and decrease score
 SOL.undo = function () {
+  var lastState = JSON.parse(SOL.game.history.pop());
 
+  SOL.stats.moves += 1;
+  SOL.game.stacks = lastState.stacks;
+  SOL.stats.score = lastState.score + SOL.scoring.undo;
+
+  SOL.rebuild();
 };
 
 // Creates a gamestate and pushes it to cookies
 SOL.save = function () {
+  var state = {
+    score: SOL.stats.score,
+    scores: SOL.stats.scores,
+    time: SOL.stats.time.now,
+    moves: SOL.stats.moves,
+    stacks: SOL.game.stacks
+  };
 
+  SOL.game.history.push(JSON.stringify(state));
+  SOL.stats.moves += 1;
+
+  if (SOL.game.history.length > SOL.game.maxGameStates) {
+    SOL.game.history.shift();
+  }
 };
 
 // Calculates score and shows win screen / stats
