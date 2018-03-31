@@ -75,6 +75,11 @@
   }
 
 
+  &.hidden {
+    display: none;
+  }
+
+
   &.clicked {
     box-shadow: 0 0 15px 4px saturate(lighten($color-primary, 20%), 100%);
 

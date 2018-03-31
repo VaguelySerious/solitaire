@@ -1030,6 +1030,8 @@ h3, .text-block h3, .text-block .h3, .text-block .label {
     box-shadow: 8px 9px 34px rgba(0, 0, 0, 0.12), -8.2px 6.8px 17px rgba(0, 0, 0, 0.24), 0 -1px 3px rgba(0, 0, 0, 0.24); }
   .card:hover {
     transform: translate3d(0, -3px, 0); }
+  .card.hidden {
+    display: none; }
   .card.clicked {
     box-shadow: 0 0 15px 4px #ffa0b0; }
     .card.clicked:hover {
