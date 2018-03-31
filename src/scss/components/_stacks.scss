@@ -104,10 +104,10 @@
     }
 
 
-    .card:not(:nth-last-child(-n + 3)) {
-      display: none;
-    }
     &.show-3 {
+      .card:not(:nth-last-child(-n + 3)) {
+        display: none;
+      }
     }
 
 
