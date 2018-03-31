@@ -191,7 +191,19 @@ SOL.new = function () {
 
 // Rebuilds DOM from stack variable
 SOL.rebuild = function () {
+  var i;
+  var j;
 
+  // Flush the board stacks
+  for (var i = 0; i < SOL.DOM.stacks.length; i++) {
+    SOL.DOM.stacks[i].innerHTML = '';
+
+    // Refill from stack variable
+    for (var j = 0; j < SOL.game.stacks[i].length; j++) {
+      var domCard = SOL.generate(SOL.game.stacks[i][j]);
+      SOL.DOM.stacks[i].insertAdjacentHTML('beforeend', domCard);
+    }
+  }
 };
 
 // Go back in time once and decrease score
