@@ -13,7 +13,7 @@ SOL.game = {
   maxGameStates: 1,
   progressiveUndo: 1,
   maxCycleTimes: 2,
-  cycleTimes: 2,
+  cycleTimes: 0,
 
   // Board information
   cards: 52,
@@ -43,32 +43,28 @@ SOL.scoring = {
 SOL.clickCard = function (cardInfo) {
   var wasOnlyHighlight = false;
 
+  SOL.save();
+
   // Clicking on deck
   if (cardInfo.stack === 0) {
-    console.log('Deck cycle');
     if (SOL.game.stacks[0].length < 3) {
       SOL.move(0, 1, SOL.game.stacks[0].length, true, true);
     } else {
       SOL.move(0, 1, 3, true, true);
     }
     SOL.deselectLast();
-    setTimeout(SOL.save, 0);
 
   // Uncover face down card
   } else if (cardInfo.card.facedown) {
-
-    console.log('Uncover facedown');
     SOL.stats.updateScore(SOL.scoring.uncoverFaceDown);
     cardInfo.card.facedown = false;
     document.getElementById(cardInfo.card.id).classList.remove('facedown');
     SOL.deselectLast();
-    setTimeout(SOL.save, 0);
 
   // Select card
   } else if (SOL.game.activeCard === null) {
     SOL.game.activeCard = cardInfo;
     SOL.highlight(cardInfo);
-    console.log('Only select card');
 
   // Deselect on same-card-twice or push to foundation
   } else if (SOL.game.activeCard.card === cardInfo.card) {
@@ -77,8 +73,6 @@ SOL.clickCard = function (cardInfo) {
       for (var j = 2; j < 6; j++) {
         if (SOL.game.stacks[j].length === 0) {
           SOL.move(SOL.game.activeCard.stack, j, 1);
-          console.log('Move to empty foundation doubleclick');
-          setTimeout(SOL.save, 0);
           break;
         }
       }
@@ -87,12 +81,9 @@ SOL.clickCard = function (cardInfo) {
       for (var j = 2; j < 6; j++) {
         if (SOL.game.stacks[j].length !== 0) {
           var lastCard = SOL.game.stacks[j][SOL.game.stacks[j].length - 1]
-          console.log('lastcard: '+JSON.stringify(lastCard));
           if (SOL.game.activeCard.card.value === lastCard.value + 1
             && SOL.game.activeCard.card.color === lastCard.color){
-            console.log('Move to non-empty foundation double-click');
             SOL.move(SOL.game.activeCard.stack, j, 1);
-            setTimeout(SOL.save, 0);
             break;
           }
         }
@@ -108,21 +99,17 @@ SOL.clickCard = function (cardInfo) {
     if (SOL.game.activeCard.card.value === cardInfo.card.value - 1
       && SOL.differentColor(SOL.game.activeCard.card.color, cardInfo.card.color)
       && cardInfo.stack > 5) {
-      console.log('Normal move card');
       SOL.move(
         SOL.game.activeCard.stack,
         cardInfo.stack,
         SOL.game.stacks[SOL.game.activeCard.stack].length - SOL.game.activeCard.pos
       );
-      setTimeout(SOL.save, 0);
 
     // Wrong selection
     } else if (SOL.game.activeCard.card.value === cardInfo.card.value + 1
       && SOL.game.activeCard.card.color === cardInfo.card.color
       && cardInfo.stack > 1 && cardInfo.stack < 6){
-      console.log('Move to non-empty (default)');
       SOL.move(SOL.game.activeCard.stack, cardInfo.stack, 1);
-      setTimeout(SOL.save, 0);
     } else {
       console.log('Two-card interaction failure');
       // TODO Errorflash
@@ -139,28 +126,24 @@ SOL.clickCard = function (cardInfo) {
 
 // Make a move
 SOL.clickStack = function (stack) {
-  console.log(stack);
+  SOL.save();
 
   // Cycle the deck once round
   if (stack === 0) {
 
-    console.log('Cycled deck');
     if (SOL.game.cycleTimes > 0) {
       SOL.move(1, 0, SOL.game.stacks[1].length, true, true);
       SOL.game.cycleTimes -= 1;
       if (SOL.game.cycleTimes <= 0) {
         SOL.DOM.stacks[0].classList.add('error');
-      } 
+      }
     }
-    SOL.save();
 
   // Move to foundation
   } else if (SOL.game.activeCard
     && SOL.game.activeCard.card.value === 0
     && stack > 1 && stack < 6) {
-    console.log('Move card to foundation');
     SOL.move(SOL.game.activeCard.stack, stack, 1);
-    SOL.save();
 
   // Move Kings to empty stack
   } else if (SOL.game.activeCard
@@ -168,7 +151,6 @@ SOL.clickStack = function (stack) {
     && stack > 5) {
     SOL.move(SOL.game.activeCard.stack, stack,
       SOL.game.stacks[SOL.game.activeCard.stack].length - SOL.game.activeCard.pos);
-    SOL.save();
   } else {
     // Error flash
     console.log('Failed empty stack interaction');

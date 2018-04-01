@@ -1,6 +1,7 @@
 // TODO Implement scoreboard
 // TODO Fix undo
 // TODO Fix time starting too early
+// TODO Fix time too fast
 
 // ////////////////////
 // GLOBAL VARIABLES //
@@ -167,6 +168,7 @@ SOL.new = function () {
   SOL.stats.moves = 0;
   SOL.stats.score = 0;
   SOL.game.cycleTimes = SOL.game.maxCycleTimes;
+  SOL.DOM.undo.setAttribute('disabled', 'true');
   SOL.DOM.stacks[0].classList.remove('error');
   document.cookie = 'gamestate=;';
 
@@ -263,7 +265,6 @@ SOL.undo = function () {
 
 // Creates a gamestate and pushes it to cookies
 SOL.save = function () {
-
   if (!SOL.stats.started) {
     SOL.stats.time.start();
     SOL.stats.started = true;
@@ -287,7 +288,8 @@ SOL.save = function () {
   }
 
   // Game is undoable, so enable the button
-  if (SOL.game.history.length >= 1) {
+  if (SOL.game.history.length >= 1
+      && SOL.game.history[SOL.game.history.length - 1] !== SOL.game.stacks) {
     SOL.DOM.undo.removeAttribute('disabled');
   }
 };
@@ -434,12 +436,9 @@ for (var i = 0; i < SOL.DOM.newgames.length; i++){
 }
 
 document.onkeypress = function(e){
-  console.log(e.which);
   switch(e.which) {
-    // CTRL-Z
-    case 26: SOL.undo();
-    break;
-    // U
+    // CTRL-Z, U
+    case 26: // Falls through
     case 85: SOL.undo();
     break;
     // N
@@ -489,7 +488,6 @@ function parseCookieStringAsJson (string) {
 
 // // Read out cookies
 var SOL_cookie_save = parseCookieStringAsJson(document.cookie);
-console.log(SOL_cookie_save);
 if (SOL_cookie_save.scores) {
   SOL.stats.scores = SOL_cookie_save.scores;
 }
