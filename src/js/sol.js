@@ -14,7 +14,7 @@ SOL.stats = {
     now: 0,
     interval: null
   },
-  // Array of {score, time, moves, wasWin}
+  // Array of {score, time, timeBonus, moves, wasWin}
   scores: []
 };
 SOL.DOM = {
@@ -32,6 +32,17 @@ SOL.DOM = {
     // Text info
     timer: document.getElementById('printinfo'),
     score: document.getElementById('printinfo'),
+
+    scoreboard: {
+      gameScore: document.getElementById('scoreboard-score'),
+      gameBonus: document.getElementById('scoreboard-bonus'),
+      gameTotal: document.getElementById('scoreboard-total'),
+      gameTime: document.getElementById('scoreboard-time'),
+
+      highScore: document.getElementById('scoreboard-highscore'),
+      gamesCount: document.getElementById('scoreboard-gamesCount'),
+      gamesWonCount: document.getElementById('scoreboard-gamesWonCount'),
+    }
 };
 SOL.cardColors = [
   'yellow',
@@ -273,8 +284,22 @@ SOL.save = function () {
 
 // Calculates score and shows win screen / stats
 SOL.win = function () {
-  //TODO
+  SOL.addStats(true);
   SOL.stats.time.stop();
+};
+
+SOL.addStats = function(won) {
+  won = won || false;
+
+  var length = SOL.stats.scores.push({
+    score: SOL.game.score,
+    time: SOL.stats.time.now,
+    moves: SOL.stats.moves,
+    wasWin: won
+  });
+
+  SOL.DOM.scoreboard.gameScore.textContent = SOL.stats.scores[length - 1].score;
+  // SOL.DOM.scoreboard.gameBonus.
 };
 
 // Checks if two cards have different colors

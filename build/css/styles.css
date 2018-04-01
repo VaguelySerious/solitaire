@@ -79,6 +79,16 @@ img {
   display: block;
   max-width: 100%; }
 
+.container {
+  padding: 0 10px;
+  width: 100%; }
+  .container.narrow {
+    margin: 0 auto;
+    max-width: 500px; }
+  @media only screen and (min-width: 768px) {
+    .container {
+      padding: 0 20px; } }
+
 html {
   font-size: 14px; }
   @media only screen and (min-width: 768px) {
