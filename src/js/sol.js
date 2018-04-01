@@ -240,7 +240,7 @@ SOL.save = function () {
   SOL.game.history.push(state);
   SOL.stats.moves += 1;
 
-  document.cookie = 'gamestate' + state + ';';
+  document.cookie = 'gamestate=' + state + ';';
 
   if (SOL.game.history.length > SOL.game.maxGameStates) {
     SOL.game.history.shift();
@@ -409,5 +409,18 @@ document.onkeypress = function(e){
 // ////////////
 
 document.body.className += SOL.cardColors[Math.floor(Math.random() * SOL.cardColors.length)];
-SOL.new();
-  
+var SOL_cookie_save = document.cookie;
+if (SOL_cookie_save !== '') {
+  SOL_cookie_save = JSON.parse(SOL_cookie_save.slice(10));
+  if (typeof SOL_cookie_save.stacks !== 'undefined') {
+    SOL.game.stacks = SOL_cookie_save.stacks;
+    SOL.stats.score = SOL_cookie_save.score;
+    SOL.stats.time.now = SOL_cookie_save.time;
+    SOL.stats.time.start();
+    SOL.rebuild();
+  } else {
+    SOL.new();
+  }
+} else {
+  SOL.new();
+}

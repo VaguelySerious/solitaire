@@ -37,6 +37,7 @@ SOL.scoring = {
 
 // Resolve rules for clicking on card
 SOL.clickCard = function (cardInfo) {
+  var wasOnlyHighlight = false;
 
   // Clicking on deck
   if (cardInfo.stack === 0) {
@@ -160,6 +161,7 @@ SOL.check = function () {
   for (var i = 2; i < 6; i++) {
     if (SOL.game.stacks[i].length < 13) {
       won = false;
+      break;
     }
   }
   if (won) {
