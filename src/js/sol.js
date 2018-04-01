@@ -143,13 +143,13 @@ SOL.new = function () {
   var tempNumber = '';
   var currentStack = 0;
   var tempIsFacedown = true;
-  var i;
-  var j;
   var len;
   SOL.stats.time.reset();
+  SOL.game.cycleTimes = SOL.game.maxCycleTimes;
+  SOL.DOM.stacks[0].classList.remove('error');
   document.cookie = 'gamestate=;';
 
-  for (i = 0, len = SOL.game.cards; i < len; i++) {
+  for (var i = 0, len = SOL.game.cards; i < len; i++) {
     deck.push({
       id: i,
       color: SOL.game.colors[i % SOL.game.colors.length],
@@ -158,11 +158,15 @@ SOL.new = function () {
     });
   }
 
+  for (var k = 0; k < SOL.game.stacks.length; k++) {
+    SOL.game.stacks[k] = [];
+  }
+
   SOL.clear();
   SOL.shuffle(deck);
 
   // Parse the fen string
-  for (i = 0, len = SOL.game.distribution.length; i < len; i++) {
+  for (var i = 0, len = SOL.game.distribution.length; i < len; i++) {
     if (/[0-9]/.test(SOL.game.distribution[i])) {
       tempNumber += SOL.game.distribution[i];
     } else {
@@ -249,7 +253,8 @@ SOL.save = function () {
     score: SOL.stats.score,
     time: SOL.stats.time.now,
     moves: SOL.stats.moves,
-    stacks: SOL.game.stacks
+    stacks: SOL.game.stacks,
+    cycleTimes: SOL.game.cycleTimes
   });
 
   SOL.game.history.push(state);
@@ -455,10 +460,14 @@ if (SOL_cookie_save.scores) {
 }
 if (SOL_cookie_save.gamestate) {
   SOL.game.stacks = SOL_cookie_save.gamestate.stacks;
+  SOL.game.cycleTimes = SOL_cookie_save.gamestate.cycleTimes;
   SOL.stats.score = SOL_cookie_save.gamestate.score;
   SOL.stats.time.now = SOL_cookie_save.gamestate.time;
   SOL.stats.moves = SOL_cookie_save.gamestate.moves;
   SOL.stats.started = true;
+  if (SOL.game.cycleTimes <= 0) {
+    SOL.DOM.stacks[0].classList.add('error');
+  }
   SOL.stats.time.start();
   SOL.rebuild();
 } else {

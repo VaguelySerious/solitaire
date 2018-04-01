@@ -9,6 +9,7 @@ SOL.game = {
   // Settings
   maxGameStates: 1,
   progressiveUndo: 1,
+  maxCycleTimes: 2,
   cycleTimes: 2,
 
   // Board information
@@ -132,12 +133,27 @@ SOL.clickCard = function (cardInfo) {
 // Make a move
 SOL.clickStack = function (stack) {
   console.log(stack);
+
+  // Cycle the deck once round
+  if (stack === 0) {
+
+    console.log('Cycled deck');
+    if (SOL.game.cycleTimes > 0) {
+      SOL.move(1, 0, SOL.game.stacks[1].length, true, true);
+      SOL.game.cycleTimes -= 1;
+      if (SOL.game.cycleTimes <= 0) {
+        SOL.DOM.stacks[0].classList.add('error');
+      } 
+    }
+    SOL.save();
+
   // Move to foundation
-  if (SOL.game.activeCard
+  } else if (SOL.game.activeCard
     && SOL.game.activeCard.card.value === 0
     && stack > 1 && stack < 6) {
     console.log('Move card to foundation');
     SOL.move(SOL.game.activeCard.stack, stack, 1);
+    SOL.save();
 
   // Move Kings to empty stack
   } else if (SOL.game.activeCard
@@ -145,6 +161,7 @@ SOL.clickStack = function (stack) {
     && stack > 5) {
     SOL.move(SOL.game.activeCard.stack, stack,
       SOL.game.stacks[SOL.game.activeCard.stack].length - SOL.game.activeCard.pos);
+    SOL.save();
   } else {
     // Error flash
     console.log('Failed empty stack interaction');
