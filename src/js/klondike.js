@@ -46,7 +46,11 @@ SOL.clickCard = function (cardInfo) {
   // Clicking on deck
   if (cardInfo.stack === 0) {
     console.log('Deck cycle');
-    SOL.move(0, 1, 3, true, true);
+    if (SOL.game.stacks[0].length < 3) {
+      SOL.move(0, 1, SOL.game.stacks[0].length, true, true);
+    } else {
+      SOL.move(0, 1, 3, true, true);
+    }
     SOL.deselectLast();
     setTimeout(SOL.save, 0);
 
