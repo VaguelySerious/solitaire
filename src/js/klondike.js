@@ -1,5 +1,8 @@
 // TODO Fix SOL.complete to actually do that
 // TODO Errorflash
+// TODO Fix hints
+// TODO Apply all scores
+
 
 var SOL = {};
 

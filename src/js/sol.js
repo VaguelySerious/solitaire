@@ -1,6 +1,6 @@
-// TODO: Read cookies on startup
-// TODO: Remove scss that's not needed
-// TODO: Fix hints
+// TODO Implement scoreboard
+// TODO Fix undo
+// TODO Fix time starting too early
 
 // ////////////////////
 // GLOBAL VARIABLES //
@@ -155,7 +155,17 @@ SOL.new = function () {
   var currentStack = 0;
   var tempIsFacedown = true;
   var len;
+
+  // Add stats
+  if (SOL.stats.started) {
+    SOL.addStats(false);
+  }
+
+  // Reset stats
   SOL.stats.time.reset();
+  SOL.stats.started = false;
+  SOL.stats.moves = 0;
+  SOL.stats.score = 0;
   SOL.game.cycleTimes = SOL.game.maxCycleTimes;
   SOL.DOM.stacks[0].classList.remove('error');
   document.cookie = 'gamestate=;';
