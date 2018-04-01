@@ -86,8 +86,33 @@ $controls-switch-bp:      'tablet-l';
     }
 
 
-    &.help {
+    &.help-toggle {
       margin-top: auto;
+    }
+  }
+
+
+  .color-picker {
+    margin-top: auto;
+
+
+    &__current,
+    &__option {
+      border-radius: 50%;
+      display: block;
+      height: 100%;
+      position: relative;
+      width: 100%;
+    }
+
+
+    &__current {
+      background: var(--card-back);
+    }
+
+
+    & + .help-toggle {
+      margin-top: 0;
     }
   }
 }
@@ -147,17 +172,20 @@ $controls-switch-bp:      'tablet-l';
   display: flex;
   flex-flow: row nowrap;
   flex: 0 0 auto;
+  transform: translateZ(0px);
   width: 100%;
 
 
-  &:not(.flex), &:not(:empty) {
-    height: 30%;
-    height: calc((100vw / var(--spacing) * var(--columns)) * var(--columns) * 1.4);
+  &.flex,
+  &:empty {
+    flex: 1;
   }
 
 
-  &.flex, &:empty {
-    flex: 1;
+  &:not(.flex),
+  &:not(:empty) {
+    // height: 30%;
+    // height: calc((100vw / var(--spacing) * var(--columns)) * var(--columns) * 1.4);
   }
 
 

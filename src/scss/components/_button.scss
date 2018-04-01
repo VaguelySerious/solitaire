@@ -2,10 +2,6 @@
 /// Button component
 ///
 
-.icon-button {
-  @extend %icon-button;
-}
-
 .button {
   align-items: center;
   appearance: none;
@@ -83,69 +79,6 @@
   }
 
 
-  &.fadedout {
-    opacity: 0;
-    pointer-events: none;
-    transform: translateY($spacing-base);
-  }
-
-
-  &.loading {
-  }
-
-  &.loading & {
-    &__text {
-      opacity: 0;
-      transform: translateY(-100%);
-    }
-
-    &__icon {
-      align-items: center;
-      display: flex;
-      height: 100%;
-      justify-content: center;
-      left: 0;
-      position: absolute;
-      top: 0;
-      width: 100%;
-
-      span {
-        animation: loadingDot 0.75s ease infinite;
-        background: currentColor;
-        border-radius: 50px;
-        height: 4px;
-        display: inline-block;
-        margin: 2px;
-        width: 4px;
-
-
-        &:nth-child(2) {
-          animation-delay: $transition-duration / 2;
-        }
-        &:nth-child(3) {
-          animation-delay: $transition-duration;
-        }
-
-
-        @keyframes loadingDot {
-          0% {
-            transform: translateY(0);
-          }
-
-          50% {
-            transform: translateY(-100%);
-          }
-
-          100% {
-            transform: translateY(0);
-          }
-        }
-      }
-    }
-  }
-
-
-  &:disabled,
   &[disabled],
   &.disabled {
     color: $color-gray;

@@ -33,16 +33,13 @@ SOL.DOM = {
     score: document.getElementById('printinfo'),
 };
 SOL.cardColors = [
-    'royalblue',
-    'plum',
-    'brickred',
-    'red',
-    'orange',
-    'yellow',
-    'green',
-    'emerald',
-    'mint',
-    'aqua'
+  'yellow',
+  'orange',
+  'red',
+  'purple',
+  'lavender',
+  'blue',
+  'aqua',
 ];
 
 // Create object with dynamic dom bindings
@@ -157,8 +154,10 @@ SOL.new = function () {
     });
   }
 
+  SOL.clear();
   SOL.shuffle(deck);
 
+  // Parse the fen string
   for (i = 0, len = SOL.game.distribution.length; i < len; i++) {
     if (/[0-9]/.test(SOL.game.distribution[i])) {
       tempNumber += SOL.game.distribution[i];
@@ -190,16 +189,22 @@ SOL.new = function () {
   }
 };
 
+// Clear the board stacks
+SOL.clear = function() {
+  for (var i = 0; i < SOL.DOM.stacks.length; i++) {
+    SOL.DOM.stacks[i].innerHTML = '';
+  }
+}
+
 // Rebuilds DOM from stack variable
 SOL.rebuild = function () {
   var i;
   var j;
 
-  // Flush the board stacks
-  for (var i = 0; i < SOL.DOM.stacks.length; i++) {
-    SOL.DOM.stacks[i].innerHTML = '';
+  SOL.clear();
 
-    // Refill from stack variable
+  // Refill from stack variable
+  for (var i = 0; i < SOL.DOM.stacks.length; i++) {
     for (var j = 0; j < SOL.game.stacks[i].length; j++) {
       var domCard = SOL.generate(SOL.game.stacks[i][j]);
       SOL.DOM.stacks[i].insertAdjacentHTML('beforeend', domCard);
@@ -370,13 +375,13 @@ document.body.addEventListener("click", function(event){
   }
 });
 
-SOL.DOM.undo.addEventListener('click', function() { 
-  SOL.undo(); 
+SOL.DOM.undo.addEventListener('click', function() {
+  SOL.undo();
 });
 for (var i = 0; i < SOL.DOM.newgames.length; i++){
-  SOL.DOM.newgames[i].addEventListener('click', function() { 
-    SOL.new(); 
-  }); 
+  SOL.DOM.newgames[i].addEventListener('click', function() {
+    SOL.new();
+  });
 }
 
 document.onkeypress = function(e){
@@ -384,10 +389,10 @@ document.onkeypress = function(e){
   switch(e.which) {
     // CTRL-Z
     case 26: SOL.undo();
-    break; 
+    break;
     // U
     case 85: SOL.undo();
-    break; 
+    break;
     // N
     case 110: SOL.new();
     break;

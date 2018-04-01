@@ -26,6 +26,7 @@ $color-lucky-point:     #1B1464;
 $color-portage:         #9980FA;
 $color-lavender-rose:   #FDA7DF;
 $color-mandy:           #ED4C67;
+$color-purple:          #9b59b6;
 $color-hibiscus:        #B53471;
 
 
@@ -60,4 +61,16 @@ $state-colors: (
 );
 
 $modal-background:      linear-gradient(70deg, darken($color-board, 5%),
-                          darken(mix($color-board, $color-science-blue), 15%))
+                          darken(mix($color-board, $color-science-blue), 15%));
+
+
+$card-back-colors: (
+  'yellow':   $color-lightning,
+  'orange':   $color-tree-poppy,
+  'red':      $color-mandy,
+  'purple':   $color-purple,
+  'lavender': $color-portage,
+  'blue':     $color-science-blue,
+  'aqua':     $color-java,
+  'green':    $color-fun-green
+);

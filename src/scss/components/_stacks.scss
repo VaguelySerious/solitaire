@@ -31,7 +31,8 @@
   &::before {
     background: saturate(darken($color-board, 7%), 20%);
     border-radius: $card-border-radius;
-    display: table;
+    display: block;
+    // display: table;
     left: 0;
     opacity: 0.4;
     padding-bottom: (100% * $card-ratio-s);
@@ -45,10 +46,6 @@
     @include break(tablet) {
       padding-bottom: (100% * $card-ratio);
     }
-  }
-
-  &:empty::before {
-    position: relative;
   }
 
 
@@ -100,7 +97,7 @@
     flex-direction: row;
 
     &::before {
-      position: absolute;
+      // position: absolute;
     }
 
 

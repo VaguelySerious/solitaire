@@ -2,12 +2,9 @@
 /// Icon Button Component
 ///
 
-//
-// Buttons
-//
-
 
 .icon-button {
+  @extend %icon-button;
   font: inherit;
 
   &__text {
