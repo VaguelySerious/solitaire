@@ -47,12 +47,13 @@ module.exports = function (grunt) {
     sass: {
       options: {
         importer: compass,
-        // sourceMap: true,
         includePaths: ['node_modules/bootstrap-sass/assets/stylesheets']
       },
       dev: {
         files: [{
           expand: true,
+          sourceMap: true,
+          style: 'compressed',
           cwd: assetpath+'scss',
           src: ['**/*.scss'],
           dest: destination+'css',
@@ -60,7 +61,14 @@ module.exports = function (grunt) {
         }]
       },
       dist: {
-        
+        files: [{
+          expand: true,
+          sourceMap: false,
+          cwd: assetpath+'scss',
+          src: ['**/*.scss'],
+          dest: destination+'css',
+          ext: '.css'
+        }]
       }
     }
   });
