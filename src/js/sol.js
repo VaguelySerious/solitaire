@@ -9,6 +9,7 @@
 SOL.stats = {
   score: 0,
   moves: 0,
+  started: false,
   time: {
     now: 0,
     interval: null
@@ -144,6 +145,8 @@ SOL.new = function () {
   var i;
   var j;
   var len;
+  SOL.stats.time.reset();
+  document.cookie = 'gamestate=;';
 
   for (i = 0, len = SOL.game.cards; i < len; i++) {
     deck.push({
@@ -234,18 +237,23 @@ SOL.undo = function () {
 
 // Creates a gamestate and pushes it to cookies
 SOL.save = function () {
+
+  if (!SOL.stats.started) {
+    SOL.stats.time.start();
+    SOL.stats.started = true;
+  }
+
+  SOL.stats.moves += 1;
   var state = JSON.stringify({
     score: SOL.stats.score,
-    scores: SOL.stats.scores,
     time: SOL.stats.time.now,
     moves: SOL.stats.moves,
     stacks: SOL.game.stacks
   });
 
   SOL.game.history.push(state);
-  SOL.stats.moves += 1;
-
   document.cookie = 'gamestate=' + state + ';';
+  document.cookie = 'stats=' + JSON.stringify(SOL.stats.scores) + ';';
 
   if (SOL.game.history.length > SOL.game.maxGameStates) {
     SOL.game.history.shift();
@@ -259,7 +267,8 @@ SOL.save = function () {
 
 // Calculates score and shows win screen / stats
 SOL.win = function () {
-
+  //TODO
+  SOL.stats.time.stop();
 };
 
 // Checks if two cards have different colors
@@ -413,19 +422,47 @@ document.onkeypress = function(e){
 // MAIN CODE //
 // ////////////
 
+// Assign random color to cards
 document.body.className += SOL.cardColors[Math.floor(Math.random() * SOL.cardColors.length)];
-var SOL_cookie_save = document.cookie;
-if (SOL_cookie_save !== '') {
-  SOL_cookie_save = JSON.parse(SOL_cookie_save.slice(10));
-  if (typeof SOL_cookie_save.stacks !== 'undefined') {
-    SOL.game.stacks = SOL_cookie_save.stacks;
-    SOL.stats.score = SOL_cookie_save.score;
-    SOL.stats.time.now = SOL_cookie_save.time;
-    SOL.stats.time.start();
-    SOL.rebuild();
-  } else {
-    SOL.new();
-  }
-} else {
-  SOL.new();
+
+// Function for parsing cookies
+function SOL_cookie_parser () {
+  var cookie = document.cookie;
+  var ret = {};
+  var list = [];
+  var lastIndex = 0;
+
+  // for (var i = 0; i < 10; i++) {
+    
+  // }
+
+  // while (counter > 0) {
+  //   var index = cookie.indexOf(';');
+  //   console.log(index);
+  //   if (index < 0) {
+  //     break;
+  //   }
+  //   list.push(cookie.splice(lastIndex, index));
+  //   lastIndex = index;
+  //   counter -= 1;
+  // }
+  return list;
 }
+
+// // Read out cookies
+var SOL_cookie_save = SOL_cookie_parser();
+console.log(SOL_cookie_save);
+// if (SOL_cookie_save.scores) {
+//   SOL.stats.scores = SOL_cookie_save.scores;
+// }
+// if (SOL_cookie_save.gamestate) {
+//   SOL.game.stacks = SOL_cookie_save.gamestate.stacks;
+//   SOL.stats.score = SOL_cookie_save.gamestate.score;
+//   SOL.stats.time.now = SOL_cookie_save.gamestate.time;
+//   SOL.stats.moves = SOL_cookie_save.gamestate.moves;
+//   SOL.stats.started = true;
+//   SOL.stats.time.start();
+//   SOL.rebuild();
+// } else {
+  SOL.new();
+// }
