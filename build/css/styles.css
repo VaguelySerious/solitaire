@@ -221,6 +221,107 @@ a {
   display: block;
   margin: 40px 0 60px; }
 
+.button {
+  align-items: center;
+  appearance: none;
+  background: #FFFFFF;
+  border: 0;
+  border-radius: 2em;
+  box-shadow: 2px 3px 10px rgba(0, 0, 0, 0.12), -1px 2px 5px rgba(0, 0, 0, 0.24), 0 -1px 3px rgba(0, 0, 0, 0.24);
+  color: #262f5c;
+  cursor: pointer;
+  display: inline-flex;
+  font: 900 1em/1 "Helvetica Neue", "Trebuchet MS", "Helvetica", "Arial", sans-serif;
+  outline: 0;
+  padding: 15px 20px;
+  position: relative;
+  text-decoration: none;
+  transition: all 0.2s ease-out; }
+  @media only screen and (min-width: 768px) {
+    .button {
+      padding: 15px 25px; } }
+  .button + .button {
+    margin-left: 10px; }
+  .button:hover {
+    background-size: 200% 100%;
+    color: #262f5c;
+    box-shadow: 6.75px 7.75px 29px rgba(0, 0, 0, 0.12), -6.7px 5.8px 14.5px rgba(0, 0, 0, 0.24), 0 -1px 3px rgba(0, 0, 0, 0.24);
+    transform: translateY(-3px); }
+  .button:active {
+    box-shadow: 2px 3px 10px rgba(0, 0, 0, 0.12), -1px 2px 5px rgba(0, 0, 0, 0.24), 0 -1px 3px rgba(0, 0, 0, 0.24);
+    opacity: 0.9;
+    transform: translateY(1px); }
+  .button.primary {
+    background: #ED4C67 0 0/100% 100%;
+    background-image: linear-gradient(to right, #ef6363, #ED4C67);
+    color: #FFFFFF; }
+    .button.primary:hover {
+      background-size: 200% 100%;
+      color: #FFFFFF; }
+  .button.clear {
+    background: transparent;
+    box-shadow: none;
+    color: #FFFFFF; }
+    .button.clear:hover {
+      background: rgba(112, 126, 196, 0.2);
+      box-shadow: none;
+      color: #FFFFFF;
+      transform: none; }
+  .button[disabled], .button.disabled {
+    color: #333333;
+    opacity: 0.75;
+    pointer-events: none; }
+  .button__text {
+    display: block;
+    position: relative;
+    transition: all 0.2s ease-out; }
+  .button svg {
+    height: 20px;
+    margin-bottom: -2px;
+    margin-right: 20px;
+    width: 20px; }
+
+.button-between {
+  color: #707ec4;
+  display: inline-block;
+  margin: 0 10px; }
+
+h1, h2, h3 {
+  font-family: "Helvetica Neue", "Trebuchet MS", "Helvetica", "Arial", sans-serif;
+  line-height: 1.2;
+  margin-bottom: 0.5em; }
+
+h1 {
+  font-size: 2.5em; }
+
+h2 {
+  font-size: 1.5em; }
+  @media only screen and (min-width: 768px) {
+    h2 {
+      font-size: 2em; } }
+
+h3 {
+  color: #707ec4;
+  font-size: 0.875em;
+  font-weight: bold;
+  letter-spacing: 0.05em;
+  margin-bottom: 1em;
+  text-align: center;
+  text-transform: uppercase; }
+  h3.label {
+    align-items: center;
+    display: flex;
+    margin: 2.5em -7.5% 1em; }
+    h3.label::after, h3.label::before {
+      border-bottom: 1px solid #707ec4;
+      content: '';
+      display: inline-block;
+      flex-basis: 100%; }
+    h3.label::after {
+      margin-left: 20px; }
+    h3.label::before {
+      margin-right: 20px; }
+
 .icon-button {
   font: inherit; }
   .icon-button__text {
