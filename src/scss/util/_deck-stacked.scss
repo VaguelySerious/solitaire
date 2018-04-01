@@ -12,6 +12,10 @@
     width: 100%;
 
 
+    &:first-child {
+      position: relative;
+    }
+
     &:last-child {
       border-bottom: 0;
     }

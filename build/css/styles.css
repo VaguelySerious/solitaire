@@ -538,10 +538,12 @@ h3 {
     transform: translate3d(0, -3px, 0); }
   .card.hidden {
     display: none; }
-  .card.clicked {
-    box-shadow: 0 0 15px 4px #ffa0b0; }
-    .card.clicked:hover {
-      box-shadow: 0 3px 15px 4px #ffbac5; }
+  .card.clicked, .card.error {
+    box-shadow: 0 0 15px 4px #ffa0b0;
+    box-shadow: 0 0 15px 4px var(--highlight); }
+    .card.clicked:hover, .card.error:hover {
+      box-shadow: 0 3px 15px 4px #ffbac5;
+      box-shadow: 0 3px 15px 4px var(--highlight); }
   .card.facedown {
     transform: translate3d(0, 0, 0) rotateY(180deg); }
     .card.facedown:not(:last-child) {
@@ -550,6 +552,18 @@ h3 {
     .card.facedown:hover {
       box-shadow: 8px 9px 34px rgba(0, 0, 0, 0.12), -8.2px 6.8px 17px rgba(0, 0, 0, 0.24), 0 -1px 3px rgba(0, 0, 0, 0.24);
       transform: translate3d(0, -3px, 0) rotateY(180deg); }
+  .card.error {
+    animation: errorFlash 0.15s infinite; }
+
+@keyframes errorFlash {
+  0% {
+    transform: rotateZ(0); }
+  33% {
+    transform: rotateZ(3deg); }
+  66% {
+    transform: rotateZ(-3deg); }
+  100% {
+    transform: rotateZ(0); } }
   .card.fixed {
     font-size: 125%;
     max-width: 8vw;
@@ -757,6 +771,8 @@ h3 {
     position: absolute;
     top: 0;
     width: 100%; }
+    .stack.default .card:first-child, .stack:not(.vertical):not(.horizontal) .card:first-child {
+      position: relative; }
     .stack.default .card:last-child, .stack:not(.vertical):not(.horizontal) .card:last-child {
       border-bottom: 0; }
     .stack.default .card:nth-last-child(-n+3), .stack:not(.vertical):not(.horizontal) .card:nth-last-child(-n+3) {
@@ -781,6 +797,8 @@ h3 {
     position: relative; }
     .stack.vertical .card:hover ~ .card {
       transform: translate3d(0, -3px, 0); }
+    .stack.vertical .card:last-child {
+      margin-bottom: 0; }
     .stack.vertical .card.facedown {
       margin-bottom: -95%; }
     @media only screen and (max-width: 768px) and (orientation: landscape) {
@@ -812,20 +830,29 @@ h3 {
     background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNSAyNSI+CiAgPHBhdGggZmlsbD0ibm9uZSIgc3Ryb2tlPSJyZ2JhKDAsMCwwLDAuMikiIHN0cm9rZS13aWR0aD0iMi41IiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1taXRlcmxpbWl0PSIxMCIgZD0iTTIzLjUsMS41bC0yMiwyMiBNMjMuNSwyMy41bC0yMi0yMiIvPgo8L3N2Zz4K"); }
 
 body {
-  --card-back: #ED4C67; }
+  --card-back: #ED4C67;
+  --highlight: #ffbac5; }
   body.yellow {
-    --card-back: #FFC312; }
+    --card-back: #FFC312;
+    --highlight: #ffdd78; }
   body.orange {
-    --card-back: #F79F1F; }
+    --card-back: #F79F1F;
+    --highlight: #ffca7d; }
   body.red {
-    --card-back: #ED4C67; }
+    --card-back: #ED4C67;
+    --highlight: #ffa0b0; }
   body.purple {
-    --card-back: #9b59b6; }
+    --card-back: #9b59b6;
+    --highlight: #d776ff; }
   body.lavender {
-    --card-back: #9980FA; }
+    --card-back: #9980FA;
+    --highlight: #e7e1ff; }
   body.blue {
-    --card-back: #0652DD; }
+    --card-back: #0652DD;
+    --highlight: #4a8aff; }
   body.aqua {
-    --card-back: #12CBC4; }
+    --card-back: #12CBC4;
+    --highlight: #44fff8; }
   body.green {
-    --card-back: #009432; }
+    --card-back: #009432;
+    --highlight: #00fa54; }

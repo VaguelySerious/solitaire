@@ -2,10 +2,12 @@ body {
   @each $key, $value in $card-back-colors {
     &.#{$key} {
       --card-back: #{$value};
+      --highlight: #{saturate(lighten($value, 20%), 100%)};
     }
 
     @if $value == $color-primary {
       --card-back: #{$color-primary};
+      --highlight: #{saturate(lighten($color-primary, 25%), 100%)};
     }
   }
 }

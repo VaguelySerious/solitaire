@@ -82,9 +82,11 @@
 
   &.clicked {
     box-shadow: 0 0 15px 4px saturate(lighten($color-primary, 20%), 100%);
+    box-shadow: 0 0 15px 4px var(--highlight);
 
     &:hover {
       box-shadow: 0 3px 15px 4px saturate(lighten($color-primary, 25%), 100%);
+      box-shadow: 0 3px 15px 4px var(--highlight);
     }
   }
 
@@ -101,6 +103,30 @@
     &:hover {
       @include elevate(25);
       transform: translate3d(0, -3px, 0) rotateY(180deg);
+    }
+  }
+
+
+  &.error {
+    @extend .card.clicked;
+    animation: errorFlash 0.15s infinite;
+
+    @keyframes errorFlash {
+      0% {
+        transform: rotateZ(0);
+      }
+
+      33% {
+        transform: rotateZ(3deg);
+      }
+
+      66% {
+        transform: rotateZ(-3deg);
+      }
+
+      100% {
+        transform: rotateZ(0);
+      }
     }
   }
 
