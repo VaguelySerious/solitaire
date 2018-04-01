@@ -148,7 +148,8 @@ a {
     .controls .icon-button.help-toggle {
       margin-top: auto; }
   .controls .color-picker {
-    margin-top: auto; }
+    margin-top: auto;
+    position: relative; }
     .controls .color-picker__current, .controls .color-picker__option {
       border-radius: 50%;
       display: block;
@@ -157,6 +158,38 @@ a {
       width: 100%; }
     .controls .color-picker__current {
       background: var(--card-back); }
+    .controls .color-picker__tooltip {
+      background: #1f264a;
+      border-radius: 5px;
+      color: #FFFFFF;
+      cursor: default;
+      display: block;
+      font-size: 0.875em;
+      font-weight: bold;
+      line-height: 1;
+      left: 100%;
+      opacity: 0;
+      padding: 0.4em;
+      position: absolute;
+      text-transform: lowercase;
+      top: 50%;
+      transform: translate(-10px, -50%);
+      transition: all 0.2s ease-out;
+      visibility: hidden;
+      white-space: nowrap; }
+      .controls .color-picker__tooltip::before {
+        border: 5px solid transparent;
+        border-left: 0;
+        border-right-color: #1f264a;
+        content: '';
+        position: absolute;
+        top: 50%;
+        margin-top: -5px;
+        right: 100%; }
+    .controls .color-picker:hover .color-picker__tooltip {
+      opacity: 1;
+      transform: translate(0, -50%);
+      visibility: visible; }
     .controls .color-picker + .help-toggle {
       margin-top: 0; }
 

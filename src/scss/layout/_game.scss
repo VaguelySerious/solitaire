@@ -94,6 +94,7 @@ $controls-switch-bp:      'tablet-l';
 
   .color-picker {
     margin-top: auto;
+    position: relative;
 
 
     &__current,
@@ -108,6 +109,46 @@ $controls-switch-bp:      'tablet-l';
 
     &__current {
       background: var(--card-back);
+    }
+
+
+    &__tooltip {
+      background: darken($color-board, 5%);
+      border-radius: 5px;
+      color: $color-base;
+      cursor: default;
+      display: block;
+      font-size: $fs-small;
+      font-weight: bold;
+      line-height: 1;
+      left: 100%;
+      opacity: 0;
+      padding: 0.4em;
+      position: absolute;
+      text-transform: lowercase;
+      top: 50%;
+      transform: translate(-10px, -50%);
+      transition: all $transition;
+      visibility: hidden;
+      white-space: nowrap;
+
+
+      &::before {
+        border: 5px solid transparent;
+        border-left: 0;
+        border-right-color: darken($color-board, 5%);
+        content: '';
+        position: absolute;
+        top: 50%;
+        margin-top: -5px;
+        right: 100%;
+      }
+    }
+
+    &:hover .color-picker__tooltip {
+      opacity: 1;
+      transform: translate(0, -50%);
+      visibility: visible;
     }
 
 
