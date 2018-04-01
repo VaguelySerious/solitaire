@@ -110,8 +110,9 @@ SOL.clickCard = function (cardInfo) {
 
     // Wrong selection
     } else if (SOL.game.activeCard.card.value === cardInfo.card.value + 1
-      && SOL.game.activeCard.card.color === cardInfo.card.color){
-      console.log('Move to non-empty foundation double-click');
+      && SOL.game.activeCard.card.color === cardInfo.card.color
+      && cardInfo.stack > 1 && cardInfo.stack < 6){
+      console.log('Move to non-empty (default)');
       SOL.move(SOL.game.activeCard.stack, cardInfo.stack, 1);
       setTimeout(SOL.save, 0);
     } else {

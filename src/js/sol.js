@@ -102,8 +102,9 @@ SOL.push = function (stack, card) {
 // Returns the id of the removed card
 SOL.pop = function (stack) {
   var children = SOL.DOM.stacks[stack].childNodes;
-  if (SOL.game.stacks[stack].length > 0) {
-    children[children.length - 1].outerHTML = '';
+
+  if (SOL.game.stacks[stack].length > 0 && children.length > 0) {
+    SOL.DOM.stacks[stack].removeChild(children[children.length - 1]);
     return SOL.game.stacks[stack].pop();
   } else {
     throw new Error('Cannot pop empty stack');
