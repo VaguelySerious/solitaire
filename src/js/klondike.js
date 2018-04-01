@@ -48,7 +48,7 @@ SOL.clickCard = function (cardInfo) {
 
   // Uncover face down card
   } else if (cardInfo.card.facedown) {
- 
+
     console.log('Uncover facedown');
     SOL.stats.updateScore(SOL.scoring.uncoverFaceDown);
     cardInfo.card.facedown = false;
@@ -142,9 +142,8 @@ SOL.clickStack = function (stack) {
   } else if (SOL.game.activeCard
     && SOL.game.activeCard.card.value === 12
     && stack > 5) {
-    console.log('Move king to empty field');
-    SOL.move(SOL.game.activeCard.stack, stack, 1);
-    // TODO MOVE ALL CARDS
+    SOL.move(SOL.game.activeCard.stack, stack,
+      SOL.game.stacks[SOL.game.activeCard.stack].length - SOL.game.activeCard.pos);
   } else {
     // Error flash
     console.log('Failed empty stack interaction');
