@@ -126,6 +126,10 @@ a {
   a:hover {
     color: #8297ff; }
 
+.gamewrap {
+  -webkit-user-select: none;
+  user-select: none; }
+
 .controls {
   align-items: center;
   bottom: 0;
@@ -209,6 +213,8 @@ a {
   height: 100%;
   padding: 0.25vw;
   perspective: 1200px;
+  -webkit-user-select: none;
+  user-select: none;
   transition: all 0.2s ease-out;
   --width: 92%;
   --columns: 7; }
@@ -553,7 +559,6 @@ h3 {
   overflow: hidden;
   position: relative;
   transition: box-shadow 0.2s ease-out, transform 0.2s ease-out;
-  transform: translate3d(0, 0, 0);
   transform-origin: center;
   transform-style: preserve-3d;
   width: 100%; }
@@ -575,26 +580,33 @@ h3 {
     @media only screen and (max-width: 768px) and (orientation: landscape) {
       .card::after {
         padding-bottom: 90%; } }
-  .card:hover {
-    box-shadow: 8px 9px 34px rgba(0, 0, 0, 0.12), -8.2px 6.8px 17px rgba(0, 0, 0, 0.24), 0 -1px 3px rgba(0, 0, 0, 0.24); }
-  .card:hover {
-    transform: translate3d(0, -3px, 0); }
+  @media only screen and (min-width: 1024px) {
+    .card:hover {
+      box-shadow: 8px 9px 34px rgba(0, 0, 0, 0.12), -8.2px 6.8px 17px rgba(0, 0, 0, 0.24), 0 -1px 3px rgba(0, 0, 0, 0.24);
+      transform: translate3d(0, -3px, 0); } }
   .card.hidden {
     display: none; }
   .card.clicked, .card.error {
-    box-shadow: 0 0 15px 4px #ffa0b0;
-    box-shadow: 0 0 15px 4px var(--highlight); }
-    .card.clicked:hover, .card.error:hover {
-      box-shadow: 0 3px 15px 4px #ffbac5;
-      box-shadow: 0 3px 15px 4px var(--highlight); }
+    box-shadow: 0 0 7px 1px #ffa0b0;
+    box-shadow: 0 0 7px 1px var(--highlight); }
+    @media only screen and (min-width: 1024px) {
+      .card.clicked, .card.error {
+        box-shadow: 0 0 15px 4px #ffa0b0;
+        box-shadow: 0 0 15px 4px var(--highlight); }
+        .card.clicked:hover, .card.error:hover {
+          box-shadow: 0 3px 15px 4px #ffbac5;
+          box-shadow: 0 3px 15px 4px var(--highlight); } }
   .card.facedown {
-    transform: translate3d(0, 0, 0) rotateY(180deg); }
+    transform: translate3d(0, 0, -100px) rotateY(180deg);
+    z-index: 0; }
     .card.facedown:not(:last-child) {
       cursor: default;
       pointer-events: none; }
-    .card.facedown:hover {
-      box-shadow: 8px 9px 34px rgba(0, 0, 0, 0.12), -8.2px 6.8px 17px rgba(0, 0, 0, 0.24), 0 -1px 3px rgba(0, 0, 0, 0.24);
-      transform: translate3d(0, -3px, 0) rotateY(180deg); }
+    @media only screen and (min-width: 1024px) {
+      .card.facedown:hover {
+        box-shadow: 8px 9px 34px rgba(0, 0, 0, 0.12), -8.2px 6.8px 17px rgba(0, 0, 0, 0.24), 0 -1px 3px rgba(0, 0, 0, 0.24);
+        transform: translate3d(0, -3px, 0) rotateY(180deg);
+        z-index: 2; } }
   .card.error {
     animation: errorFlash 0.15s infinite; }
 
@@ -614,8 +626,10 @@ h3 {
     pointer-events: all;
     width: 130px; }
     .card.fixed:hover {
-      box-shadow: 8px 9px 34px rgba(0, 0, 0, 0.12), -8.2px 6.8px 17px rgba(0, 0, 0, 0.24), 0 -1px 3px rgba(0, 0, 0, 0.24);
       transform: rotateY(180deg); }
+      @media only screen and (min-width: 1024px) {
+        .card.fixed:hover {
+          box-shadow: 8px 9px 34px rgba(0, 0, 0, 0.12), -8.2px 6.8px 17px rgba(0, 0, 0, 0.24), 0 -1px 3px rgba(0, 0, 0, 0.24); } }
     .card.fixed::after {
       padding-bottom: 140% !important; }
   .card.hearts, .card.diamonds {
@@ -654,6 +668,9 @@ h3 {
     --card-value: 'Q'; }
   .card.card-12 {
     --card-value: 'K'; }
+  .card__front, .card__back {
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden; }
   .card__front {
     background: #FFFFFF;
     height: 100%;
@@ -670,7 +687,6 @@ h3 {
       justify-content: center;
       left: 50%;
       letter-spacing: 0.2em;
-      line-height: 3.75;
       margin-left: 0.1em;
       position: absolute;
       text-align: center;
@@ -682,7 +698,8 @@ h3 {
       word-wrap: break-word; }
       @media screen and (min-width: 768px) {
         .card__front::before {
-          font-size: 120%; }
+          font-size: 120%;
+          line-height: 3.75; }
           .card-0 .card__front::before {
             content: "" var(--card-color) "\a";
             font: bold 300%/1 "Helvetica Neue", "Trebuchet MS", "Helvetica", "Arial", sans-serif; }
@@ -800,22 +817,20 @@ h3 {
     display: block;
     left: 0;
     opacity: 0.4;
-    padding-bottom: 90%;
+    padding-bottom: 140%;
     pointer-events: none;
     position: relative;
     top: 0;
     width: 100%;
     z-index: -1; }
-    @media only screen and (min-width: 768px) {
+    @media only screen and (max-width: 768px) and (orientation: landscape) {
       .stack::before {
-        padding-bottom: 140%; } }
+        padding-bottom: 90%; } }
   .stack.default .card, .stack:not(.vertical):not(.horizontal) .card {
     box-shadow: 2px 3px 10px rgba(0, 0, 0, 0.025), -1px 2px 5px rgba(0, 0, 0, 0.05), 0 -1px 3px rgba(0, 0, 0, 0.05);
     position: absolute;
     top: 0;
     width: 100%; }
-    .stack.default .card:first-child, .stack:not(.vertical):not(.horizontal) .card:first-child {
-      position: relative; }
     .stack.default .card:last-child, .stack:not(.vertical):not(.horizontal) .card:last-child {
       border-bottom: 0; }
     .stack.default .card:nth-last-child(-n+3), .stack:not(.vertical):not(.horizontal) .card:nth-last-child(-n+3) {
@@ -872,30 +887,30 @@ h3 {
   .stack.error {
     background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNSAyNSI+CiAgPHBhdGggZmlsbD0ibm9uZSIgc3Ryb2tlPSJyZ2JhKDAsMCwwLDAuMikiIHN0cm9rZS13aWR0aD0iMi41IiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1taXRlcmxpbWl0PSIxMCIgZD0iTTIzLjUsMS41bC0yMiwyMiBNMjMuNSwyMy41bC0yMi0yMiIvPgo8L3N2Zz4K"); }
 
-body {
+:root {
   --card-back: #ED4C67;
   --highlight: #ffbac5; }
-  body.yellow {
+  :root.yellow {
     --card-back: #FFC312;
     --highlight: #ffdd78; }
-  body.orange {
+  :root.orange {
     --card-back: #F79F1F;
     --highlight: #ffca7d; }
-  body.red {
+  :root.red {
     --card-back: #ED4C67;
     --highlight: #ffa0b0; }
-  body.purple {
+  :root.purple {
     --card-back: #9b59b6;
     --highlight: #d776ff; }
-  body.lavender {
+  :root.lavender {
     --card-back: #9980FA;
     --highlight: #e7e1ff; }
-  body.blue {
+  :root.blue {
     --card-back: #0652DD;
     --highlight: #4a8aff; }
-  body.aqua {
+  :root.aqua {
     --card-back: #12CBC4;
     --highlight: #44fff8; }
-  body.green {
+  :root.green {
     --card-back: #009432;
     --highlight: #00fa54; }

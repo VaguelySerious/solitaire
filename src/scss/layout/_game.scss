@@ -37,6 +37,11 @@
 //
 $controls-switch-bp:      'tablet-l';
 
+.gamewrap {
+  -webkit-user-select: none;
+  user-select: none;
+}
+
 
 //
 // 2. Controls
@@ -169,6 +174,8 @@ $controls-switch-bp:      'tablet-l';
   height: 100%;
   padding: $board-column-gutter-s;
   perspective: 1200px;
+  -webkit-user-select: none;
+  user-select: none;
   transition: all $transition;
 
   --width: 92%;

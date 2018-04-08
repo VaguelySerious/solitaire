@@ -28,7 +28,8 @@
   overflow: hidden;
   position: relative;
   transition: box-shadow $transition, transform $transition;
-  transform: translate3d(0,0,0);
+  // transform: translate3d(0, 0, 0);
+  // -webkit-transform: translate3d(0,0,0);
   transform-origin: center;
   transform-style: preserve-3d;
   width: $card-width;
@@ -67,11 +68,10 @@
   // 1. Card interaction
   //
   &:hover {
-    @include elevate(25);
-  }
-
-  &:hover {
-    transform: translate3d(0, -3px, 0);
+    @include break(tablet-l) {
+      @include elevate(25);
+      transform: translate3d(0, -3px, 0);
+    }
   }
 
 
@@ -81,19 +81,24 @@
 
 
   &.clicked {
-    box-shadow: 0 0 15px 4px saturate(lighten($color-primary, 20%), 100%);
-    box-shadow: 0 0 15px 4px var(--highlight);
+    box-shadow: 0 0 7px 1px saturate(lighten($color-primary, 20%), 100%);
+    box-shadow: 0 0 7px 1px var(--highlight);
 
-    &:hover {
-      box-shadow: 0 3px 15px 4px saturate(lighten($color-primary, 25%), 100%);
-      box-shadow: 0 3px 15px 4px var(--highlight);
+    @include break(tablet-l) {
+      box-shadow: 0 0 15px 4px saturate(lighten($color-primary, 20%), 100%);
+      box-shadow: 0 0 15px 4px var(--highlight);
+
+      &:hover {
+        box-shadow: 0 3px 15px 4px saturate(lighten($color-primary, 25%), 100%);
+        box-shadow: 0 3px 15px 4px var(--highlight);
+      }
     }
   }
 
 
   &.facedown {
-    transform: translate3d(0,0,0) rotateY(180deg);
-
+    transform: translate3d(0, 0, -100px) rotateY(180deg);
+    z-index: 0;
 
     &:not(:last-child) {
       cursor: default;
@@ -101,8 +106,11 @@
     }
 
     &:hover {
-      @include elevate(25);
-      transform: translate3d(0, -3px, 0) rotateY(180deg);
+      @include break(tablet-l) {
+        @include elevate(25);
+        transform: translate3d(0, -3px, 0) rotateY(180deg);
+        z-index: 2;
+      }
     }
   }
 
@@ -139,8 +147,11 @@
     width: $card-fixed-width-max;
 
     &:hover {
-      @include elevate(25);
       transform: rotateY(180deg);
+
+      @include break(tablet-l) {
+        @include elevate(25);
+      }
     }
 
     &::after {
@@ -165,6 +176,12 @@
   }
 
 
+  &__front,
+  &__back {
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+  }
+
 
   //
   // 2.1 Large card value
@@ -188,7 +205,6 @@
       justify-content: center;
       left: 50%;
       letter-spacing: 0.2em;
-      line-height: 3.75;
       margin-left: 0.1em;                // readjust the letter-spacing
       position: absolute;
       text-align: center;
@@ -208,6 +224,7 @@
       // @media screen and (min-width: 500px), screen and (orientation: landscape) {
       @media screen and (min-width: 768px) {
         font-size: 120%;
+        line-height: 3.75;
         @each $key, $value in $card-values {
           $number: number($key);
 

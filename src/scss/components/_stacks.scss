@@ -34,16 +34,15 @@
     display: block;
     left: 0;
     opacity: 0.4;
-    padding-bottom: (100% * $card-ratio-s);
+    padding-bottom: (100% * $card-ratio);
     pointer-events: none;
     position: relative;
     top: 0;
     width: 100%;
     z-index: -1;
 
-
-    @include break(tablet) {
-      padding-bottom: (100% * $card-ratio);
+    @media only screen and (max-width: 768px) and (orientation: landscape) {
+      padding-bottom: (100% * $card-ratio-s);
     }
   }
 

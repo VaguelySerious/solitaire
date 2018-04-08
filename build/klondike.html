@@ -5,7 +5,7 @@
   <!-- Meta Tags -->
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <title>Klondike</title>
   <link rel="stylesheet" href="css/styles.css">
 
@@ -48,22 +48,22 @@
   <!-- End Google Analytics -->
 </head>
 
-<body>
+<body class="gamewrap">
 
-  <div id="printinfo" style="position: fixed; bottom: 10px; right: 10px;"></div>
+  <!-- <div id="printinfo" style="position: fixed; bottom: 10px; right: 10px;"></div> -->
 
 
   <!-- Menu -->
-  <nav class="menu fullscreen-modal" id="menu">
+<!--   <nav class="menu fullscreen-modal" id="menu">
     <section class="menu__actions">
       <a class="menu__action menu-toggle">Resume</a>
       <a class="menu__action">New Game</a>
       <a href="/leaderboard" class="menu__action">Leaderboard</a>
     </section>
 
-    <!-- <section class="container menu__games">
+    <section class="container menu__games">
       <h3 class="label">Other games</h3>
-    </section> -->
+    </section>
 
     <button class="icon-button close menu-toggle">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 25 25">
@@ -71,7 +71,7 @@
       </svg>
       <span class="icon-button__text">Close menu</span>
     </button>
-  </nav>
+  </nav> -->
   <!-- /Menu -->
 
   <!-- RulesView -->
@@ -94,20 +94,21 @@
             <span>
               <span class="key">U</span>
               <span class="key">Z</span>
+              <span class="key">Ctrl + Z</span>
             </span>
           </li>
           <li class="help__shortcuts__item">
             <span class="description">New Game</span>
             <span class="key">N</span>
           </li>
-          <li class="help__shortcuts__item">
+         <!--  <li class="help__shortcuts__item">
             <span class="description">Menu</span>
             <span class="key">M</span>
-          </li>
-          <li class="help__shortcuts__item">
+          </li> -->
+          <!-- <li class="help__shortcuts__item">
             <span class="description">Go to homepage</span>
             <span class="key">ESC</span>
-          </li>
+          </li> -->
           <li class="help__shortcuts__item">
             <span class="description">Help &amp; Rules</span>
             <span class="key">H</span>
@@ -150,13 +151,13 @@
 
   <!-- Controls -->
   <aside class="controls">
-    <button class="icon-button menu-toggle">
+    <!-- <button class="icon-button menu-toggle">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
         <path fill="none" stroke="#FFFFFF" stroke-miterlimit="10" stroke-width="2" d="M1.5,4.7h21 M1.5,12h12.6" stroke-linejoin="round" stroke-linecap="round" />
         <path fill="none" stroke="#FFFFFF" stroke-miterlimit="10" stroke-width="2" d="M1.5,19.3h21" stroke-linejoin="round" stroke-linecap="round" />
       </svg>
       <span class="icon-button__text">Open menu</span>
-    </button>
+    </button> -->
 
     <button class="icon-button new-game">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
@@ -181,7 +182,7 @@
     </button> -->
 
 
-    <button class="icon-button color-picker">
+    <!-- <button class="icon-button color-picker">
       <span class="color-picker__current"></span>
 
       <span class="color-picker__tooltip">Coming soonish</span>
@@ -189,7 +190,7 @@
       <div class="color-picker__menu">
 
       </div>
-    </button>
+    </button> -->
 
 
     <button class="icon-button help-toggle">
