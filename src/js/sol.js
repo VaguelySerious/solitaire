@@ -298,20 +298,51 @@ SOL.save = function () {
 SOL.win = function () {
   SOL.addStats(true);
   SOL.stats.time.stop();
+  SOL.modal_score.toggle();
+
+  document.cookies = 'gamestate=;';
+
+  var avgScore = 0;
+  var gamesWon = 0;
+  var gamesPlayed = SOL.stats.scores.length;
+  var timeBonus = 0;
+  var highScore = 0;
+  var bestTime = 100000000;
+
+  for (var i = 0; i < SOL.stats.scores; i++) {
+    avgScore += SOL.stats.scores[i].score;
+    gamesWon += SOL.stats.scores[i].wasWin;
+    if (SOL.stats.score[i].score > highScore) {
+      highScore = SOL.stats.scores[i].score;
+    }
+    if (SOL.stats.score[i].time.now < bestTime) {
+      bestTime = SOL.stats.scores[i].time.now;
+    }
+  }
+
+  avgScore /= gamesWon;
+
+  SOL.DOM.scoreboard.gameScore.textContent = SOL.stats.score;
+  SOL.DOM.scoreboard.gameBonus.textContent = Math.round(SOL.scoring.timeBonus / SOL.stats.time.now);
+  SOL.DOM.scoreboard.gameTotal.textContent = SOL.stats.score + Math.round(SOL.scoring.timeBonus / SOL.stats.time.now);
+  SOL.DOM.scoreboard.gameTime.textContent  = (SOL.stats.time.now / 3600 >= 1 ? Math.floor(SOL.stats.time.now / 3600) + ':' : '') +
+      (Math.floor(SOL.stats.time.now / 60) % 60).toString().padStart(2, '0') + ':' +
+      (SOL_cookie_save.stats.time.now % 60).toString().padStart(2, '0');
+
+  SOL.DOM.scoreboard.highScore.textContent = highScore;
+  SOL.DOM.scoreboard.gamesCount.textContent = gamesPlayed;
+  SOL.DOM.scoreboard.gamesWonCount.textContent = gamesWon;
 };
 
 SOL.addStats = function(won) {
   won = won || false;
 
   var length = SOL.stats.scores.push({
-    score: SOL.game.score,
+    score: SOL.stats.score + (SOL.scoring.timeBonus / SOL.stats.time.now),
     time: SOL.stats.time.now,
     moves: SOL.stats.moves,
     wasWin: won
   });
-
-  SOL.DOM.scoreboard.gameScore.textContent = SOL.stats.scores[length - 1].score;
-  // SOL.DOM.scoreboard.gameBonus.
 };
 
 // Checks if two cards have different colors
@@ -344,14 +375,14 @@ SOL.stats.updateScore = function (change, set) {
   } else {
     this.score += change;
   }
-  SOL.DOM.score.innerHTML = this.score;
+  // SOL.DOM.score.innerHTML = this.score;
 };
 
 // Updates time in DOM
 SOL.DOM.updateTime = function (seconds) {
-  SOL.DOM.timer.innerHTML = (seconds / 3600 >= 1 ? Math.floor(seconds / 3600) + ':' : '') +
-  (Math.floor(seconds / 60) % 60).toString().padStart(2, '0') + ':' +
-  (seconds % 60).toString().padStart(2, '0');
+  // SOL.DOM.timer.innerHTML = (seconds / 3600 >= 1 ? Math.floor(seconds / 3600) + ':' : '') +
+  // (Math.floor(seconds / 60) % 60).toString().padStart(2, '0') + ':' +
+  // (seconds % 60).toString().padStart(2, '0');
 };
 
 // Starts the timer interval
@@ -413,10 +444,10 @@ SOL.shuffle = function (arr) {
 // DOM BINDINGS //
 // ///////////////
 
-modal_menu = new Modal('menu', 'visible', 'menu-toggle');
-modal_help = new Modal('help', 'visible', 'help-toggle');
-modal_score = new Modal('scoreboard', 'visible', 'score-toggle');
-modal_cookie = new Modal('cookie', 'hidden', 'cookie-toggle');
+SOL.modal_menu = new Modal('menu', 'visible', 'menu-toggle');
+SOL.modal_help = new Modal('help', 'visible', 'help-toggle');
+SOL.modal_score = new Modal('scoreboard', 'visible', 'score-toggle');
+SOL.modal_cookie = new Modal('cookie', 'hidden', 'cookie-toggle');
 
 document.body.addEventListener("click", function(event){
   if (event.target.classList.contains('card')){
@@ -445,13 +476,13 @@ document.onkeypress = function(e){
     case 110: SOL.new();
     break;
     // H
-    case 104: modal_help.toggle();
+    case 104: SOL.modal_help.toggle();
     break;
     // M
-    case 109: modal_menu.toggle();
+    case 109: SOL.modal_menu.toggle();
     break;
     // S
-    case 115: modal_score.toggle();
+    case 115: SOL.modal_score.toggle();
     break;
   }
 };

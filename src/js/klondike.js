@@ -14,6 +14,7 @@ SOL.game = {
   progressiveUndo: 1,
   maxCycleTimes: 2,
   cycleTimes: 0,
+  minTime: 30,
 
   // Board information
   cards: 52,
@@ -35,7 +36,8 @@ SOL.scoring = {
   undo: -10,
   foundationToTableau: -15,
   uncoverFaceDown: 5,
-  afterTenSeconds: -2
+  afterTenSeconds: -2,
+  timeBonus: 700000
 };
 
 
