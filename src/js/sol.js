@@ -27,8 +27,6 @@ SOL.DOM = {
     // Buttons
     undo: document.getElementById('undo'),
     newgames: document.getElementsByClassName('new-game'),
-    autocomplete: document.getElementById('//TODO'),
-    cycle: document.getElementById('//TODO'), // TODO CHECK IF NULL
 
     // Text info
     timer: document.getElementById('printinfo'),
@@ -54,6 +52,12 @@ SOL.cardColors = [
   'blue',
   'aqua',
 ];
+
+// Create modals
+modal_menu = new Modal('menu', 'visible', 'menu-toggle');
+modal_help = new Modal('help', 'visible', 'help-toggle');
+modal_score = new Modal('scoreboard', 'visible', 'score-toggle');
+modal_cookie = new Modal('cookie', 'hidden', 'cookie-toggle');
 
 // Create object with dynamic dom bindings
 function Modal (modalID, visibleClass, toggles) {
@@ -156,6 +160,9 @@ SOL.new = function () {
   var currentStack = 0;
   var tempIsFacedown = true;
   var len;
+
+  SOL.time.stop();
+  SOL.time.reset();
 
   // Add stats
   if (SOL.stats.started) {
@@ -266,6 +273,8 @@ SOL.undo = function () {
 // Creates a gamestate and pushes it to cookies
 SOL.save = function () {
   if (!SOL.stats.started) {
+    SOL.stats.time.stop();
+    SOL.stats.time.reset();
     SOL.stats.time.start();
     SOL.stats.started = true;
   }
@@ -332,17 +341,24 @@ SOL.win = function () {
   SOL.DOM.scoreboard.highScore.textContent = highScore;
   SOL.DOM.scoreboard.gamesCount.textContent = gamesPlayed;
   SOL.DOM.scoreboard.gamesWonCount.textContent = gamesWon;
+  SOL.stats.started = false;
+  modal_score.toggle();
 };
 
 SOL.addStats = function(won) {
   won = won || false;
-
-  var length = SOL.stats.scores.push({
-    score: SOL.stats.score + (SOL.scoring.timeBonus / SOL.stats.time.now),
-    time: SOL.stats.time.now,
-    moves: SOL.stats.moves,
+  var stats = {
     wasWin: won
-  });
+  }
+  if (won) {
+    stats.score = SOL.game.score;
+    stats.time = SOL.stats.time.now;
+    stats.moves = SOL.stats.moves;
+  }
+  var length = SOL.stats.scores.push(stats);
+
+  SOL.DOM.scoreboard.gameScore.textContent = SOL.stats.scores[length - 1].score;
+  // SOL.DOM.scoreboard.gameBonus.
 };
 
 // Checks if two cards have different colors
@@ -443,11 +459,6 @@ SOL.shuffle = function (arr) {
 // ///////////////
 // DOM BINDINGS //
 // ///////////////
-
-SOL.modal_menu = new Modal('menu', 'visible', 'menu-toggle');
-SOL.modal_help = new Modal('help', 'visible', 'help-toggle');
-SOL.modal_score = new Modal('scoreboard', 'visible', 'score-toggle');
-SOL.modal_cookie = new Modal('cookie', 'hidden', 'cookie-toggle');
 
 document.body.addEventListener("click", function(event){
   if (event.target.classList.contains('card')){

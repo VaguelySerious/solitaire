@@ -1,8 +1,5 @@
-// TODO Fix SOL.complete to actually do that
 // TODO Errorflash
-// TODO Fix hints
 // TODO Apply all scores
-
 
 var SOL = {};
 
@@ -113,7 +110,6 @@ SOL.clickCard = function (cardInfo) {
       && cardInfo.stack > 1 && cardInfo.stack < 6){
       SOL.move(SOL.game.activeCard.stack, cardInfo.stack, 1);
     } else {
-      console.log('Two-card interaction failure');
       // TODO Errorflash
     }
 
@@ -155,7 +151,6 @@ SOL.clickStack = function (stack) {
       SOL.game.stacks[SOL.game.activeCard.stack].length - SOL.game.activeCard.pos);
   } else {
     // Error flash
-    console.log('Failed empty stack interaction');
   }
   setTimeout(function () {
       SOL.deselectLast();
