@@ -408,7 +408,7 @@ SOL.stats.time.start = function () {
     if (SOL.stats.time.now % 10 === 0) {
       SOL.stats.updateScore(SOL.scoring.afterTenSeconds);
     }
-    SOL.DOM.updateTime(SOL.stats.time.now);
+    // SOL.DOM.updateTime(SOL.stats.time.now);
   }, 1000);
 };
 
@@ -421,7 +421,7 @@ SOL.stats.time.stop = function () {
 // Only sets the timer to zero
 SOL.stats.time.reset = function () {
   SOL.stats.time.now = 0;
-  SOL.DOM.updateTime(0);
+  // SOL.DOM.updateTime(0);
 };
 
 

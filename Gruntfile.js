@@ -3,7 +3,7 @@ module.exports = function (grunt) {
   // Stuff for sass
   var compass = require('compass-importer');
   var assetpath = "src/";
-  var destination = "build/";
+  var destination = "public/";
 
   // Configuration
   grunt.initConfig({
