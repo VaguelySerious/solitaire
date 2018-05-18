@@ -29,8 +29,8 @@ SOL.DOM = {
     newgames: document.getElementsByClassName('new-game'),
 
     // Text info
-    timer: document.getElementById('printinfo'),
-    score: document.getElementById('printinfo'),
+    // timer: document.getElementById('printinfo'),
+    // score: document.getElementById('printinfo'),
 
     scoreboard: {
       gameScore: document.getElementById('scoreboard-score'),
@@ -54,27 +54,41 @@ SOL.cardColors = [
 ];
 
 // Create modals
-modal_menu = new Modal('menu', 'visible', 'menu-toggle');
+// modal_menu = new Modal('menu', 'visible', 'menu-toggle');
 modal_help = new Modal('help', 'visible', 'help-toggle');
 modal_score = new Modal('scoreboard', 'visible', 'score-toggle');
 modal_cookie = new Modal('cookie', 'hidden', 'cookie-toggle');
 
 // Create object with dynamic dom bindings
-function Modal (modalID, visibleClass, toggles) {
+function Modal(modalID, visibleClass, toggles) {
   this.modal = document.getElementById(modalID);
   this.visibleClass = visibleClass;
+
+  console.log(this)
+  console.log(this.toggle)
+
   if (typeof toggles === 'string') {
     var toggleNodes = document.getElementsByClassName(toggles);
+
     for (var i = 0; i < toggleNodes.length; i++){
-      toggleNodes[i].addEventListener('click', this.toggle.bind(this));
+      // toggleNodes[i].addEventListener('click', this.toggle.bind(this));
+      toggleNodes[i].addEventListener('click', () => {
+        this.modal.classList.toggle(this.visibleClass);
+      })
     }
   } else {
     for (var i = 0; i < toggles.length; i++){
-      document.getElementById(toggles[i]).addEventListener('click', this.toggle.bind(this));
+      // document.getElementById(toggles[i]).addEventListener('click',
+        // this.toggle.bind(this));
+      document.getElementById(toggles[i]).addEventListener('click', () => {
+        this.toggle();
+        // this.modal.classList.toggle(this.visibleClass);
+      });
     }
   }
 }
-Modal.prototype.toggle = function(){
+
+Modal.prototype.toggle = function(){ // this is undefined
   this.modal.classList.toggle(this.visibleClass);
 };
 
@@ -161,8 +175,8 @@ SOL.new = function () {
   var tempIsFacedown = true;
   var len;
 
-  SOL.time.stop();
-  SOL.time.reset();
+  SOL.stats.time.stop();
+  SOL.stats.time.reset();
 
   // Add stats
   if (SOL.stats.started) {
@@ -307,7 +321,7 @@ SOL.save = function () {
 SOL.win = function () {
   SOL.addStats(true);
   SOL.stats.time.stop();
-  SOL.modal_score.toggle();
+  modal_score.toggle();
 
   document.cookies = 'gamestate=;';
 
@@ -336,7 +350,7 @@ SOL.win = function () {
   SOL.DOM.scoreboard.gameTotal.textContent = SOL.stats.score + Math.round(SOL.scoring.timeBonus / SOL.stats.time.now);
   SOL.DOM.scoreboard.gameTime.textContent  = (SOL.stats.time.now / 3600 >= 1 ? Math.floor(SOL.stats.time.now / 3600) + ':' : '') +
       (Math.floor(SOL.stats.time.now / 60) % 60).toString().padStart(2, '0') + ':' +
-      (SOL_cookie_save.stats.time.now % 60).toString().padStart(2, '0');
+      (SOL.stats.time.now % 60).toString().padStart(2, '0');
 
   SOL.DOM.scoreboard.highScore.textContent = highScore;
   SOL.DOM.scoreboard.gamesCount.textContent = gamesPlayed;
