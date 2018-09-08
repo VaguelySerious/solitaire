@@ -521,44 +521,44 @@ document.onkeypress = function(e){
 document.body.className += SOL.cardColors[Math.floor(Math.random() * SOL.cardColors.length)];
 
 // Function for parsing cookies
-function parseCookieStringAsJson (string) {
-  var ret = {};
-  var lastIndex = 0;
-  var lastName = null;
+// function parseCookieStringAsJson (string) {
+//   var ret = {};
+//   var lastIndex = 0;
+//   var lastName = null;
 
-  for (var i = 0; i < string.length; i++) {
-    if (string[i] === '=') {
-      lastName = string.slice(lastIndex, i);
-      ret[lastName] = null;
-      lastIndex = i + 1;
-    } else if (string[i] === ';') {
-      ret[lastName] = JSON.parse(string.slice(lastIndex, i));
-      lastIndex = i + 2;
-      lastName = null;
-    } else if (i === string.length-1 && lastName !== null) {
-      ret[lastName] = JSON.parse(string.slice(lastIndex));
-    }
-  }
-  return ret;
-}
+//   for (var i = 0; i < string.length; i++) {
+//     if (string[i] === '=') {
+//       lastName = string.slice(lastIndex, i);
+//       ret[lastName] = null;
+//       lastIndex = i + 1;
+//     } else if (string[i] === ';') {
+//       ret[lastName] = JSON.parse(string.slice(lastIndex, i));
+//       lastIndex = i + 2;
+//       lastName = null;
+//     } else if (i === string.length-1 && lastName !== null) {
+//       ret[lastName] = JSON.parse(string.slice(lastIndex));
+//     }
+//   }
+//   return ret;
+// }
 
 // // Read out cookies
-var SOL_cookie_save = parseCookieStringAsJson(document.cookie);
-if (SOL_cookie_save.scores) {
-  SOL.stats.scores = SOL_cookie_save.scores;
-}
-if (SOL_cookie_save.gamestate) {
-  SOL.game.stacks = SOL_cookie_save.gamestate.stacks;
-  SOL.game.cycleTimes = SOL_cookie_save.gamestate.cycleTimes;
-  SOL.stats.score = SOL_cookie_save.gamestate.score;
-  SOL.stats.time.now = SOL_cookie_save.gamestate.time;
-  SOL.stats.moves = SOL_cookie_save.gamestate.moves;
-  SOL.stats.started = true;
-  if (SOL.game.cycleTimes <= 0) {
-    SOL.DOM.stacks[0].classList.add('error');
-  }
-  SOL.stats.time.start();
-  SOL.rebuild();
-} else {
+// var SOL_cookie_save = parseCookieStringAsJson(document.cookie);
+// if (SOL_cookie_save.scores) {
+  // SOL.stats.scores = SOL_cookie_save.scores;
+// }
+// if (SOL_cookie_save.gamestate) {
+  // SOL.game.stacks = SOL_cookie_save.gamestate.stacks;
+  // SOL.game.cycleTimes = SOL_cookie_save.gamestate.cycleTimes;
+  // SOL.stats.score = SOL_cookie_save.gamestate.score;
+  // SOL.stats.time.now = SOL_cookie_save.gamestate.time;
+  // SOL.stats.moves = SOL_cookie_save.gamestate.moves;
+  // SOL.stats.started = true;
+  // if (SOL.game.cycleTimes <= 0) {
+    // SOL.DOM.stacks[0].classList.add('error');
+  // }
+  // SOL.stats.time.start();
+  // SOL.rebuild();
+// } else {
   SOL.new();
-}
+// }
