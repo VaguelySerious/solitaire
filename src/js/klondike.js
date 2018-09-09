@@ -1,6 +1,3 @@
-// TODO Errorflash
-// TODO Apply all scores
-
 var SOL = {};
 
 // General
@@ -27,15 +24,15 @@ SOL.game = {
 };
 
 // Scoring rules
-SOL.scoring = {
-  pileToTableau: 5,
-  tableauToFoundation: 10,
-  undo: -10,
-  foundationToTableau: -15,
-  uncoverFaceDown: 5,
-  afterTenSeconds: -2,
-  timeBonus: 700000
-};
+// SOL.scoring = {
+//   pileToTableau: 5,
+//   tableauToFoundation: 10,
+//   undo: -10,
+//   foundationToTableau: -15,
+//   uncoverFaceDown: 5,
+//   afterTenSeconds: -2,
+//   timeBonus: 700000
+// };
 
 
 // Resolve rules for clicking on card
@@ -55,7 +52,7 @@ SOL.clickCard = function (cardInfo) {
 
   // Uncover face down card
   } else if (cardInfo.card.facedown) {
-    SOL.stats.updateScore(SOL.scoring.uncoverFaceDown);
+    // SOL.stats.updateScore(SOL.scoring.uncoverFaceDown);
     cardInfo.card.facedown = false;
     document.getElementById(cardInfo.card.id).classList.remove('facedown');
     SOL.deselectLast();
@@ -160,23 +157,25 @@ SOL.clickStack = function (stack) {
 
 // Check for win or autocompleteabilty
 SOL.check = function () {
-  var won = true;
-  for (var i = 2; i < 6; i++) {
-    if (SOL.game.stacks[i].length < 13) {
-      won = false;
-      break;
+  var count = 0;
+  var stacks = SOL.game.stacks;
+  for (var i = 0; i < stacks.length; i++) {
+    for (var j = 0; j < stacks[i].length; j++) {
+      if (stacks[i][j].facedown) {
+        return;
+      } else {
+        count++;
+      }
     }
   }
-  if (won) {
-    SOL.win();
-  }
+  SOL.win();
 };
 
 // Move all cards to wincondition
-SOL.complete = function () {
+// SOL.complete = function () {
   // SOL.game.stacks = [[],[],[a],[a],[a],[a]]
-  SOL.rebuild();
-};
+  // SOL.rebuild();
+// };
 
 // Deselect Active Card
 SOL.deselectLast = function () {

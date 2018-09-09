@@ -8,15 +8,15 @@
 // ////////////////////
 
 SOL.stats = {
-  score: 0,
-  moves: 0,
-  started: false,
-  time: {
-    now: 0,
-    interval: null
-  },
+  // score: 0,
+  // moves: 0,
+  // started: false,
+  // time: {
+    // now: 0,
+    // interval: null
+  // },
   // Array of {score, time, timeBonus, moves, wasWin}
-  scores: []
+  // scores: []
 };
 SOL.DOM = {
 
@@ -32,16 +32,16 @@ SOL.DOM = {
     // timer: document.getElementById('printinfo'),
     // score: document.getElementById('printinfo'),
 
-    scoreboard: {
-      gameScore: document.getElementById('scoreboard-score'),
-      gameBonus: document.getElementById('scoreboard-bonus'),
-      gameTotal: document.getElementById('scoreboard-total'),
-      gameTime: document.getElementById('scoreboard-time'),
+    // scoreboard: {
+    //   gameScore: document.getElementById('scoreboard-score'),
+    //   gameBonus: document.getElementById('scoreboard-bonus'),
+    //   gameTotal: document.getElementById('scoreboard-total'),
+    //   gameTime: document.getElementById('scoreboard-time'),
 
-      highScore: document.getElementById('scoreboard-highscore'),
-      gamesCount: document.getElementById('scoreboard-gamesCount'),
-      gamesWonCount: document.getElementById('scoreboard-gamesWonCount'),
-    }
+    //   highScore: document.getElementById('scoreboard-highscore'),
+    //   gamesCount: document.getElementById('scoreboard-gamesCount'),
+    //   gamesWonCount: document.getElementById('scoreboard-gamesWonCount'),
+    // }
 };
 SOL.cardColors = [
   'yellow',
@@ -57,15 +57,15 @@ SOL.cardColors = [
 // modal_menu = new Modal('menu', 'visible', 'menu-toggle');
 modal_help = new Modal('help', 'visible', 'help-toggle');
 modal_score = new Modal('scoreboard', 'visible', 'score-toggle');
-modal_cookie = new Modal('cookie', 'hidden', 'cookie-toggle');
+// modal_cookie = new Modal('cookie', 'hidden', 'cookie-toggle');
 
 // Create object with dynamic dom bindings
 function Modal(modalID, visibleClass, toggles) {
   this.modal = document.getElementById(modalID);
   this.visibleClass = visibleClass;
 
-  console.log(this)
-  console.log(this.toggle)
+  // console.log(this)
+  // console.log(this.toggle)
 
   if (typeof toggles === 'string') {
     var toggleNodes = document.getElementsByClassName(toggles);
@@ -175,23 +175,24 @@ SOL.new = function () {
   var tempIsFacedown = true;
   var len;
 
-  SOL.stats.time.stop();
-  SOL.stats.time.reset();
+  // SOL.stats.time.stop();
+  // SOL.stats.time.reset();
 
   // Add stats
-  if (SOL.stats.started) {
-    SOL.addStats(false);
-  }
+  // if (SOL.stats.started) {
+  //   SOL.addStats(false);
+  // }
 
   // Reset stats
-  SOL.stats.time.reset();
-  SOL.stats.started = false;
-  SOL.stats.moves = 0;
-  SOL.stats.score = 0;
+  // SOL.stats.time.reset();
+  // SOL.stats.started = false;
+  // SOL.stats.moves = 0;
+  // SOL.stats.score = 0;
+
   SOL.game.cycleTimes = SOL.game.maxCycleTimes;
   SOL.DOM.undo.setAttribute('disabled', 'true');
   SOL.DOM.stacks[0].classList.remove('error');
-  document.cookie = 'gamestate=;';
+  window.localStorage.setItem('gamestate', '');
 
   for (var i = 0, len = SOL.game.cards; i < len; i++) {
     deck.push({
@@ -269,9 +270,9 @@ SOL.undo = function () {
   if (SOL.game.history.length > 0) {
     var lastState = JSON.parse(SOL.game.history.pop());
 
-    SOL.stats.moves += 1;
+    // SOL.stats.moves += 1;
     SOL.game.stacks = lastState.stacks;
-    SOL.stats.score = lastState.score + SOL.scoring.undo;
+    // SOL.stats.score = lastState.score + SOL.scoring.undo;
 
     SOL.rebuild();
 
@@ -286,25 +287,24 @@ SOL.undo = function () {
 
 // Creates a gamestate and pushes it to cookies
 SOL.save = function () {
-  if (!SOL.stats.started) {
-    SOL.stats.time.stop();
-    SOL.stats.time.reset();
-    SOL.stats.time.start();
-    SOL.stats.started = true;
-  }
-
-  SOL.stats.moves += 1;
+  // if (!SOL.stats.started) {
+    // SOL.stats.time.stop();
+    // SOL.stats.time.reset();
+    // SOL.stats.time.start();
+    // SOL.stats.started = true;
+  // }
+  // SOL.stats.moves += 1;
   var state = JSON.stringify({
-    score: SOL.stats.score,
-    time: SOL.stats.time.now,
-    moves: SOL.stats.moves,
+    // score: SOL.stats.score,
+    // time: SOL.stats.time.now,
+    // moves: SOL.stats.moves,
     stacks: SOL.game.stacks,
     cycleTimes: SOL.game.cycleTimes
   });
 
   SOL.game.history.push(state);
-  document.cookie = 'gamestate=' + state + ';';
-  document.cookie = 'stats=' + JSON.stringify(SOL.stats.scores) + ';';
+  window.localStorage.setItem('gamestate', state);
+  // document.cookie = 'stats=' + JSON.stringify(SOL.stats.scores) + ';';
 
   if (SOL.game.history.length > SOL.game.maxGameStates) {
     SOL.game.history.shift();
@@ -319,61 +319,60 @@ SOL.save = function () {
 
 // Calculates score and shows win screen / stats
 SOL.win = function () {
-  SOL.addStats(true);
-  SOL.stats.time.stop();
-  modal_score.toggle();
+  // SOL.addStats(true);
+  // SOL.stats.time.stop();
 
-  document.cookies = 'gamestate=;';
+  // var avgScore = 0;
+  // var gamesWon = 0;
+  // var gamesPlayed = SOL.stats.scores.length;
+  // var timeBonus = 0;
+  // var highScore = 0;
+  // var bestTime = 100000000;
 
-  var avgScore = 0;
-  var gamesWon = 0;
-  var gamesPlayed = SOL.stats.scores.length;
-  var timeBonus = 0;
-  var highScore = 0;
-  var bestTime = 100000000;
+  // for (var i = 0; i < SOL.stats.scores; i++) {
+  //   avgScore += SOL.stats.scores[i].score;
+  //   gamesWon += SOL.stats.scores[i].wasWin;
+  //   if (SOL.stats.score[i].score > highScore) {
+  //     highScore = SOL.stats.scores[i].score;
+  //   }
+  //   if (SOL.stats.score[i].time.now < bestTime) {
+  //     bestTime = SOL.stats.scores[i].time.now;
+  //   }
+  // }
 
-  for (var i = 0; i < SOL.stats.scores; i++) {
-    avgScore += SOL.stats.scores[i].score;
-    gamesWon += SOL.stats.scores[i].wasWin;
-    if (SOL.stats.score[i].score > highScore) {
-      highScore = SOL.stats.scores[i].score;
-    }
-    if (SOL.stats.score[i].time.now < bestTime) {
-      bestTime = SOL.stats.scores[i].time.now;
-    }
-  }
+  // avgScore /= gamesWon;
 
-  avgScore /= gamesWon;
+  // SOL.DOM.scoreboard.gameScore.textContent = SOL.stats.score;
+  // SOL.DOM.scoreboard.gameBonus.textContent = Math.round(SOL.scoring.timeBonus / SOL.stats.time.now);
+  // SOL.DOM.scoreboard.gameTotal.textContent = SOL.stats.score + Math.round(SOL.scoring.timeBonus / SOL.stats.time.now);
+  // SOL.DOM.scoreboard.gameTime.textContent  = (SOL.stats.time.now / 3600 >= 1 ? Math.floor(SOL.stats.time.now / 3600) + ':' : '') +
+  //     (Math.floor(SOL.stats.time.now / 60) % 60).toString().padStart(2, '0') + ':' +
+  //     (SOL.stats.time.now % 60).toString().padStart(2, '0');
 
-  SOL.DOM.scoreboard.gameScore.textContent = SOL.stats.score;
-  SOL.DOM.scoreboard.gameBonus.textContent = Math.round(SOL.scoring.timeBonus / SOL.stats.time.now);
-  SOL.DOM.scoreboard.gameTotal.textContent = SOL.stats.score + Math.round(SOL.scoring.timeBonus / SOL.stats.time.now);
-  SOL.DOM.scoreboard.gameTime.textContent  = (SOL.stats.time.now / 3600 >= 1 ? Math.floor(SOL.stats.time.now / 3600) + ':' : '') +
-      (Math.floor(SOL.stats.time.now / 60) % 60).toString().padStart(2, '0') + ':' +
-      (SOL.stats.time.now % 60).toString().padStart(2, '0');
+  // SOL.DOM.scoreboard.highScore.textContent = highScore;
+  // SOL.DOM.scoreboard.gamesCount.textContent = gamesPlayed;
+  // SOL.DOM.scoreboard.gamesWonCount.textContent = gamesWon;
+  // SOL.stats.started = false;
 
-  SOL.DOM.scoreboard.highScore.textContent = highScore;
-  SOL.DOM.scoreboard.gamesCount.textContent = gamesPlayed;
-  SOL.DOM.scoreboard.gamesWonCount.textContent = gamesWon;
-  SOL.stats.started = false;
+  window.localStorage.setItem('gamestate', null);
   modal_score.toggle();
 };
 
-SOL.addStats = function(won) {
-  won = won || false;
-  var stats = {
-    wasWin: won
-  }
-  if (won) {
-    stats.score = SOL.game.score;
-    stats.time = SOL.stats.time.now;
-    stats.moves = SOL.stats.moves;
-  }
-  var length = SOL.stats.scores.push(stats);
+// SOL.addStats = function(won) {
+  // won = won || false;
+  // var stats = {
+    // wasWin: won
+  // }
+  // if (won) {
+    // stats.score = SOL.game.score;
+    // stats.time = SOL.stats.time.now;
+    // stats.moves = SOL.stats.moves;
+  // }
+  // var length = SOL.stats.scores.push(stats);
 
-  SOL.DOM.scoreboard.gameScore.textContent = SOL.stats.scores[length - 1].score;
+  // SOL.DOM.scoreboard.gameScore.textContent = SOL.stats.scores[length - 1].score;
   // SOL.DOM.scoreboard.gameBonus.
-};
+// };
 
 // Checks if two cards have different colors
 SOL.differentColor = function (color1, color2) {
@@ -399,44 +398,44 @@ SOL.dehighlight = function (cardInfo) {
 // /////////////////
 
 // Updates score in DOM
-SOL.stats.updateScore = function (change, set) {
-  if (typeof set === 'number') {
-    this.score = set;
-  } else {
-    this.score += change;
-  }
-  // SOL.DOM.score.innerHTML = this.score;
-};
+// SOL.stats.updateScore = function (change, set) {
+//   if (typeof set === 'number') {
+//     this.score = set;
+//   } else {
+//     this.score += change;
+//   }
+//   // SOL.DOM.score.innerHTML = this.score;
+// };
 
 // Updates time in DOM
-SOL.DOM.updateTime = function (seconds) {
+// SOL.DOM.updateTime = function (seconds) {
   // SOL.DOM.timer.innerHTML = (seconds / 3600 >= 1 ? Math.floor(seconds / 3600) + ':' : '') +
   // (Math.floor(seconds / 60) % 60).toString().padStart(2, '0') + ':' +
   // (seconds % 60).toString().padStart(2, '0');
-};
+// };
 
 // Starts the timer interval
-SOL.stats.time.start = function () {
-  this.timer = setInterval(function () {
-    SOL.stats.time.now += 1;
-    if (SOL.stats.time.now % 10 === 0) {
-      SOL.stats.updateScore(SOL.scoring.afterTenSeconds);
-    }
+// SOL.stats.time.start = function () {
+  // this.timer = setInterval(function () {
+    // SOL.stats.time.now += 1;
+    // if (SOL.stats.time.now % 10 === 0) {
+      // SOL.stats.updateScore(SOL.scoring.afterTenSeconds);
+    // }
     // SOL.DOM.updateTime(SOL.stats.time.now);
-  }, 1000);
-};
+  // }, 1000);
+// };
 
 // Only stops the timer
-SOL.stats.time.stop = function () {
-  clearInterval(this.timer);
-  this.timer = null;
-};
+// SOL.stats.time.stop = function () {
+//   clearInterval(this.timer);
+//   this.timer = null;
+// };
 
 // Only sets the timer to zero
-SOL.stats.time.reset = function () {
-  SOL.stats.time.now = 0;
-  // SOL.DOM.updateTime(0);
-};
+// SOL.stats.time.reset = function () {
+//   SOL.stats.time.now = 0;
+//   // SOL.DOM.updateTime(0);
+// };
 
 
 // /////////////////
@@ -493,22 +492,24 @@ for (var i = 0; i < SOL.DOM.newgames.length; i++){
 
 document.onkeypress = function(e){
   switch(e.which) {
-    // CTRL-Z, U
-    case 26: // Falls through
-    case 85: SOL.undo();
+    // CTRL-Z
+    case 90: SOL.undo();
+    break;
+    // U
+    case 85: SOL.undo(); console.log('aaah');
     break;
     // N
-    case 110: SOL.new();
+    case 110: SOL.new(); console.log('bbbb');
     break;
     // H
-    case 104: SOL.modal_help.toggle();
+    case 104: modal_help.toggle();
     break;
     // M
-    case 109: SOL.modal_menu.toggle();
-    break;
+    // case 109: modal_menu.toggle();
+    // break;
     // S
-    case 115: SOL.modal_score.toggle();
-    break;
+    // case 115: modal_score.toggle();
+    // break;
   }
 };
 
@@ -560,5 +561,18 @@ document.body.className += SOL.cardColors[Math.floor(Math.random() * SOL.cardCol
   // SOL.stats.time.start();
   // SOL.rebuild();
 // } else {
-  SOL.new();
+  // SOL.new();
 // }
+
+window.onload = function () {
+  var savedGameState = localStorage.getItem('gamestate');
+  if (savedGameState) {
+    var parsedGameState = JSON.parse(savedGameState);
+    SOL.game.cycleTimes = parsedGameState.cycleTimes;
+    SOL.game.stacks = parsedGameState.stacks;
+    SOL.rebuild();
+  } else {
+    SOL.new();  
+  }
+}
+
