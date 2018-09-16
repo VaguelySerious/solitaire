@@ -1,24 +1,54 @@
 {
   "private": true,
-  "name": "relax",
-  "version": "1.0.0",
-  "description": "Informative Webseite zum Thema Berufliches Gesundheitsmanagement",
-  "devDependencies": {
-    "autoprefixer": "^6.3.6",
-    "grunt-contrib-htmlmin": "^3.0.0",
-    "grunt-postcss": "^0.8.0",
-    "gulp": "^3.9.1",
-    "cssnano": "^3.10.0",
-    "grunt": "~0.4.5",
-    "grunt-concurrent": "*",
-    "grunt-contrib-uglify": "^3.3.0",
-    "grunt-contrib-uglify-es": "^3.3.0",
-    "grunt-contrib-watch": "*",
-    "grunt-nightwatch": "^0.5.4",
-    "grunt-sass": "2.1.0",
-    "grunt-sass-globbing": "*",
-    "load-grunt-config": "*",
-    "postcss-inline-svg": "^3.1.1"
+  "name": "Solitaire",
+  "version": "1.1.0",
+  "description": "Lightweight solitaire suite",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "serve": "webpack-dev-server --mode development",
+    "build": "webpack --mode production",
+    "start": "node server/server.js",
+    "preinstall": "npm i -g webpack webpack-cli webpack-dev-server"
   },
-  "dependencies": {}
+  "devDependencies": {
+    "@babel/core": "^7.0.1",
+    "@babel/preset-env": "^7.0.0",
+    "autoprefixer": "^6.7.7",
+    "babel-eslint": "^9.0.0",
+    "babel-loader": "^8.0.2",
+    "babel-preset-es2015": "^6.24.1",
+    "clean-webpack-plugin": "^0.1.19",
+    "copy-webpack-plugin": "^4.5.2",
+    "css-loader": "^1.0.0",
+    "css-mqpacker": "^7.0.0",
+    "cssnano": "^3.10.0",
+    "html-webpack-inline-svg-plugin": "^1.2.4",
+    "html-webpack-plugin": "^3.2.0",
+    "mini-css-extract-plugin": "^0.4.2",
+    "node-sass": "^4.9.3",
+    "postcss-easing-gradients": "^3.0.1",
+    "postcss-inline-svg": "^3.1.1",
+    "postcss-loader": "^3.0.0",
+    "sass-loader": "^7.1.0",
+    "strip-loader": "^0.1.2",
+    "style-loader": "^0.23.0",
+    "url-loader": "^1.1.1",
+    "webpack": "^4.19.0",
+    "webpack-cli": "^3.1.0"
+  },
+  "dependencies": {},
+  "eslintConfig": {
+    "env": {
+      "node": true
+    },
+    "extends": [],
+    "rules": {
+      "semi": "off",
+      "no-multiple-empty-lines": "off",
+      "space-before-function-paren": "off"
+    },
+    "parserOptions": {
+      "parser": "babel-eslint"
+    }
+  }
 }

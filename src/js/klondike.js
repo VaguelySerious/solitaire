@@ -1,4 +1,4 @@
-var SOL = {};
+const SOL = {};
 
 // General
 SOL.game = {
@@ -185,3 +185,4 @@ SOL.deselectLast = function () {
   }
 };
 
+export default SOL;

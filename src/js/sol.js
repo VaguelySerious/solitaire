@@ -1,3 +1,6 @@
+import '../scss/styles.scss';
+import SOL from './klondike.js';
+
 // TODO Implement scoreboard
 // TODO Fix undo
 // TODO Fix time starting too early
@@ -55,8 +58,8 @@ SOL.cardColors = [
 
 // Create modals
 // modal_menu = new Modal('menu', 'visible', 'menu-toggle');
-modal_help = new Modal('help', 'visible', 'help-toggle');
-modal_score = new Modal('scoreboard', 'visible', 'score-toggle');
+const modal_help = new Modal('help', 'visible', 'help-toggle');
+const modal_score = new Modal('scoreboard', 'visible', 'score-toggle');
 // modal_cookie = new Modal('cookie', 'hidden', 'cookie-toggle');
 
 // Create object with dynamic dom bindings
@@ -64,8 +67,8 @@ function Modal(modalID, visibleClass, toggles) {
   this.modal = document.getElementById(modalID);
   this.visibleClass = visibleClass;
 
-  // console.log(this)
-  // console.log(this.toggle)
+  console.log(this)
+  console.log(this.toggle)
 
   if (typeof toggles === 'string') {
     var toggleNodes = document.getElementsByClassName(toggles);
@@ -192,7 +195,7 @@ SOL.new = function () {
   SOL.game.cycleTimes = SOL.game.maxCycleTimes;
   SOL.DOM.undo.setAttribute('disabled', 'true');
   SOL.DOM.stacks[0].classList.remove('error');
-  window.localStorage.setItem('gamestate', '');
+  SOL_set_storage('gamestate', '');
 
   for (var i = 0, len = SOL.game.cards; i < len; i++) {
     deck.push({
@@ -224,7 +227,7 @@ SOL.new = function () {
         tempIsFacedown = false;
         // falls through
       case 'd':
-        for (j = 0; j < +tempNumber; j++) {
+        for (var j = 0; j < +tempNumber; j++) {
           var tempCard = deck.pop();
           tempCard.facedown = tempIsFacedown;
           SOL.push(currentStack, tempCard);
@@ -303,7 +306,7 @@ SOL.save = function () {
   });
 
   SOL.game.history.push(state);
-  window.localStorage.setItem('gamestate', state);
+  SOL_set_storage('gamestate', state);
   // document.cookie = 'stats=' + JSON.stringify(SOL.stats.scores) + ';';
 
   if (SOL.game.history.length > SOL.game.maxGameStates) {
@@ -565,7 +568,11 @@ document.body.className += SOL.cardColors[Math.floor(Math.random() * SOL.cardCol
 // }
 
 window.onload = function () {
-  var savedGameState = localStorage.getItem('gamestate');
+  var savedGameState = null;
+  try {
+    savedGameState = SOL_get_storage('gamestate');
+  } catch (e) {
+  }
   if (savedGameState) {
     var parsedGameState = JSON.parse(savedGameState);
     SOL.game.cycleTimes = parsedGameState.cycleTimes;
@@ -576,3 +583,18 @@ window.onload = function () {
   }
 }
 
+function SOL_set_storage (item, value) {
+  try {
+    localStorage.setItem(item, value);
+  } catch (e) {
+    console.log('(SOL) Error in setting localStorage occured: ', e);
+  }
+}
+
+function SOL_get_storage (item) {
+  try {
+    return localStorage.getItem(item);
+  } catch (e) {
+    console.log('(SOL) Error in reading localStorage occured: ', e);
+  }
+}
