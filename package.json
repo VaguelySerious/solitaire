@@ -8,7 +8,7 @@
     "serve": "webpack-dev-server --mode development",
     "build": "webpack --mode production",
     "start": "node server/server.js",
-    "preinstall": "npm i -g webpack webpack-cli webpack-dev-server"
+    "preinstall": "npm i -g webpack-dev-server"
   },
   "devDependencies": {
     "@babel/core": "^7.0.1",
@@ -36,19 +36,5 @@
     "webpack": "^4.19.0",
     "webpack-cli": "^3.1.0"
   },
-  "dependencies": {},
-  "eslintConfig": {
-    "env": {
-      "node": true
-    },
-    "extends": [],
-    "rules": {
-      "semi": "off",
-      "no-multiple-empty-lines": "off",
-      "space-before-function-paren": "off"
-    },
-    "parserOptions": {
-      "parser": "babel-eslint"
-    }
-  }
+  "dependencies": {}
 }
