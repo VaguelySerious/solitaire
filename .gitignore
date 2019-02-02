@@ -6,10 +6,11 @@
 /public/js
 /public/*.html
 
-# NPM
+# NPM / Yarn
 node_modules/
-package-lock.json
 npm-debug.log
 
 # OS Specific
 .DS_STORE
+
+/src/assets/img/previews
