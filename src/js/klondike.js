@@ -4,9 +4,9 @@ const SOL = {};
 SOL.game = {
 
   // Settings
-  maxGameStates: 1,
+  maxGameStates: 10,
   progressiveUndo: 1,
-  maxCycleTimes: 2,
+  maxCycleTimes: 5,
   cycleTimes: 0,
   minTime: 30,
 
