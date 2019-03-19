@@ -3,7 +3,7 @@
   "version": "0.8.0",
   "description": "Lightweight solitaire suite",
   "scripts": {
-    "serve": "webpack-dev-server --mode development",
+    "serve": "webpack-dev-server --mode development --open",
     "build": "webpack --mode production"
   },
   "devDependencies": {

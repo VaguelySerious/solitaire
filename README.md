@@ -15,12 +15,15 @@ Use the source-code:
 
 ## Roadmap
 
-+ First release (Februrary 2019)
-  + Basic functionality
++ Februrary 2019
+  + First release
 
-+ February 2019
++ March 2019
   + Simple local scoreboard
   + Keyboard shortcuts displayed on-screen on large screens
 
-+ March 2019
++ Unknown future
+  + Autocomplete
+  + Detect unwinnable games
   + Spider Solitaire game mode
+  + Drag and drop
