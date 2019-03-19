@@ -58,7 +58,7 @@ SOL.cardColors = [
 
 // Create modals
 // modal_menu = new Modal('menu', 'visible', 'menu-toggle');
-const modal_help = new Modal('help', 'visible', 'help-toggle');
+// const modal_help = new Modal('help', 'visible', 'help-toggle');
 const modal_score = new Modal('scoreboard', 'visible', 'score-toggle');
 // modal_cookie = new Modal('cookie', 'hidden', 'cookie-toggle');
 
@@ -66,9 +66,6 @@ const modal_score = new Modal('scoreboard', 'visible', 'score-toggle');
 function Modal(modalID, visibleClass, toggles) {
   this.modal = document.getElementById(modalID);
   this.visibleClass = visibleClass;
-
-  console.log(this)
-  console.log(this.toggle)
 
   if (typeof toggles === 'string') {
     var toggleNodes = document.getElementsByClassName(toggles);
@@ -494,25 +491,25 @@ for (var i = 0; i < SOL.DOM.newgames.length; i++){
 }
 
 document.onkeypress = function(e){
-  switch(e.which) {
+  switch(e.key) {
     // CTRL-Z
-    case 90: SOL.undo();
+    case 'z': SOL.undo();
     break;
     // U
-    case 85: SOL.undo(); console.log('aaah');
+    case 'u': SOL.undo();
     break;
     // N
-    case 110: SOL.new(); console.log('bbbb');
+    case 'n': SOL.new();
     break;
     // H
-    case 104: modal_help.toggle();
+    case 'h': modal_help.toggle();
     break;
     // M
-    // case 109: modal_menu.toggle();
+    // case 'm': modal_menu.toggle();
     // break;
     // S
-    // case 115: modal_score.toggle();
-    // break;
+    case 's': modal_score.toggle();
+    break;
   }
 };
 
@@ -568,11 +565,7 @@ document.body.className += SOL.cardColors[Math.floor(Math.random() * SOL.cardCol
 // }
 
 window.onload = function () {
-  var savedGameState = null;
-  try {
-    savedGameState = SOL_get_storage('gamestate');
-  } catch (e) {
-  }
+  var savedGameState = SOL_get_storage('gamestate');
   if (savedGameState) {
     var parsedGameState = JSON.parse(savedGameState);
     SOL.game.cycleTimes = parsedGameState.cycleTimes;
@@ -587,7 +580,7 @@ function SOL_set_storage (item, value) {
   try {
     localStorage.setItem(item, value);
   } catch (e) {
-    console.log('(SOL) Error in setting localStorage occured: ', e);
+    console.log('Failed writing to localStorage');
   }
 }
 
@@ -595,6 +588,7 @@ function SOL_get_storage (item) {
   try {
     return localStorage.getItem(item);
   } catch (e) {
-    console.log('(SOL) Error in reading localStorage occured: ', e);
+    console.log('Failed reading from localStorage');
+    return null;
   }
 }

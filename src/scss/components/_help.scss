@@ -1,28 +1,22 @@
 .help {
-  &__rules, &__shortcuts {
-    opacity: 0;
-    position: relative;
-    transform: translateY($spacing-large);
+  &__shortcuts {
+    bottom: 0;
+    right: 0;
+    opacity: 1;
+    position: fixed;
+    transform: translateY(0);
     transition: all 0.3s $transition-easing;
 
-    .visible & {
-      opacity: 1;
-      transform: translateY(0);
+    .invisible & {
+      opacity: 0;
+      transform: translateY($spacing-large);
     }
-  }
 
-
-  &__rules {
-    transition-delay: 0;
-  }
-
-
-  &__shortcuts {
     transition-delay: 0.125s;
 
     &__list {
       display: flex;
-      flex-flow: row wrap;
+      flex-flow: row;
       justify-content: space-between;
       list-style: none;
       margin: 0;
@@ -32,9 +26,9 @@
 
     &__item {
       display: flex;
-      justify-content: space-between;
+      justify-content: space-around;
       margin: $spacing-small 0;
-      width: 45%;
+      width: 200px;
     }
 
 
