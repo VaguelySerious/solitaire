@@ -210,7 +210,7 @@
     &::before {
       content: var(--card-color);
       display: flex;
-      font-size: 200%;
+      font-size: 400%;
       justify-content: center;
       left: 50%;
       letter-spacing: 0.2em;
@@ -225,6 +225,17 @@
       word-wrap: break-word;
 
 
+      @include break(tablet, max) {
+        transform: translate(-50%, -40%);
+
+        @include break(mobile) {
+          font-size: 16vw;
+        }
+
+        @include landscape-cards-bp {
+          font-size: 8vmin;
+        }
+      }
 
       //
       // 2.2 Number Handling
@@ -303,19 +314,36 @@
 
     &::after,
     &::before {
+      align-items: center;
       content: var(--card-value)'\a'var(--card-color);
+      display: flex;
+      flex-direction: column;
       text-align: center;
       text-transform: uppercase;
+      width: 0.6em;
       white-space: pre;
+
+      @include break(tablet, max) {
+        content: var(--card-value)' 'var(--card-color);
+        width: auto;
+      }
     }
 
     &::before {
       align-self: flex-start;
+
+      @include break(tablet, max) {
+        font-size: 1.25em;
+      }
     }
 
     &::after {
       align-self: flex-end;
       transform: rotate(180deg);
+
+      @include break(tablet, max) {
+        content: none;
+      }
     }
   }
 
