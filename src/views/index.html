@@ -29,6 +29,8 @@
   <body>
     <div class="gamewrap">
 
+      <!-- <div id="printinfo" style="position: fixed; bottom: 10px; right: 10px;">00:00 | 24323</div> -->
+
       <!-- Board -->
       <main class="board" id="board" style="--width: 65vw; --columns: 7;">
         <div class="row">
@@ -53,6 +55,13 @@
 
       <!-- Controls -->
       <aside class="controls">
+        <button class="icon-button menu-toggle disabled">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path fill="none" stroke="#FFFFFF" stroke-miterlimit="10" stroke-width="2" d="M1.5,4.7h21 M1.5,12h12.6" stroke-linejoin="round" stroke-linecap="round" />
+            <path fill="none" stroke="#FFFFFF" stroke-miterlimit="10" stroke-width="2" d="M1.5,19.3h21" stroke-linejoin="round" stroke-linecap="round" />
+          </svg>
+          <span class="icon-button__text">Open menu</span>
+        </button>
 
         <button class="icon-button new-game">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
@@ -69,21 +78,34 @@
           <span class="icon-button__text"></span>
         </button>
 
-       <!--  <button class="icon-button" id="autocomplete" disabled>
+        <button class="icon-button" id="autocomplete" disabled>
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
             <path fill="none" stroke="#FFFFFF" stroke-miterlimit="10" stroke-width="2" d="M1.5,13l7.2,7.2L22.5,5.8" stroke-linejoin="round" stroke-linecap="round" />
           </svg>
           <span class="icon-button__text"></span>
-        </button> -->
+        </button>
+
+        <button class="icon-button color-picker disabled">
+          <span class="color-picker__current"></span>
+          <span class="color-picker__tooltip">Coming soonish</span>
+          <div class="color-picker__menu">
+          </div>
+        </button>
+
+        <button class="icon-button help-toggle">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+              <circle cx="32" cy="32" r="30" fill="none" stroke="#FFFFFF" stroke-miterlimit="10" stroke-width="5" stroke-linejoin="round" stroke-linecap="round"></circle>
+              <path d="M24 24.528C24 21.647 26.206 17 32.47 17S40 22.628 40 24.528s-.59 4.092-4.057 7.558C32.477 35.552 32 37.353 32 39v2" fill="none" stroke="#FFFFFF" stroke-miterlimit="10" stroke-width="5" stroke-linejoin="round" stroke-linecap="round"></path>
+              <circle cx="32" cy="47" r="2" fill="none" stroke="#FFFFFF" stroke-miterlimit="10" stroke-width="5" stroke-linejoin="round" stroke-linecap="round"></circle>
+            </svg>
+          </button>
       </aside>
 
       <!-- Scoreboard -->
       <aside class="modal scoreboard" id="scoreboard">
         <h2>Congratulations, you won!</h2>
-
-        <p>The scoring system has not been implemented yet, but it is a planned feature.</p>
-
-    <!--     <h3 class="label">Game Score</h3>
+<!-- 
+        <h3 class="label">Game Score</h3>
         <ul class="scoreboard__scores">
           <li class="scoreboard__score">
             <span class="scoreboard__score__label">Score:</span>
@@ -126,26 +148,24 @@
       </aside>
 
 
-      <!-- ASD -->
-      <aside class="help__shortcuts visible">
-        <ul class="help__shortcuts__list">
-          <li class="help__shortcuts__item">
-            <span class="description">Undo</span>
-            <span>
-              <span class="key">U</span>
-              <span class="key">Z</span>
-              <span class="key">Ctrl + Z</span>
-            </span>
-          </li>
-          <li class="help__shortcuts__item">
-            <span class="description">New Game</span>
-            <span class="key">N</span>
-          </li>
-          <li class="help__shortcuts__item">
-            <span class="description">Help &amp; Rules</span>
-            <span class="key">H</span>
-          </li>
-        </ul>
+      <!-- Keyboard Shortcuts -->
+      <aside class="help__shortcuts hidden" id="help">
+        <div class="flex-center">
+          <ul class="help__shortcuts__list">
+            <li class="help__shortcuts__item">
+              <span class="description">New Game</span>
+              <span class="key">N</span>
+            </li>
+            <li class="help__shortcuts__item">
+              <span class="description">Undo</span>
+              <span class="key">U / Z</span>
+            </li>
+            <li class="help__shortcuts__item">
+              <span class="description">Help</span>
+              <span class="key">H</span>
+            </li>
+          </ul>
+        </div>
       </aside>
     </div>
   </body>

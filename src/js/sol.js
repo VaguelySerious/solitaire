@@ -32,19 +32,19 @@ SOL.DOM = {
     newgames: document.getElementsByClassName('new-game'),
 
     // Text info
-    // timer: document.getElementById('printinfo'),
-    // score: document.getElementById('printinfo'),
+    timer: document.getElementById('printinfo'),
+    score: document.getElementById('printinfo'),
 
-    // scoreboard: {
-    //   gameScore: document.getElementById('scoreboard-score'),
-    //   gameBonus: document.getElementById('scoreboard-bonus'),
-    //   gameTotal: document.getElementById('scoreboard-total'),
-    //   gameTime: document.getElementById('scoreboard-time'),
+    scoreboard: {
+      gameScore: document.getElementById('scoreboard-score'),
+      gameBonus: document.getElementById('scoreboard-bonus'),
+      gameTotal: document.getElementById('scoreboard-total'),
+      gameTime: document.getElementById('scoreboard-time'),
 
-    //   highScore: document.getElementById('scoreboard-highscore'),
-    //   gamesCount: document.getElementById('scoreboard-gamesCount'),
-    //   gamesWonCount: document.getElementById('scoreboard-gamesWonCount'),
-    // }
+      highScore: document.getElementById('scoreboard-highscore'),
+      gamesCount: document.getElementById('scoreboard-gamesCount'),
+      gamesWonCount: document.getElementById('scoreboard-gamesWonCount'),
+    }
 };
 SOL.cardColors = [
   'yellow',
@@ -58,7 +58,7 @@ SOL.cardColors = [
 
 // Create modals
 // modal_menu = new Modal('menu', 'visible', 'menu-toggle');
-// const modal_help = new Modal('help', 'visible', 'help-toggle');
+const modal_help = new Modal('help', 'hidden', 'help-toggle');
 const modal_score = new Modal('scoreboard', 'visible', 'score-toggle');
 // modal_cookie = new Modal('cookie', 'hidden', 'cookie-toggle');
 

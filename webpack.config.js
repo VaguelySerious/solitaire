@@ -24,6 +24,7 @@ module.exports = (env, argv) => {
 
   // Development Config
   const config = {
+    mode: argv.mode,
     entry: ["./src/js/sol.js"],
     output: {
       filename: "js/app.js"
@@ -99,13 +100,17 @@ module.exports = (env, argv) => {
 
       // Copy assets folder statically
       new CopyWebpackPlugin(['src/assets']),
-    ]
+    ],
+
+    optimization: {}
   }
 
 
 
   // Changes in production
   if (isProd) {
+
+    config.optimization.minimize = true;
 
     // Strip console.log statements
     config.module.rules.push({
@@ -115,7 +120,7 @@ module.exports = (env, argv) => {
       loader: WebpackStripLoader.loader('console.log')
     });
 
-    // TBA
+    // 
 
     // Remove copy plugin for images and add Image Processor plugin
   }
