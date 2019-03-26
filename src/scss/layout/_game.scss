@@ -96,6 +96,13 @@ $controls-switch-bp:      'tablet-l';
   }
 
 
+  .help-toggle {
+    @include break(tablet, max) {
+      display: none;
+    }
+  }
+
+
   .color-picker {
     position: relative;
 
