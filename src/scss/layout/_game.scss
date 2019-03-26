@@ -88,6 +88,10 @@ $controls-switch-bp:      'tablet-l';
     &[disabled] {
       color: lighten($color-board, 15%);
       pointer-events: none;
+
+      @include break(tablet, max) {
+        color: desaturate(lighten($background-color-a, 20%), 40%);
+      }
     }
   }
 
@@ -161,7 +165,7 @@ $controls-switch-bp:      'tablet-l';
   display: flex;
   flex-flow: column nowrap;
   height: 100%;
-  padding: $board-column-gutter-s;
+  padding: 10px;
   perspective: 1200px;
   -webkit-user-select: none;
   user-select: none;
