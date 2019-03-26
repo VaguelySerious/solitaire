@@ -8,7 +8,6 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 // Copies files statically
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 
-
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 // Clears a folder
@@ -81,7 +80,7 @@ module.exports = (env, argv) => {
       // Clear the dist folder
       new CleanWebpackPlugin(['dist'], {}),
 
-      // Minify the extracted CSS
+      // Save the css bundle as file
       new MiniCssExtractPlugin({
         filename: 'css/styles.css',
       }),
@@ -90,9 +89,7 @@ module.exports = (env, argv) => {
       new HtmlWebpackPlugin({
         title: 'Zentigon Solitaire',
         template: 'src/views/index.html',
-        minify: true//isProd && {
-          //maxLineLength: 120
-        //}
+        minify: isProd
       }),
 
       // See description at top
@@ -120,9 +117,7 @@ module.exports = (env, argv) => {
       loader: WebpackStripLoader.loader('console.log')
     });
 
-    // 
-
-    // Remove copy plugin for images and add Image Processor plugin
+    // TODO Remove copy plugin for images and add Image Processor plugin
   }
 
   return config;
