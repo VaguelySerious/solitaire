@@ -14,16 +14,16 @@
 $color-white:           #FFFFFF;
 $color-gray:            #333333;
 
-$color-lightning:       #FFC312;
+$color-lightning:       #FED330;
 $color-tree-poppy:      #F79F1F;
 $color-flamingo:        #EE5A24;
 $color-crimson:         #EA2027;
 $color-pear:            #C4E538;
-$color-fun-green:       #009432;
+$color-fun-green:       #32bf22;
 $color-java:            #12CBC4;
-$color-science-blue:    #0652DD;
+$color-science-blue:    dodgerblue;
 $color-lucky-point:     #1B1464;
-$color-portage:         #9980FA;
+$color-portage:         #d59cff;
 $color-lavender-rose:   #FDA7DF;
 $color-mandy:           #ED4C67;
 $color-purple:          #9b59b6;
@@ -68,9 +68,9 @@ $card-back-colors: (
   'yellow':   $color-lightning,
   'orange':   $color-tree-poppy,
   'red':      $color-mandy,
-  'purple':   $color-purple,
   'lavender': $color-portage,
   'blue':     $color-science-blue,
   'aqua':     $color-java,
-  'green':    $color-fun-green
+  'green':    $color-fun-green,
+  'grey':     #a3b8cc
 );
