@@ -1,4 +1,5 @@
 import '../scss/styles.scss';
+import { mobileCheck } from './utils.js';
 import SOL from './klondike.js';
 
 // TODO Implement scoreboard
@@ -50,7 +51,6 @@ SOL.cardColors = [
   'yellow',
   'orange',
   'red',
-  'purple',
   'lavender',
   'blue',
   'aqua',
@@ -64,32 +64,30 @@ const modal_score = new Modal('scoreboard', 'visible', 'score-toggle');
 
 // Create object with dynamic dom bindings
 function Modal(modalID, visibleClass, toggles) {
+  this.modalID = modalID;
   this.modal = document.getElementById(modalID);
   this.visibleClass = visibleClass;
 
   if (typeof toggles === 'string') {
     var toggleNodes = document.getElementsByClassName(toggles);
-
     for (var i = 0; i < toggleNodes.length; i++){
-      // toggleNodes[i].addEventListener('click', this.toggle.bind(this));
       toggleNodes[i].addEventListener('click', () => {
-        this.modal.classList.toggle(this.visibleClass);
-      })
+        this.toggle();
+      });
     }
   } else {
     for (var i = 0; i < toggles.length; i++){
-      // document.getElementById(toggles[i]).addEventListener('click',
-        // this.toggle.bind(this));
       document.getElementById(toggles[i]).addEventListener('click', () => {
         this.toggle();
-        // this.modal.classList.toggle(this.visibleClass);
       });
     }
   }
 }
 
-Modal.prototype.toggle = function(){ // this is undefined
-  this.modal.classList.toggle(this.visibleClass);
+Modal.prototype.toggle = function(){
+  const toggled = this.modal.classList.toggle(this.visibleClass);
+  SOL_set_storage(this.modalID+'_hidden', `${toggled}`);
+  console.log(this.modalID+'_hidden', toggled);
 };
 
 // Generates a DOM Node from card object
@@ -565,6 +563,15 @@ document.body.className += SOL.cardColors[Math.floor(Math.random() * SOL.cardCol
 // }
 
 window.onload = function () {
+
+  // Restore status of help menu
+  var isMobile = mobileCheck();
+  var help_hidden = isMobile || SOL_get_storage('help_hidden');
+  if (help_hidden === 'false' || help_hidden == null) {
+    modal_help.toggle();
+  }
+
+  // Restore savegame if available
   var savedGameState = SOL_get_storage('gamestate');
   if (savedGameState) {
     var parsedGameState = JSON.parse(savedGameState);
@@ -573,6 +580,14 @@ window.onload = function () {
     SOL.rebuild();
   } else {
     SOL.new();  
+  }
+
+  // Remove help modal on mobile
+  if (isMobile) {
+    const items = document.querySelectorAll('.js-desktop');
+    for (let i = 0; i < items.length; i++) {
+      items[i].remove();
+    }
   }
 }
 
