@@ -1,4 +1,4 @@
-:root {
+body {
   @each $key, $value in $card-back-colors {
     &.#{$key} {
       --card-back: #{$value};
