@@ -16,9 +16,14 @@
 ///
 ///
 
+@mixin landscape-cards-bp {
+  @media only screen and (max-width: 768px) and (orientation: landscape) {
+    @content;
+  }
+}
 
 .card {
-  border-radius: $card-border-radius;
+  border-radius: floor($card-border-radius * 0.5);
   @include elevate(1);
   color: $card-color;
   cursor: pointer;
@@ -34,12 +39,16 @@
   transform-style: preserve-3d;
   width: $card-width;
 
+  @include landscape-cards-bp {
+    border-radius: $card-border-radius;
+  }
 
   @include break(mobile) {
     font-size: calc((100vw - #{$board-column-gutter * 2} * var(--columns)) / var(--columns) / 5.5);
   }
 
   @include break(tablet) {
+    border-radius: $card-border-radius;
     font-size: calc((100vw - #{$board-column-gutter * 2} * var(--columns)) / var(--columns) / 7);
   }
 
@@ -57,7 +66,7 @@
     width: 100%;
 
 
-    @media only screen and (max-width: 768px) and (orientation: landscape) {
+    @include landscape-cards-bp {
       padding-bottom: (100% * $card-ratio-s);
     }
   }
@@ -345,6 +354,10 @@
       mix-blend-mode: soft-light;
       top: 0;
       width: 100%;
+
+      @include landscape-cards-bp {
+        height: 180%;
+      }
     }
 
     &::after {
