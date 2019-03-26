@@ -1,5 +1,6 @@
 import '../scss/styles.scss';
-import { mobileCheck } from './utils.js';
+import { mobileCheck, setStorage, getStorage } from './utils.js';
+import * as colorpicker from './colorpicker.js';
 import SOL from './klondike.js';
 
 // TODO Implement scoreboard
@@ -47,14 +48,6 @@ SOL.DOM = {
       gamesWonCount: document.getElementById('scoreboard-gamesWonCount'),
     }
 };
-SOL.cardColors = [
-  'yellow',
-  'orange',
-  'red',
-  'lavender',
-  'blue',
-  'aqua',
-];
 
 // Create modals
 // modal_menu = new Modal('menu', 'visible', 'menu-toggle');
@@ -86,7 +79,7 @@ function Modal(modalID, visibleClass, toggles) {
 
 Modal.prototype.toggle = function(){
   const toggled = this.modal.classList.toggle(this.visibleClass);
-  SOL_set_storage(this.modalID+'_hidden', `${toggled}`);
+  setStorage(this.modalID+'_hidden', `${toggled}`);
   console.log(this.modalID+'_hidden', toggled);
 };
 
@@ -190,7 +183,7 @@ SOL.new = function () {
   SOL.game.cycleTimes = SOL.game.maxCycleTimes;
   SOL.DOM.undo.setAttribute('disabled', 'true');
   SOL.DOM.stacks[0].classList.remove('error');
-  SOL_set_storage('gamestate', '');
+  setStorage('gamestate', '');
 
   for (var i = 0, len = SOL.game.cards; i < len; i++) {
     deck.push({
@@ -301,7 +294,7 @@ SOL.save = function () {
   });
 
   SOL.game.history.push(state);
-  SOL_set_storage('gamestate', state);
+  setStorage('gamestate', state);
   // document.cookie = 'stats=' + JSON.stringify(SOL.stats.scores) + ';';
 
   if (SOL.game.history.length > SOL.game.maxGameStates) {
@@ -516,9 +509,6 @@ document.onkeypress = function(e){
 // MAIN CODE //
 // ////////////
 
-// Assign random color to cards
-document.body.className += SOL.cardColors[Math.floor(Math.random() * SOL.cardColors.length)];
-
 // Function for parsing cookies
 // function parseCookieStringAsJson (string) {
 //   var ret = {};
@@ -564,15 +554,17 @@ document.body.className += SOL.cardColors[Math.floor(Math.random() * SOL.cardCol
 
 window.onload = function () {
 
+  colorpicker.setRandom();
+
   // Restore status of help menu
   var isMobile = mobileCheck();
-  var help_hidden = isMobile || SOL_get_storage('help_hidden');
+  var help_hidden = isMobile || getStorage('help_hidden');
   if (help_hidden === 'false' || help_hidden == null) {
     modal_help.toggle();
   }
 
   // Restore savegame if available
-  var savedGameState = SOL_get_storage('gamestate');
+  var savedGameState = getStorage('gamestate');
   if (savedGameState) {
     var parsedGameState = JSON.parse(savedGameState);
     SOL.game.cycleTimes = parsedGameState.cycleTimes;
@@ -588,22 +580,5 @@ window.onload = function () {
     for (let i = 0; i < items.length; i++) {
       items[i].remove();
     }
-  }
-}
-
-function SOL_set_storage (item, value) {
-  try {
-    localStorage.setItem(item, value);
-  } catch (e) {
-    console.log('Failed writing to localStorage');
-  }
-}
-
-function SOL_get_storage (item) {
-  try {
-    return localStorage.getItem(item);
-  } catch (e) {
-    console.log('Failed reading from localStorage');
-    return null;
   }
 }
