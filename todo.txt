@@ -1,0 +1,3 @@
++ random card colors don't work
++ don't create save states when only highlighting card
++ can't re-do
