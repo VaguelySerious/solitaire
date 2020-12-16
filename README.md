@@ -5,7 +5,7 @@ A simple, zero-dependency implementation of Klondike Solitaire, written in Vanil
 ## How to run
 
 Use the live-website:
-+ [https://solitaire.zentigon.com](https://solitaire.zentigon.com)
++ [https://solitaire.wielander.me](https://solitaire.wielander.me)
 
 Use the source-code:
 + Clone the repo
@@ -18,7 +18,7 @@ Use the source-code:
 + Februrary 2019
   + First release
 
-+ Planned features
++ Features I might never get around to:
   + Simple local scoreboard
   + Keyboard shortcuts displayed on-screen on large screens
   + Autocomplete moves
