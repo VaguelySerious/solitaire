@@ -10,6 +10,6 @@ $board-column-gutter-s:   0.25vmax;
 $board-column-width-raw:  '(100% - #{$board-column-gutter * 2} * var(--columns)) / var(--columns)';
 $board-column-width-raw:  '(100% - var(--spacing) * var(--columns)) / var(--columns)';
 $board-column-width:      calc(#{$board-column-width-raw});
-$board-column-width-s:    calc((100% - #{$board-column-gutter-s * 2} * var(--columns)) / var(--columns);
-$board-column-width-s:    calc((100% - var(--spacing) * var(--columns)) / var(--columns);
+$board-column-width-s:    calc((100% - #{$board-column-gutter-s * 2} * var(--columns)) / var(--columns));
+$board-column-width-s:    calc((100% - var(--spacing) * var(--columns)) / var(--columns));
 $board-card-height:       '((#{$board-column-width-raw}) * #{$card-ratio})';
