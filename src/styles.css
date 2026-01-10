@@ -10,34 +10,366 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background: #2e7d32;
+  background: linear-gradient(135deg, #1e5128 0%, #2d6a4f 100%);
+  min-height: 100vh;
   color: white;
 }
 
-.gamewrap {
-  min-height: 100vh;
+.game {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.game-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+  padding: 20px;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+}
+
+.game-info {
+  display: flex;
+  gap: 30px;
+}
+
+.game-stat {
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.game-controls {
+  display: flex;
+  gap: 10px;
+}
+
+.btn {
+  padding: 10px 20px;
+  background: #40916c;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  transition: background 0.2s;
+}
+
+.btn:hover {
+  background: #52b788;
+}
+
+.btn:active {
+  transform: scale(0.98);
+}
+
+.btn-large {
+  padding: 15px 30px;
+  font-size: 16px;
+}
+
+.game-board {
+  min-height: 600px;
+}
+
+.game-top {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 40px;
+}
+
+.deck-waste {
+  display: flex;
+  gap: 20px;
+}
+
+.deck,
+.waste {
+  position: relative;
+  width: 100px;
+  height: 140px;
+}
+
+.waste-cards {
+  position: relative;
+  width: 100px;
+  height: 140px;
+}
+
+.foundations {
+  display: flex;
+  gap: 10px;
+}
+
+.foundation-pile {
+  width: 100px;
+  height: 140px;
+  cursor: pointer;
+}
+
+.card {
+  width: 100px;
+  height: 140px;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+  transition: transform 0.1s, box-shadow 0.1s;
+  position: relative;
+  user-select: none;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+.card.selected {
+  transform: translateY(-10px);
+  box-shadow: 0 6px 16px rgba(255, 215, 0, 0.6);
+  border: 3px solid gold;
+}
+
+.card.facedown {
+  background: linear-gradient(135deg, #1a5490 0%, #2a6fb8 100%);
+  cursor: default;
+}
+
+.card.facedown:hover {
+  transform: none;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.card-back {
+  width: 100%;
+  height: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
+  background: repeating-linear-gradient(
+    45deg,
+    #1a5490,
+    #1a5490 10px,
+    #2a6fb8 10px,
+    #2a6fb8 20px
+  );
+  border-radius: 8px;
 }
 
-.board {
-  max-width: 1200px;
-  padding: 2rem;
+.card.red {
+  color: #d32f2f;
 }
 
-.container {
+.card.black {
+  color: #000;
+}
+
+.card-value {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.card-suit {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 48px;
+}
+
+.card-value-bottom {
+  position: absolute;
+  bottom: 8px;
+  right: 8px;
+  font-size: 24px;
+  font-weight: bold;
+  transform: rotate(180deg);
+}
+
+.card-placeholder {
+  width: 100px;
+  height: 140px;
+  border: 3px dashed rgba(255, 255, 255, 0.3);
+  border-radius: 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: border-color 0.2s;
+}
+
+.card-placeholder:hover {
+  border-color: rgba(255, 255, 255, 0.6);
+}
+
+.foundation-placeholder {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.deck-placeholder {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.reload-icon {
+  font-size: 48px;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.tableau {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+}
+
+.tableau-column {
+  position: relative;
+  width: 100px;
+  min-height: 140px;
+}
+
+.win-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  animation: fadeIn 0.3s;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.win-content {
+  background: linear-gradient(135deg, #2d6a4f 0%, #40916c 100%);
+  padding: 40px;
+  border-radius: 15px;
   text-align: center;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+  animation: slideIn 0.3s;
 }
 
-h1 {
-  font-size: 2.5rem;
-  margin-bottom: 1rem;
+@keyframes slideIn {
+  from {
+    transform: translateY(-50px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
 }
 
-p {
-  font-size: 1.1rem;
-  margin-bottom: 0.5rem;
-  line-height: 1.6;
+.win-content h2 {
+  font-size: 36px;
+  margin-bottom: 20px;
 }
 
+.win-content p {
+  font-size: 20px;
+  margin: 10px 0;
+}
+
+.win-content .btn {
+  margin: 10px 5px;
+}
+
+@media (max-width: 1024px) {
+  .game {
+    padding: 10px;
+  }
+
+  .game-header {
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .tableau {
+    gap: 5px;
+  }
+
+  .card,
+  .card-placeholder,
+  .foundation-pile,
+  .deck,
+  .waste,
+  .waste-cards,
+  .tableau-column {
+    width: 80px;
+    height: 112px;
+  }
+
+  .card-value {
+    font-size: 18px;
+    top: 5px;
+    left: 5px;
+  }
+
+  .card-suit {
+    font-size: 36px;
+  }
+
+  .card-value-bottom {
+    font-size: 18px;
+    bottom: 5px;
+    right: 5px;
+  }
+}
+
+@media (max-width: 768px) {
+  .card,
+  .card-placeholder,
+  .foundation-pile,
+  .deck,
+  .waste,
+  .waste-cards,
+  .tableau-column {
+    width: 60px;
+    height: 84px;
+  }
+
+  .card-value {
+    font-size: 14px;
+    top: 3px;
+    left: 3px;
+  }
+
+  .card-suit {
+    font-size: 24px;
+  }
+
+  .card-value-bottom {
+    font-size: 14px;
+    bottom: 3px;
+    right: 3px;
+  }
+
+  .game-top {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .foundations {
+    justify-content: center;
+  }
+
+  .deck-waste {
+    justify-content: center;
+  }
+}
